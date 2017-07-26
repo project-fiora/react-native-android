@@ -64,7 +64,7 @@ export default class MyWalletAdd extends Component {
         }
 
     }
-    
+    /////지갑추가..버튼 연결해야함
     async addWallet() {
         if (this.state.name == "") {
             alert("지갑 이름을 입력하세요!");
