@@ -13,6 +13,7 @@ import {
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
+import StateStorage from '../common/stateStorage';
 
 export default class MyWalletAdd extends Component {
     constructor(props) {
@@ -64,60 +65,11 @@ export default class MyWalletAdd extends Component {
         }
 
     }
-    /////지갑추가..버튼 연결해야함
-    async addWallet() {
-        if (this.state.name == "") {
-            alert("지갑 이름을 입력하세요!");
-            return false;
-        } else if (this.state.addr == "") {
-            alert("지갑 주소를 입력하세요!");
-            return false;
-        } else {
-            await AsyncStorage.getItem('Token', (err, result) => {
-                if (err != null) {
-                    alert(err);
-                    return false;
-                }
-                const token = JSON.parse(result).token;
-                try {
-                    //post api call
-                    fetch(PrivateAddr.getAddr() + 'wallet/add', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            'Authorization': token
-                        },
-                        body: JSON.stringify({
-                            walletName: this.state.name,
-                            walletAddr: this.state.addr,
-                            walletType: this.state.TYPE[this.state.currentTYPE],
-                        })
-                    }).then((response) => {
-                        return response.json()
-                    }).then((responseJson) => {
-                        if (responseJson.message == "SUCCESS") {
-                            alert('지갑을 추가했습니다!');
-                            Actions.main({goTo: 'myWallet'});
-                        } else {
-                            alert('오류가 발생했습니다.\n다시 시도해주세요!');
-                        }
-                    })
-                        .catch((error) => {
-                            alert('Network Connection Failed');
-                            console.error(error);
-                        }).done();
-                    AsyncStorage.multiRemove(['walletAddNameTmp', 'walletAddQrcodeTmp']);
-                } catch (err) {
-                    alert('지갑추가실패 : ' + err);
-                }
-            });
-        }
-    }
-
 
     setType(i) {
-        this.setState({currentTYPE: i, onClickBox: !this.state.onClickBox});
+        this.setState({currentTYPE: i, onClickBox: !this.state.onClickBox},()=>{
+            // StateStorage.walletType=this.state.TYPE[this.state.currentTYPE];
+        });
     }
 
     render() {
@@ -128,7 +80,10 @@ export default class MyWalletAdd extends Component {
                     <TextInput
                         style={styles.inputId}
                         value={this.state.name}
-                        onChangeText={(name) => this.setState({name: name})}
+                        onChangeText={(name) => {
+                            this.setState({name: name});
+                            // StateStorage.walletName=name;
+                        }}
                         placeholder={'지갑 이름'}
                         placeholderTextColor="#FFFFFF"
                         autoCapitalize='none'
@@ -184,7 +139,10 @@ export default class MyWalletAdd extends Component {
                     <TextInput
                         style={styles.inputWalletAddr}
                         value={this.state.addr}
-                        onChangeText={(addr) => this.setState({addr: addr})}
+                        onChangeText={(addr) => {
+                            this.setState({addr: addr});
+                            // StateStorage.walletAddr=addr;
+                        }}
                         placeholder={'지갑 주소'}
                         placeholderTextColor="#FFFFFF"
                         autoCapitalize='none'
