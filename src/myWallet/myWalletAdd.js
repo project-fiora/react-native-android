@@ -11,10 +11,13 @@ import {
 } from 'react-native';
 
 import {Actions} from 'react-native-router-flux';
+import {observer} from 'mobx-react/native';
 import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
+import StateStorage from '../common/stateStore';
 
-export default class MyWalletAdd extends Component {
+
+const MyWalletAdd = observer(class MyWalletAdd extends Component {
     constructor(props) {
         super(props);
 
@@ -67,6 +70,7 @@ export default class MyWalletAdd extends Component {
 
     setType(i) {
         this.setState({currentTYPE: i, onClickBox: !this.state.onClickBox},()=>{
+            StateStorage.setType(this.state.TYPE[this.state.currentTYPE]);
         });
     }
 
@@ -80,6 +84,7 @@ export default class MyWalletAdd extends Component {
                         value={this.state.name}
                         onChangeText={(name) => {
                             this.setState({name: name});
+                            StateStorage.setName(name);
                         }}
                         placeholder={'지갑 이름'}
                         placeholderTextColor="#FFFFFF"
@@ -138,6 +143,7 @@ export default class MyWalletAdd extends Component {
                         value={this.state.addr}
                         onChangeText={(addr) => {
                             this.setState({addr: addr});
+                            StateStorage.setAddr(addr);
                         }}
                         placeholder={'지갑 주소'}
                         placeholderTextColor="#FFFFFF"
@@ -161,7 +167,7 @@ export default class MyWalletAdd extends Component {
             </View>
         );
     }
-}
+});
 
 const wid = Common.winWidth();
 const hei = Common.winHeight();
@@ -260,3 +266,5 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 });
+
+export default MyWalletAdd

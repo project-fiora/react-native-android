@@ -6,6 +6,7 @@ import React, {Component} from 'react';
 import {PixelRatio, Dimensions, AsyncStorage} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "./private/address";
+import StateStore from '../common/stateStore';
 
 var {height, width} = Dimensions.get('window');
 
@@ -157,10 +158,10 @@ class Common extends Component {
     // walletAddr: this.state.addr,
     // walletType: this.state.TYPE[this.state.currentTYPE],
     static async addWallet() {
-        if (this.state.name == "") {
+        if (StateStore.walletName() == "") {
             alert("지갑 이름을 입력하세요!");
             return false;
-        } else if (this.state.addr == "") {
+        } else if (StateStore.walletAddr() == "") {
             alert("지갑 주소를 입력하세요!");
             return false;
         } else {
@@ -180,9 +181,9 @@ class Common extends Component {
                             'Authorization': token
                         },
                         body: JSON.stringify({
-                            walletName: name,
-                            walletAddr: addr,
-                            walletType: type,
+                            walletName: StateStore.walletName(),
+                            walletAddr: StateStore.walletAddr(),
+                            walletType: StateStore.walletType(),
                         })
                     }).then((response) => {
                         return response.json()
@@ -193,8 +194,7 @@ class Common extends Component {
                         } else {
                             alert('오류가 발생했습니다.\n다시 시도해주세요!');
                         }
-                    })
-                        .catch((error) => {
+                    }).catch((error) => {
                             alert('Network Connection Failed');
                             console.error(error);
                         }).done();
