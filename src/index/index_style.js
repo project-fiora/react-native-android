@@ -5,14 +5,15 @@
 import {
     StyleSheet,
 } from 'react-native';
+import Common from "../common/common";
 
+const dpi = Common.getRatio();
+const wid = Common.winWidth();
+const hei = Common.winHeight();
 const styles = StyleSheet.create({
     container: { //background image
         flex: 1,
         justifyContent: 'center',
-        // width: 1000,
-        // height: 1000,
-        // resizeMode: 'cover',
     },
     backgroundImg: {
         width: '100%',
@@ -21,6 +22,7 @@ const styles = StyleSheet.create({
     },
     loginContainer: { //wrapper
         alignItems: 'center',
+        paddingVertical:20*dpi,
     },
     loadingIconWrapper: {
         position: 'absolute',
@@ -32,96 +34,111 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     loadingIcon: {
-        width: 50,
-        height: 50,
+        width: 50*dpi,
+        height: 50*dpi,
     },
     mainIcon: { //MEMBER LOG-IN Image
-        width: 130,
-        height: 130,
+        width: 130*dpi,
+        height: 130*dpi,
         opacity: 0.6
     },
     inputWrapper: { //입력칸과 아이콘 wrapper
         flexDirection: 'row',
     },
     inputTextIcon: {
-        width: 15,
-        height: 15,
-        marginRight: -33,
-        marginTop: 17,
+        width: 15*dpi,
+        height: 15*dpi,
+        marginRight: -33*dpi,
+        marginTop: 17*dpi,
         opacity: 0.4
     },
     input: { //입력칸
-        width: 240,
-        fontSize: 15,
+        width: 0.65*wid,
+        fontSize: 15*dpi,
         color: '#FFFFFF',
-        padding: 10,
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 40,
-        marginRight: -25,
-        height: 50,
+        padding: 10*dpi,
+        paddingTop: 10*dpi,
+        paddingBottom: 10*dpi,
+        paddingLeft: 40*dpi,
+        marginRight: -25*dpi,
+        height: 50*dpi,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 15*dpi,
         alignSelf: 'center',
         backgroundColor: '#000000',
-        marginBottom: 5,
+        marginBottom: 5*dpi,
         opacity: 0.2
     },
-    noIconInput: {
-        width: 240,
-        fontSize: 15,
+    autoLoginCheckBox:{
+        width: 0.5*wid,
+        marginTop: 5*dpi,
+        marginBottom: 40*dpi
+    },
+    autoLoginLabel:{
+        opacity: 0.7,
         color: '#FFFFFF',
-        padding: 10,
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 20,
-        marginRight: -25,
-        height: 50,
+        fontSize: 14*dpi,
+    },
+    autoLoginBox:{
+        opacity: 0.7,
+        width: 14*dpi,
+        height: 14*dpi
+    },
+    noIconInput: {
+        width: 240*dpi,
+        fontSize: 15*dpi,
+        color: '#FFFFFF',
+        padding: 10*dpi,
+        paddingTop: 10*dpi,
+        paddingBottom: 10*dpi,
+        paddingLeft: 20*dpi,
+        marginRight: -25*dpi,
+        height: 50*dpi,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 15*dpi,
         alignSelf: 'center',
         backgroundColor: '#000000',
-        marginBottom: 5,
+        marginBottom: 5*dpi,
         opacity: 0.2
     },
     button: { //버튼
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 1,
-        borderRadius: 20,
+        borderWidth: 1*dpi,
+        borderRadius: 20*dpi,
         borderColor: '#FFFFFF',
-        padding: 8,
-        margin: 4,
+        padding: 8*dpi,
+        margin: 4*dpi,
         opacity: 0.6
     },
     authBtn: {
-        maxWidth: 118,
+        maxWidth: 118*dpi,
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 1,
-        borderRadius: 20,
+        borderWidth: 1*dpi,
+        borderRadius: 20*dpi,
         borderColor: '#FFFFFF',
-        padding: 8,
-        marginTop: 4,
-        marginBottom: 8,
+        padding: 8*dpi,
+        marginTop: 4*dpi,
+        marginBottom: 8*dpi,
         opacity: 0.8
     },
     label: { //버튼텍스트
-        width: 100,
+        width: 100*dpi,
         alignSelf: 'center',
         textAlign: 'center',
-        fontSize: 12,
+        fontSize: 12*dpi,
         fontWeight: '600',
         color: '#FFFFFF',
         opacity: 0.8
     },
     authLabel: { //버튼텍스트
-        width: 100,
+        width: 100*dpi,
         alignSelf: 'center',
         textAlign: 'center',
-        fontSize: 13,
+        fontSize: 13*dpi,
         fontWeight: '600',
         color: '#FFFFFF',
         opacity: 0.9
@@ -129,16 +146,16 @@ const styles = StyleSheet.create({
     agreeText: {
         backgroundColor: 'transparent',
         color: '#FFFFFF',
-        fontSize: 17,
-        marginTop: 10,
+        fontSize: 17*dpi,
+        marginTop: 10*dpi,
         fontWeight: "900",
     },
     loadingIcon: {
         position: 'absolute',
-        width: 40,
-        height: 40,
+        width: 40*dpi,
+        height: 40*dpi,
         alignSelf: 'center',
-        marginTop: 40,
+        marginTop: 40*dpi,
     },
 });
 

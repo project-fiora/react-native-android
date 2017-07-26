@@ -2,16 +2,10 @@
  * Created by kusob on 2017. 6. 26..
  */
 import React, {Component} from 'react';
-import {ImageBackground, AsyncStorage} from 'react-native';
-import {Actions} from 'react-native-router-flux';
-import realm from '../common/realm';
-
+import {ImageBackground} from 'react-native';
 import styles from './index_style';
 import Join from './join';
 import Login from './login';
-
-
-
 
 export default class Title extends Component {
     constructor(props) {
@@ -36,7 +30,8 @@ export default class Title extends Component {
 
     render() {
         return (
-            <ImageBackground imageStyle={styles.backgroundImg} source={require('../common/img/background2.png')}
+            <ImageBackground imageStyle={styles.backgroundImg}
+                             source={require('../common/img/background2.png')}
                              style={styles.container}>
                 {this.state.currentPage === 'title' &&
                 <Login goJoinPage={this.joinPage.bind(this)}/>
@@ -52,4 +47,3 @@ export default class Title extends Component {
         );
     }
 }
-

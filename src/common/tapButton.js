@@ -15,7 +15,7 @@ export default class TabButton extends Component {
                 <Tap img={images.price} text="시세" goTo="price"/>
                 <Tap img={images.wallet} text="내지갑" goTo="myWallet"/>
                 <Tap img={images.friendWallet} text="친구지갑" goTo="friendWallet"/>
-                <Tap img={images.exchange} text="자동거래" goTo="exchange"/>
+                {/*<Tap img={images.exchange} text="자동거래" goTo="exchange"/>*/}
                 <Tap img={images.more} text="더보기" goTo="more"/>
             </View>
         )
@@ -34,7 +34,7 @@ class Tap extends Component {
                     underlayColor={'#AAAAAA'}
                     onPress={() => this.goTo(this.props.goTo)}
                 >
-                    <View style={styles.btn}>
+                    <View>
                         <Image
                             source={this.props.img}
                             style={styles.img}
@@ -60,32 +60,29 @@ const dpi = Common.getRatio();
 var styles = StyleSheet.create({
     taps: {
         width:'100%',
-        height: '17%',
+        height: 80*dpi,
         backgroundColor: 'transparent',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding:10*dpi,
         borderTopWidth: 1*dpi,
         borderColor: '#FFFFFF',
-        opacity:0.6
+        opacity:0.6,
+        padding:5*dpi,
     },
     tab: {
         justifyContent: 'center',
     },
-    btn: {
-
-    },
     img: {
-        marginTop: -10*dpi,
-        height: '80%',
-        width: '80%',
+        marginTop: -8*dpi,
+        height: '95%',
+        width: '95%',
         alignSelf:'center',
     },
     boxText: {
         minWidth: 50*dpi,
-        marginTop: dpi,
+        marginTop: -9*dpi,
         color:'#FFFFFF',
-        fontSize:12,
+        fontSize:14,
         textAlign:'center',
     }
 });

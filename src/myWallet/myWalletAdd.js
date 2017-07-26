@@ -12,6 +12,7 @@ import {
 
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "../common/private/address";
+import Common from "../common/common";
 
 export default class MyWalletAdd extends Component {
     constructor(props) {
@@ -209,6 +210,8 @@ export default class MyWalletAdd extends Component {
     }
 }
 
+const wid = Common.winWidth();
+const hei = Common.winHeight();
 const styles = StyleSheet.create({
     frame: {
         alignItems: 'center',
@@ -305,14 +308,13 @@ const styles = StyleSheet.create({
     },
     rightBtn: {
         position: 'absolute',
-        top: -45,
-        right: 15,
-        width: 80,
-        height: 30,
+        top:-0.077*hei,
+        right:0.05*wid,
+        width: 0.23*wid,
+        height: 0.045*hei,
         borderWidth: 1,
         borderRadius: 20,
         borderColor: '#FFFFFF',
-        padding: 5,
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6

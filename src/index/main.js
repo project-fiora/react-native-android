@@ -48,13 +48,13 @@ export default class Main extends Component {
         super(props);
 
         this.state = {
-            title:'',
-            enableBackBtn:false,
-            backBtnGoTo:'',
-            enableRightBtn:false,
-            rightBtnGoTo:'',
-            rightBtnText:'',
-            refreshGoTo:'price',
+            title: '',
+            enableBackBtn: false,
+            backBtnGoTo: '',
+            enableRightBtn: false,
+            rightBtnGoTo: '',
+            rightBtnText: '',
+            refreshGoTo: 'price',
         };
     }
 
@@ -74,103 +74,106 @@ export default class Main extends Component {
                 enableBackBtn: true, backBtnGoTo: 'myWallet',
                 enableRightBtn: true, rightBtnText: '지갑 추가', rightBtnGoTo: 'myWalletAdd'
             });
-        } else if(p=='myWalletEdit'){
+        } else if (p == 'myWalletEdit') {
             this.setState({
                 title: '지갑 수정',
                 enableBackBtn: true, backBtnGoTo: 'myWalletMng',
             });
-        } else if(p=='myWalletAdd'){
+        } else if (p == 'myWalletAdd') {
             this.setState({
                 title: '지갑 추가',
                 enableBackBtn: true, backBtnGoTo: 'myWalletMng',
             });
-        } else if(p=='friendWallet'){
+        } else if (p == 'friendWallet') {
             this.setState({
                 title: '친구 지갑',
                 enableRightBtn: true, rightBtnText: '친구 관리', rightBtnGoTo: 'friendWalletMng'
             });
-        } else if(p=='friendWalletMng'){
+        } else if (p == 'friendWalletMng') {
             this.setState({
-                title: '친구 관리', enableBackBtn:true, backBtnGoTo:'friendWallet',
+                title: '친구 관리', enableBackBtn: true, backBtnGoTo: 'friendWallet',
             });
-        } else if(p=='exchange'){
-            this.setState({title:'자동 거래'});
-        } else if(p=='price'){
+        } else if (p == 'exchange') {
+            this.setState({title: '자동 거래'});
+        } else if (p == 'price') {
             this.setState({
-                title:'시세 정보',
+                title: '시세 정보',
                 enableRightBtn: true, rightBtnText: '다른 정보', rightBtnGoTo: 'cryptocompare'
             });
-        } else if(p=='cryptocompare'){
+        } else if (p == 'cryptocompare') {
             this.setState({
-                title:'시세 정보',
-                enableBackBtn: true, backBtnGoTo:'price'
+                title: '시세 정보',
+                enableBackBtn: true, backBtnGoTo: 'price'
             });
-        } else if(p=='more'){
+        } else if (p == 'more') {
             this.setState({
-                title:'더보기'
+                title: '더보기'
             });
-        } else if(p=='exchangeLink'){
+        } else if (p == 'exchangeLink') {
             this.setState({
-                title:'거래소 바로가기',
-                enableBackBtn:true, backBtnGoTo:'more'});
-        } else if(p=='exchangeSite'){
+                title: '거래소 바로가기',
+                enableBackBtn: true, backBtnGoTo: 'more'
+            });
+        } else if (p == 'exchangeSite') {
             this.setState({
-                title:this.props.siteName,
-                enableBackBtn:true, backBtnGoTo:'exchangeLink'});
-        } else if(p=='convert'){
+                title: this.props.siteName,
+                enableBackBtn: true, backBtnGoTo: 'exchangeLink'
+            });
+        } else if (p == 'convert') {
             this.setState({
-                title:'모의환전',
-                enableBackBtn:true, backBtnGoTo:'more'});
-        } else if(p=='optionDetail'){
+                title: '모의환전',
+                enableBackBtn: true, backBtnGoTo: 'more'
+            });
+        } else if (p == 'optionDetail') {
             this.setState({
-                title:this.props.title,
-                enableBackBtn:true, backBtnGoTo:'option'});
-        } else if(p=='post'){
+                title: this.props.title,
+                enableBackBtn: true, backBtnGoTo: 'option'
+            });
+        } else if (p == 'post') {
             this.setState({
-                title:'커뮤니티',
-                enableBackBtn:true, backBtnGoTo:'more',
+                title: '커뮤니티',
+                enableBackBtn: true, backBtnGoTo: 'more',
                 enableRightBtn: true, rightBtnText: '글쓰기', rightBtnGoTo: 'postAdd'
             });
-        } else if(p=='postRead'){
+        } else if (p == 'postRead') {
             this.setState({
-                title:'게시물 읽기',
-                enableBackBtn:true, backBtnGoTo:'post',
+                title: '게시물 읽기',
+                enableBackBtn: true, backBtnGoTo: 'post',
             });
-        } else if(p=='postAdd'){
+        } else if (p == 'postAdd') {
             this.setState({
-                title:'게시물 작성',
-                enableBackBtn:true, backBtnGoTo:'post',
+                title: '게시물 작성',
             });
-        } else if(p=='postEdit'){
+        } else if (p == 'postEdit') {
             this.setState({
-                title:'게시물 수정',
-                enableBackBtn:false,
+                title: '게시물 수정',
+                enableBackBtn: false,
             });
-        } else if(p=='notice'){
+        } else if (p == 'notice') {
             this.setState({
-                title:'공지사항',
-                enableBackBtn:true, backBtnGoTo:'more'
+                title: '공지사항',
+                enableBackBtn: true, backBtnGoTo: 'more'
             });
-        } else if(p=='noticeDetail'){
+        } else if (p == 'noticeDetail') {
             this.setState({
-                title:this.props.title,
-                enableBackBtn:true, backBtnGoTo:'notice'
+                title: this.props.title,
+                enableBackBtn: true, backBtnGoTo: 'notice'
             });
-        } else if(p=='version'){
+        } else if (p == 'version') {
             this.setState({
-                title:'버전정보',
-                enableBackBtn:true, backBtnGoTo:'more'
+                title: '버전정보',
+                enableBackBtn: true, backBtnGoTo: 'more'
             });
-        } else if(p=='inquire'){
+        } else if (p == 'inquire') {
             this.setState({
-                title:'문의하기',
-                enableBackBtn:true, backBtnGoTo:'more'
+                title: '문의하기',
+                enableBackBtn: true, backBtnGoTo: 'more'
             });
         }
     }
 
     goTo(part) {
-        Actions.main({goTo:part});
+        Actions.main({goTo: part});
     }
 
     render() {
@@ -182,71 +185,76 @@ export default class Main extends Component {
             >
                 <View style={styles.wrapper}>
                     <View style={styles.summaryTitleWrapper}>
+                        <View style={styles.navBtnWrapper}>
+                            {this.state.enableBackBtn &&
+                            <TouchableOpacity
+                                style={styles.navBackBtn}
+                                underlayColor={'#AAAAAA'}
+                                onPress={() => this.goTo(this.state.backBtnGoTo)}
+                            >
+                                <Image source={require('../common/img/navArrow.png')}
+                                       style={styles.navBackArrow}/>
+                            </TouchableOpacity>
+                            }
+                        </View>
                         <Text style={styles.summaryTitle}>
                             {this.state.title}
                         </Text>
+                        <View style={styles.navBtnWrapper}>
+                            {this.state.enableRightBtn &&
+                            <TouchableHighlight
+                                style={styles.rightBtn}
+                                underlayColor={'#000000'}
+                                onPress={() => this.goTo(this.state.rightBtnGoTo)}
+                            >
+                                <Text style={styles.rightBtnText}>{this.state.rightBtnText}</Text>
+                            </TouchableHighlight>
+                            }
+                        </View>
+
                     </View>
                     <View style={styles.hr}/>
                     {this.props.goTo === 'home' && <Home/>}
                     {this.props.goTo === 'price' && <Coinmarketcap/>}
-                        {this.props.goTo === 'cryptocompare' && <Cryptocompare/>}
+                    {this.props.goTo === 'cryptocompare' && <Cryptocompare/>}
 
                     {this.props.goTo === 'myWallet' && <MyWallet/>}
-                        {this.props.goTo === 'myWalletMng' && <MyWalletMng/>}
-                        {this.props.goTo === 'myWalletEdit' &&
-                            <MyWalletEdit id={this.props.id}/>
-                        }
-                        {this.props.goTo === 'myWalletAdd' && <MyWalletAdd/>}
+                    {this.props.goTo === 'myWalletMng' && <MyWalletMng/>}
+                    {this.props.goTo === 'myWalletEdit' &&
+                    <MyWalletEdit id={this.props.id}/>
+                    }
+                    {this.props.goTo === 'myWalletAdd' && <MyWalletAdd/>}
 
                     {this.props.goTo === 'friendWallet' && <FriendWallet/>}
-                        {this.props.goTo === 'friendWalletMng' && <FriendWalletMng/>}
+                    {this.props.goTo === 'friendWalletMng' && <FriendWalletMng/>}
                     {this.props.goTo === 'exchange' && <Exchange/>}
 
                     {this.props.goTo === 'more' && <More/>}
-                        {this.props.goTo === 'exchangeLink' && <ExchangeLink/>}
-                            {this.props.goTo === 'exchangeSite' && <ExchangeSite link={this.props.link}/>}
-                        {this.props.goTo === 'convert' && <Convert/>}
-                        {/*{this.props.goTo === 'option' && <Option/>}*/}
-                            {/*{this.props.goTo === 'optionDetail' && <OptionDetail/>}*/}
-                        {this.props.goTo === 'post' && <Post/>}
-                            {this.props.goTo === 'postRead' && <PostRead post_id={this.props.post_id}/>}
-                            {this.props.goTo === 'postAdd' && <PostAdd/>}
-                            {this.props.goTo === 'postEdit' && <PostAdd
-                                                                    post_id={this.props.post_id}
-                                                                    title={this.props.title}
-                                                                    contents={this.props.contents}
-                                                                    edit={this.props.edit}
-                                                               />
-                            }
-                        {this.props.goTo === 'notice' && <Notice/>}
-                            {this.props.goTo === 'noticeDetail' &&
-                                <NoticeDetail id={this.props.id}
-                                              content={this.props.content}
-                                              date={this.props.date}
-                                />
-                            }
-                        {this.props.goTo === 'version' && <Version/>}
-                        {this.props.goTo === 'inquire' && <Inquire/>}
+                    {this.props.goTo === 'exchangeLink' && <ExchangeLink/>}
+                    {this.props.goTo === 'exchangeSite' && <ExchangeSite link={this.props.link}/>}
+                    {this.props.goTo === 'convert' && <Convert/>}
+                    {/*{this.props.goTo === 'option' && <Option/>}*/}
+                    {/*{this.props.goTo === 'optionDetail' && <OptionDetail/>}*/}
+                    {this.props.goTo === 'post' && <Post/>}
+                    {this.props.goTo === 'postRead' && <PostRead post_id={this.props.post_id}/>}
+                    {this.props.goTo === 'postAdd' && <PostAdd/>}
+                    {this.props.goTo === 'postEdit' && <PostAdd
+                        post_id={this.props.post_id}
+                        title={this.props.title}
+                        contents={this.props.contents}
+                        edit={this.props.edit}
+                    />
+                    }
+                    {this.props.goTo === 'notice' && <Notice/>}
+                    {this.props.goTo === 'noticeDetail' &&
+                    <NoticeDetail id={this.props.id}
+                                  content={this.props.content}
+                                  date={this.props.date}
+                    />
+                    }
+                    {this.props.goTo === 'version' && <Version/>}
+                    {this.props.goTo === 'inquire' && <Inquire/>}
                 </View>
-                {this.state.enableRightBtn == true &&
-                    <TouchableHighlight
-                        style={styles.rightBtn}
-                        underlayColor={'#000000'}
-                        onPress={() => this.goTo(this.state.rightBtnGoTo)}
-                    >
-                        <Text style={styles.rightBtnText}>{this.state.rightBtnText}</Text>
-                    </TouchableHighlight>
-                }
-                {this.state.enableBackBtn == true &&
-                    <TouchableOpacity
-                        style={styles.navBackBtn}
-                        underlayColor={'#AAAAAA'}
-                        onPress={() => this.goTo(this.state.backBtnGoTo)}
-                    >
-                        <Image source={require('../common/img/navArrow.png')}
-                               style={styles.navBackArrow}/>
-                    </TouchableOpacity>
-                }
                 <TabButton/>
             </ImageBackground>
         );
@@ -254,73 +262,68 @@ export default class Main extends Component {
 }
 
 const dpi = Common.getRatio();
-const navArrowSize = 40*dpi;
-const navArrowWrapperSize=navArrowSize+10*dpi;
+const wid = Common.winWidth();
+const hei = Common.winHeight();
+const navArrowSize = 40 * dpi;
+const navArrowWrapperSize = navArrowSize + 10 * dpi;
 var styles = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'stretch',
     },
-    backgroundImg:{
-        width:'100%',
-        height:'100%',
-        resizeMode:'cover',
+    backgroundImg: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
     },
     wrapper: {
-        flex:1,
-        backgroundColor:'transparent',
-        marginTop:30,
+        flex: 1,
+        backgroundColor: 'transparent',
     },
-    summaryTitleWrapper:{
-        height:53,
-        padding:10,
-        alignItems:'center',
-        alignSelf:"center",
+    summaryTitleWrapper: {
+        height: 70 * dpi,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal:15*dpi,
     },
-    summaryTitle:{
-        color:'#FFFFFF',
-        opacity:0.9,
-        fontSize:22,
-        textAlign:'center',
-        alignSelf:'center'
-        // paddingLeft:
-        // backgroundColor:'#000000',
+    navBtnWrapper:{
+        minWidth: 0.22*wid,
+        justifyContent: 'center',
     },
-    hr:{
-        borderBottomWidth:1*dpi,
-        borderColor:'#FFFFFF',
-        opacity:0.8,
+    navBackBtn: {
+        width: navArrowWrapperSize,
+        height: navArrowWrapperSize,
+    },
+    navBackArrow: {
+        width: navArrowSize,
+        height: navArrowSize,
+        opacity: 0.3,
+    },
+    summaryTitle: {
+        color: '#FFFFFF',
+        opacity: 0.9,
+        fontSize: 20 * dpi,
+        textAlign: 'center',
+        alignSelf: 'center'
     },
     rightBtn: {
-        position:'absolute',
-        top:38,
-        right:15,
-        width: 80,
-        height: 30,
-        borderWidth: 1,
-        borderRadius: 20,
+        borderWidth: 1 * dpi,
+        borderRadius: 20 * dpi,
         borderColor: '#FFFFFF',
-        padding: 5,
         alignItems: 'center',
-        justifyContent:'center',
-        opacity:0.6
+        justifyContent: 'center',
+        opacity: 0.6,
+        paddingVertical:5*dpi,
     },
     rightBtnText: {
         color: '#FFFFFF',
-        fontSize: 15
+        fontSize: 14 * dpi
     },
-    navBackBtn:{
-        width:navArrowWrapperSize,
-        height:navArrowWrapperSize,
-        position: 'absolute',
-        top:32,
-        left:15,
-    },
-    navBackArrow:{
-        width:navArrowSize,
-        height:navArrowSize,
-        opacity:0.3,
+    hr: {
+        borderBottomWidth: 1 * dpi,
+        borderColor: '#FFFFFF',
+        opacity: 0.8,
     },
 });

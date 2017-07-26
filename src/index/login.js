@@ -12,6 +12,7 @@ import CheckBox from 'react-native-checkbox';
 import styles from './index_style';
 
 import PrivateAddr from "../common/private/address";
+import Common from "../common/common";
 
 
 export default class Login extends Component {
@@ -74,6 +75,7 @@ export default class Login extends Component {
     }
 
     render() {
+        const dpi = Common.getRatio();
         return (
             <View style={styles.loginContainer} pointerEvents={this.state.enableTouch}>
                 {this.state.logining == true &&
@@ -115,10 +117,10 @@ export default class Login extends Component {
                 </View>
 
                 <CheckBox
-                    containerStyle={{width: 200, marginTop: 5, marginBottom: 40}}
+                    containerStyle={styles.autoLoginCheckBox}
                     label="자동로그인"
-                    labelStyle={{opacity: 0.7, color: '#FFFFFF', fontSize: 14,}}
-                    checkboxStyle={{opacity: 0.7, width: 14, height: 14}}
+                    labelStyle={styles.autoLoginLabel}
+                    checkboxStyle={styles.autoLoginBox}
                     checkedImage={require('../common/img/check.png')}
                     uncheckedImage={require('../common/img/un.png')}
                     underlayColor="transparent"
