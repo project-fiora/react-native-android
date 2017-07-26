@@ -15,15 +15,13 @@ export default class More extends Component {
     render() {
         return (
             <ScrollView>
-                <View style={styles.box}>
-                    <MoreBtn text="거래소 바로가기" img={images.exchange} goTo="exchangeLink"/>
-                    <MoreBtn text="coin -> KRW" img={images.convert} goTo="convert"/>
-                    <MoreBtn text="커뮤니티" img={images.post} goTo="post"/>
-                    <MoreBtn text="공지사항" img={images.notice} goTo="notice"/>
-                    <MoreBtn text="버전정보" img={images.version} goTo="version"/>
-                    <MoreBtn text="문의하기" img={images.ask} goTo="inquire"/>
-                    <MoreBtn text="로그아웃" img={images.logout} goTo="logout"/>
-                </View>
+                <MoreBtn text="거래소 바로가기" img={images.exchange} goTo="exchangeLink"/>
+                <MoreBtn text="coin -> KRW" img={images.convert} goTo="convert"/>
+                <MoreBtn text="커뮤니티" img={images.post} goTo="post"/>
+                <MoreBtn text="공지사항" img={images.notice} goTo="notice"/>
+                <MoreBtn text="버전정보" img={images.version} goTo="version"/>
+                <MoreBtn text="문의하기" img={images.ask} goTo="inquire"/>
+                <MoreBtn text="로그아웃" img={images.logout} goTo="logout"/>
             </ScrollView>
         );
     }
@@ -78,14 +76,10 @@ var styles = StyleSheet.create({
     frame: {
         flex: 1,
     },
-    box: {
-        // borderBottomWidth: 0.5,
-        // borderColor: '#A0A0A0',
-    },
     btn: {
         borderBottomWidth: 0.5,
         borderColor: '#FFFFFF',
-        padding: 20,
+        padding: 20 * dpi,
     },
     iconNtext: {
         flexDirection: 'row',
@@ -102,7 +96,7 @@ var styles = StyleSheet.create({
     menuText: {
         // backgroundColor: 'transparent',
         justifyContent: 'center',
-        fontSize: 17,
+        fontSize: 17 * dpi,
         marginLeft: 22 * dpi,
         color: 'white',
         opacity: 0.9

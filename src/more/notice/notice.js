@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from '../../common/private/address';
+import Common from "../../common/common";
 
 export default class Notice extends Component {
     constructor(props) {
@@ -85,34 +86,24 @@ class NoticeBtn extends Component {
     }
 }
 
+const dpi = Common.getRatio();
 var styles = StyleSheet.create({
     loadingIcon: {
-        width: 40,
-        height: 40,
-        marginTop: 40,
+        width: 40*dpi,
+        height: 40*dpi,
+        marginTop: 40*dpi,
         alignSelf:'center',
         opacity:0.9,
-    },
-    box: {
-        // borderBottomWidth: 0.5,
-        // borderColor: '#A0A0A0',
     },
     btn: {
         flexDirection:'row',
         borderBottomWidth: 0.5,
         borderColor: '#FFFFFF',
-        padding: 20,
-    },
-    menuIcon: {
-        resizeMode: 'stretch',
-        width: 17,
-        height: 17,
-        marginTop: 4,
-        opacity: 0.7
+        padding: 20*dpi,
     },
     menuText: {
         backgroundColor: 'transparent',
-        fontSize: 17,
+        fontSize: 17*dpi,
         color: 'white',
         opacity: 0.9
     }

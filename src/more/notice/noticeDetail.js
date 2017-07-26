@@ -7,6 +7,7 @@ import {
     StyleSheet, Text,
     View
 } from 'react-native';
+import Common from "../../common/common";
 
 export default class NoticeDetail extends Component {
     constructor(props) {
@@ -32,26 +33,27 @@ export default class NoticeDetail extends Component {
     }
 }
 
+const dpi = Common.getRatio();
 var styles = StyleSheet.create({
     frame: {
-        padding: 30,
+        padding: 30*dpi,
     },
     summaryTitle: {
         textAlign: 'center',
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 20,
+        fontSize: 20*dpi,
     },
     dateTime: {
         textAlign: 'right',
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 15,
-        marginBottom: 15,
+        fontSize: 15*dpi,
+        marginBottom: 15*dpi,
     },
     txt: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 17,
+        fontSize: 17*dpi,
     },
 });
