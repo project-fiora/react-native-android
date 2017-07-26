@@ -77,7 +77,6 @@ class NoticeBtn extends Component {
                     }
                 >
                     <Text style={styles.menuText}>
-                        <Image source={this.props.img} style={styles.menuIcon}/>
                         {this.props.title}
                     </Text>
                 </TouchableOpacity>
@@ -99,6 +98,7 @@ var styles = StyleSheet.create({
         // borderColor: '#A0A0A0',
     },
     btn: {
+        flexDirection:'row',
         borderBottomWidth: 0.5,
         borderColor: '#FFFFFF',
         padding: 20,

@@ -9,6 +9,7 @@ import {
     View, AsyncStorage, ScrollView
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import Common from "../common/common";
 
 export default class More extends Component {
     render() {
@@ -45,10 +46,15 @@ class MoreBtn extends Component {
                     underlayColor={'#AAAAAA'}
                     onPress={() => this.goTo(this.props.goTo)}
                 >
-                    <Text style={styles.menuText}>
-                        <Image source={this.props.img} style={styles.menuIcon}/>
-                        {this.props.text}
-                    </Text>
+                    <View style={styles.iconNtext}>
+                        <View style={styles.iconWrapper}>
+                            <Image source={this.props.img} style={styles.menuIcon}/>
+                        </View>
+
+                        <Text style={styles.menuText}>
+                            {this.props.text}
+                        </Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         );
@@ -67,6 +73,7 @@ const images = {
     ask: require('../common/img/ask.png'),
 };
 
+const dpi = Common.getRatio();
 var styles = StyleSheet.create({
     frame: {
         flex: 1,
@@ -80,18 +87,24 @@ var styles = StyleSheet.create({
         borderColor: '#FFFFFF',
         padding: 20,
     },
+    iconNtext: {
+        flexDirection: 'row',
+    },
+    iconWrapper: {
+        justifyContent: 'center',
+        marginBottom: -2.5 * dpi,
+    },
     menuIcon: {
-        resizeMode:'stretch',
-        width: 17,
-        height: 17,
-        marginTop:4,
-        opacity:0.7
+        width: 18 * dpi,
+        height: 18 * dpi,
+        opacity: 0.7
     },
     menuText: {
-        backgroundColor:'transparent',
+        // backgroundColor: 'transparent',
+        justifyContent: 'center',
         fontSize: 17,
-        paddingLeft: 17,
-        color:'white',
-        opacity:0.9
+        marginLeft: 22 * dpi,
+        color: 'white',
+        opacity: 0.9
     }
 });
