@@ -7,7 +7,6 @@ import {
     Text, AsyncStorage, View, TouchableOpacity,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import realm from '../common/realm';
 import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
 
@@ -101,7 +100,6 @@ export default class Home extends Component {
     clearStorage() {
         try {
             AsyncStorage.clear();
-            realm.write(() => realm.deleteAll());
         } catch (err) {
             alert("clear : " + err);
         }

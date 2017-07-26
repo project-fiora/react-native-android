@@ -6,7 +6,6 @@ import React, {Component} from 'react';
 import {PixelRatio, Dimensions, AsyncStorage} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "./private/address";
-// import StateStorage from '../common/stateStorage';
 
 var {height, width} = Dimensions.get('window');
 
@@ -158,9 +157,6 @@ class Common extends Component {
     // walletAddr: this.state.addr,
     // walletType: this.state.TYPE[this.state.currentTYPE],
     static async addWallet() {
-        // console.log(StateStorage.walletName);
-        // console.log(StateStorage.walletAddr);
-        // console.log(StateStorage.walletType);
         if (this.state.name == "") {
             alert("지갑 이름을 입력하세요!");
             return false;

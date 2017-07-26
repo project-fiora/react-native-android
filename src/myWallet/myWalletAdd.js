@@ -13,7 +13,6 @@ import {
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
-import StateStorage from '../common/stateStorage';
 
 export default class MyWalletAdd extends Component {
     constructor(props) {
@@ -68,7 +67,6 @@ export default class MyWalletAdd extends Component {
 
     setType(i) {
         this.setState({currentTYPE: i, onClickBox: !this.state.onClickBox},()=>{
-            // StateStorage.walletType=this.state.TYPE[this.state.currentTYPE];
         });
     }
 
@@ -82,7 +80,6 @@ export default class MyWalletAdd extends Component {
                         value={this.state.name}
                         onChangeText={(name) => {
                             this.setState({name: name});
-                            // StateStorage.walletName=name;
                         }}
                         placeholder={'지갑 이름'}
                         placeholderTextColor="#FFFFFF"
@@ -141,7 +138,6 @@ export default class MyWalletAdd extends Component {
                         value={this.state.addr}
                         onChangeText={(addr) => {
                             this.setState({addr: addr});
-                            // StateStorage.walletAddr=addr;
                         }}
                         placeholder={'지갑 주소'}
                         placeholderTextColor="#FFFFFF"
