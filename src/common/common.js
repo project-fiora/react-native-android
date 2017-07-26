@@ -3,7 +3,9 @@
  */
 
 import React, {Component} from 'react';
-import {PixelRatio, Dimensions} from 'react-native';
+import {PixelRatio, Dimensions, AsyncStorage} from 'react-native';
+import {Actions} from 'react-native-router-flux';
+import PrivateAddr from "./private/address";
 
 var {height, width} = Dimensions.get('window');
 
@@ -66,7 +68,7 @@ class Common extends Component {
         return tmp;
     }
 
-    static getBalance(type, addr) {
+    static getBalance(type, addr) { //잔액조회
         return new Promise((resolve, reject) => {
             if (type == 'BTC') {
                 fetch("https://chain.api.btc.com/v3/address/" + addr)

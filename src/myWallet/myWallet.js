@@ -179,50 +179,50 @@ export default class MyWallet extends Component {
     }
 }
 
+const dpi = Common.getRatio();
+const wid = Common.winWidth();
+const hei= Common.winHeight();
 const styles = StyleSheet.create({
     frame: {
-        paddingBottom: 85,
-        paddingTop: 15,
-        paddingLeft: 20,
-        paddingRight: 20,
+        padding:20*dpi,
     },
     content: {
-        marginTop: 5,
+        marginTop: 5*dpi,
         opacity: 0.8,
     },
     contentText: {
         color: '#FFFFFF',
-        fontSize: 17,
-        marginTop: 10,
+        fontSize: 17*dpi,
+        marginTop: 10*dpi,
         opacity: 0.8,
-        marginBottom: 5,
+        marginBottom: 5*dpi,
         alignSelf: 'flex-start',
     },
     loadingIcon: {
-        width: 30,
-        height: 30,
-        marginTop: 30,
+        width: 30*dpi,
+        height: 30*dpi,
+        marginTop: 30*dpi,
         alignSelf: 'center',
     },
     titleText: {
         alignSelf: 'center',
         color: '#FFFFFF',
-        fontSize: 17,
-        marginBottom: 10,
+        fontSize: 17*dpi,
+        marginBottom: 10*dpi,
         opacity: 0.8,
     },
     selectBoxWrapper: {
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: '#000000',
-        width: 220,
-        height: 35,
-        opacity: 0.4,
+        width: 0.55*wid,
+        height: 0.055*hei,
+        opacity: 0.4*dpi,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 10,
-        paddingLeft: 17,
-        paddingRight: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 10*dpi,
+        paddingLeft: 17*dpi,
+        paddingRight: 15*dpi,
     },
     selectBoxRow: {
         flexDirection: 'row',
@@ -231,19 +231,19 @@ const styles = StyleSheet.create({
     selectBoxText: {
         alignSelf: 'flex-start',
         color: '#FFFFFF',
-        fontSize: 17,
+        fontSize: 17*dpi,
     },
     selectBoxIconWrapper: {
         alignItems: 'flex-end',
     },
     selectIcon: {
         color: '#FFFFFF',
-        fontSize: 17,
+        fontSize: 17*dpi,
         opacity: 0.9,
     },
     qrCode: {
-        marginTop: 5,
-        width: 100,
-        height: 100,
+        marginTop: 5*dpi,
+        width: 100*dpi,
+        height: 100*dpi,
     },
 });

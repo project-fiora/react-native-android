@@ -63,6 +63,16 @@ export default class Main extends Component {
 
         if (p == 'home') {
             this.setState({title: '요약'});
+        } else if (p == 'price') {
+            this.setState({
+                title: '시세 정보',
+                enableRightBtn: true, rightBtnText: '다른 정보', rightBtnGoTo: 'cryptocompare'
+            });
+        } else if (p == 'cryptocompare') {
+            this.setState({
+                title: '시세 정보',
+                enableBackBtn: true, backBtnGoTo: 'price'
+            });
         } else if (p == 'myWallet') {
             this.setState({
                 title: '내지갑',
@@ -83,6 +93,7 @@ export default class Main extends Component {
             this.setState({
                 title: '지갑 추가',
                 enableBackBtn: true, backBtnGoTo: 'myWalletMng',
+                enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callAddWallet'
             });
         } else if (p == 'friendWallet') {
             this.setState({
@@ -95,16 +106,6 @@ export default class Main extends Component {
             });
         } else if (p == 'exchange') {
             this.setState({title: '자동 거래'});
-        } else if (p == 'price') {
-            this.setState({
-                title: '시세 정보',
-                enableRightBtn: true, rightBtnText: '다른 정보', rightBtnGoTo: 'cryptocompare'
-            });
-        } else if (p == 'cryptocompare') {
-            this.setState({
-                title: '시세 정보',
-                enableBackBtn: true, backBtnGoTo: 'price'
-            });
         } else if (p == 'more') {
             this.setState({
                 title: '더보기'
@@ -173,7 +174,11 @@ export default class Main extends Component {
     }
 
     goTo(part) {
-        Actions.main({goTo: part});
+        if(part == 'callAddWallet'){
+            Common.addWallet();
+        } else {
+            Actions.main({goTo: part});
+        }
     }
 
     render() {

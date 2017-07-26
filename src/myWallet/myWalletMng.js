@@ -11,6 +11,7 @@ import {
     View, AsyncStorage
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import Common from "../common/common";
 
 export default class MyWalletMng extends Component {
     constructor(props) {
@@ -33,7 +34,6 @@ export default class MyWalletMng extends Component {
     }
 
     render() {
-
         return (
             <ScrollView contentContainerStyle={styles.frame}>
                 {this.state.load == false &&
@@ -73,69 +73,40 @@ export default class MyWalletMng extends Component {
     }
 }
 
+const dpi = Common.getRatio();
+const wid = Common.winWidth();
+const hei = Common.winHeight();
 const styles = StyleSheet.create({
     frame: {
         alignItems: 'center',
-        paddingBottom: 85,
     },
     loadingIcon: {
-        width: 40,
-        height: 40,
-        marginTop: 40,
+        width: 40*dpi,
+        height: 40*dpi,
+        marginTop: 40*dpi,
     },
     explain: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 20,
-        margin: 15,
+        fontSize: 20*dpi,
+        margin: 15*dpi,
     },
     list: {
-        width: 250,
-        height: 50,
-        borderWidth: 1,
+        width: 0.55*wid,
+        height: 0.07*hei,
+        borderWidth: 1*dpi,
         borderColor: '#FFFFFF',
         borderRadius: 20,
+        alignSelf:'center',
         alignItems: 'center',
-        opacity: 0.5,
-        padding: 15,
         justifyContent: 'center',
-        marginBottom: 5,
+        opacity: 0.5,
+        padding: 15*dpi,
+        marginBottom: 5*dpi,
     },
     listText: {
-        fontSize: 15,
+        fontSize: 15*dpi,
         textAlign: 'center',
         color: '#FFFFFF',
-    },
-    walletContainer: { //wrapper
-        alignItems: 'center',
-        flexDirection: 'column',
-    },
-    selectOption: {},
-    w_inputWrapper: { //입력칸과 아이콘 wrapper
-        flexDirection: 'row',
-    },
-    w_inputTextIcon: {
-        width: 15,
-        height: 15,
-        marginRight: -33,
-        marginTop: 17,
-        opacity: 0.4,
-    },
-    w_input: { //입력칸
-        width: 240,
-        height: 50,
-        fontSize: 15,
-        color: '#FFFFFF',
-        padding: 10,
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 40,
-        marginRight: -25,
-        borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
-        backgroundColor: '#000000',
-        marginBottom: 5,
-        opacity: 0.2,
     },
 });

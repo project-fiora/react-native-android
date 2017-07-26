@@ -190,7 +190,7 @@ export default class Home extends Component {
                     {(this.state.nicknameLoad==false||this.state.confirmLoad==false||this.state.mysideLoad==false) &&
                     <Text>로딩 중 ..{'\n'}</Text>
                     }
-                    {this.state.nickname!=undefined && this.state.nickname}님 환영합니다!{'\n'}
+                    '{this.state.nickname!=undefined && this.state.nickname}'님 환영합니다!{'\n'}
                 </Text>
                 <TouchableOpacity
                     style={styles.rightBtn}

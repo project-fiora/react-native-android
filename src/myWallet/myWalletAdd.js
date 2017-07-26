@@ -64,9 +64,8 @@ export default class MyWalletAdd extends Component {
         }
 
     }
-
+    
     async addWallet() {
-        const token = JSON.parse(this.state.token).token;
         if (this.state.name == "") {
             alert("지갑 이름을 입력하세요!");
             return false;
@@ -74,41 +73,48 @@ export default class MyWalletAdd extends Component {
             alert("지갑 주소를 입력하세요!");
             return false;
         } else {
-            try {
-                //post api call
-                fetch(PrivateAddr.getAddr() + 'wallet/add', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'Authorization': token
-                    },
-                    body: JSON.stringify({
-                        walletName: this.state.name,
-                        walletAddr: this.state.addr,
-                        walletType: this.state.TYPE[this.state.currentTYPE],
+            await AsyncStorage.getItem('Token', (err, result) => {
+                if (err != null) {
+                    alert(err);
+                    return false;
+                }
+                const token = JSON.parse(result).token;
+                try {
+                    //post api call
+                    fetch(PrivateAddr.getAddr() + 'wallet/add', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': token
+                        },
+                        body: JSON.stringify({
+                            walletName: this.state.name,
+                            walletAddr: this.state.addr,
+                            walletType: this.state.TYPE[this.state.currentTYPE],
+                        })
+                    }).then((response) => {
+                        return response.json()
+                    }).then((responseJson) => {
+                        if (responseJson.message == "SUCCESS") {
+                            alert('지갑을 추가했습니다!');
+                            Actions.main({goTo: 'myWallet'});
+                        } else {
+                            alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                        }
                     })
-                }).then((response) => {
-                    return response.json()
-                }).then((responseJson) => {
-                    if (responseJson.message == "SUCCESS") {
-                        alert('지갑을 추가했습니다!');
-                        Actions.main({goTo: 'myWallet'});
-                    } else {
-                        alert('오류가 발생했습니다.\n다시 시도해주세요!');
-                    }
-                })
-                    .catch((error) => {
-                        alert('Network Connection Failed');
-                        console.error(error);
-                    }).done();
-                await AsyncStorage.multiRemove(['walletAddNameTmp', 'walletAddQrcodeTmp']);
-                Actions.main({goTo: 'myWallet'});
-            } catch (err) {
-                alert('지갑추가실패 : ' + err);
-            }
+                        .catch((error) => {
+                            alert('Network Connection Failed');
+                            console.error(error);
+                        }).done();
+                    AsyncStorage.multiRemove(['walletAddNameTmp', 'walletAddQrcodeTmp']);
+                } catch (err) {
+                    alert('지갑추가실패 : ' + err);
+                }
+            });
         }
     }
+
 
     setType(i) {
         this.setState({currentTYPE: i, onClickBox: !this.state.onClickBox});
@@ -198,13 +204,6 @@ export default class MyWalletAdd extends Component {
                         </Text>
                     </TouchableOpacity>
                 </ScrollView>
-                <TouchableOpacity
-                    style={styles.rightBtn}
-                    underlayColor={'#000000'}
-                    onPress={() => this.addWallet()}
-                >
-                    <Text style={styles.rightBtnText}>저장</Text>
-                </TouchableOpacity>
             </View>
         );
     }
@@ -305,22 +304,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         opacity: 0.6,
         marginBottom: 10,
-    },
-    rightBtn: {
-        position: 'absolute',
-        top:-0.077*hei,
-        right:0.05*wid,
-        width: 0.23*wid,
-        height: 0.045*hei,
-        borderWidth: 1,
-        borderRadius: 20,
-        borderColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center',
-        opacity: 0.6
-    },
-    rightBtnText: {
-        color: '#FFFFFF',
-        fontSize: 15
     },
 });
