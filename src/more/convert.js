@@ -8,6 +8,7 @@ import {
     Text, TextInput, TouchableOpacity,
     View
 } from 'react-native';
+import Common from "../common/common";
 
 export default class Convert extends Component {
     constructor(props) {
@@ -136,43 +137,46 @@ export default class Convert extends Component {
     }
 }
 
+const dpi = Common.getRatio();
+const wid = Common.winWidth();
+const hei = Common.winHeight();
 var styles = StyleSheet.create({
     frame: {
-        paddingTop: 20,
+        paddingTop: 20*dpi,
     },
     centerTxt: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 17,
+        fontSize: 17*dpi,
         textAlign: 'center',
-        marginBottom:10,
     },
     inputCoinValue: {
-        width: 220,
-        height: 45,
-        fontSize: 15,
+        width: 0.6*wid,
+        height: 0.07*hei,
+        fontSize: 15*dpi,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 15*dpi,
         alignSelf: 'center',
         backgroundColor: '#000000',
         opacity: 0.3,
-        margin: 15,
-        paddingLeft: 20,
+        margin: 15*dpi,
+        paddingLeft: 20*dpi,
     },
     selectBoxWrapper: {
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: '#000000',
-        width: 230,
-        height: 40,
+        width: 0.6*wid,
+        height: 0.05*hei,
         opacity: 0.4,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 10,
-        paddingLeft: 17,
-        paddingRight: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 10*dpi,
+        paddingLeft: 17*dpi,
+        paddingRight: 15*dpi,
+        marginTop:10*dpi,
     },
     selectBoxRow: {
         flexDirection: 'row',
@@ -181,37 +185,37 @@ var styles = StyleSheet.create({
     selectBoxText: {
         alignSelf: 'flex-start',
         color: '#FFFFFF',
-        fontSize: 17,
+        fontSize: 17*dpi,
     },
     selectBoxIconWrapper: {
         alignItems: 'flex-end',
     },
     selectIcon: {
         color: '#FFFFFF',
-        fontSize: 17,
+        fontSize: 17*dpi,
         opacity: 0.9,
     },
     convertBtn: {
-        width: 80,
-        height: 30,
-        borderWidth: 1,
-        borderRadius: 20,
+        width: 0.2*wid,
+        height: 0.04*hei,
+        borderWidth: 1*dpi,
+        borderRadius: 20*dpi,
         borderColor: '#FFFFFF',
-        padding: 5,
         alignItems: 'center',
+        justifyContent:'center',
         alignSelf:'center',
         opacity: 0.6,
-        margin:15,
+        margin:15*dpi,
     },
     btnText: {
         color: '#FFFFFF',
-        fontSize: 15
+        fontSize: 15*dpi
     },
     result: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 17,
+        fontSize: 17*dpi,
         textAlign: 'center',
-        margin:5,
+        margin:5*dpi,
     },
 });

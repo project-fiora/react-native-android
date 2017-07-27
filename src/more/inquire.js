@@ -12,6 +12,7 @@ import {
 import {Actions} from 'react-native-router-flux';
 
 import PrivateAddr from '../common/private/address';
+import Common from "../common/common";
 
 export default class Inquire extends Component {
     constructor(props) {
@@ -84,69 +85,72 @@ export default class Inquire extends Component {
                         multiline={false}
                         autoFocus={true}
                     />
-                    <TouchableHighlight
-                        style={styles.attachBtn}
-                        underlayColor={'#000000'}
-                        onPress={
-                            () => {
-                                alert('wallet');
-                            }
-                        }
-                    >
-                        <Text style={styles.btnText}>스크린샷, 이미지 첨부</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={styles.rightBtn}
-                        underlayColor={'#000000'}
-                        onPress={() => this.sendMail()}
-                    >
-                        <Text style={styles.rightBtnText}>전송</Text>
-                    </TouchableHighlight>
+                    {/*<TouchableHighlight*/}
+                        {/*style={styles.attachBtn}*/}
+                        {/*underlayColor={'#000000'}*/}
+                        {/*onPress={*/}
+                            {/*() => {*/}
+                                {/*alert('wallet');*/}
+                            {/*}*/}
+                        {/*}*/}
+                    {/*>*/}
+                        {/*<Text style={styles.btnText}>스크린샷, 이미지 첨부</Text>*/}
+                    {/*</TouchableHighlight>*/}
+                    {/*<TouchableHighlight*/}
+                        {/*style={styles.rightBtn}*/}
+                        {/*underlayColor={'#000000'}*/}
+                        {/*onPress={() => this.sendMail()}*/}
+                    {/*>*/}
+                        {/*<Text style={styles.rightBtnText}>전송</Text>*/}
+                    {/*</TouchableHighlight>*/}
                 </View>
         );
     }
 }
 
+const dpi = Common.getRatio();
+const wid = Common.winWidth();
+const hei = Common.winHeight();
 var styles = StyleSheet.create({
     frame:{
-        paddingTop:10,
+        paddingTop:10*dpi,
     },
     inputContent:{
-        width: 275,
-        fontSize: 15,
+        width: 0.7*wid,
+        height: 350*dpi,
+        fontSize: 15*dpi,
         color: '#FFFFFF',
-        padding: 15,
-        paddingTop:15,
-        height: 350,
+        padding: 15*dpi,
+        paddingTop:15*dpi,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 15*dpi,
         alignSelf: 'center',
         backgroundColor: 'transparent',
-        marginBottom: 5,
+        marginBottom: 5*dpi,
         opacity: 0.7
     },
     input: { //입력칸
-        width: 275,
-        fontSize: 15,
+        width: 0.7*wid,
+        fontSize: 15*dpi,
         color: '#FFFFFF',
-        padding: 15,
-        height: 50,
+        padding: 15*dpi,
+        height: 50*dpi,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 15*dpi,
         alignSelf: 'center',
         backgroundColor: 'transparent',
         marginBottom: 5,
         opacity: 0.7
     },
     attachBtn:{
-        width: 275,
-        padding: 15,
-        height: 50,
+        width: 0.7*wid,
+        padding: 15*dpi,
+        height: 50*dpi,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 15*dpi,
         alignSelf: 'center',
         backgroundColor: 'transparent',
         opacity: 0.7
@@ -155,23 +159,5 @@ var styles = StyleSheet.create({
         textAlign:'center',
         color:'#FFFFFF',
         opacity:0.9
-    },
-    rightBtn: {
-        position:'absolute',
-        top:-45,
-        right:15,
-        width: 80,
-        height: 30,
-        borderWidth: 1,
-        borderRadius: 20,
-        borderColor: '#FFFFFF',
-        padding: 5,
-        alignItems: 'center',
-        justifyContent:'center',
-        opacity:0.6
-    },
-    rightBtnText: {
-        color: '#FFFFFF',
-        fontSize: 15
     },
 });

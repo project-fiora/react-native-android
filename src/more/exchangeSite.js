@@ -19,7 +19,6 @@ export default class exchangeSite extends Component {
         return (
             <WebView
                 source={{uri: this.props.link}}
-                // style={{marginTop: 20}}
             />
         );
     }

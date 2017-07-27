@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "../../common/private/address";
+import LoadingIcon from "../../common/loadingIcon";
+import Common from "../../common/common";
 
 export default class Post extends Component {
     constructor(props) {
@@ -157,113 +159,102 @@ export default class Post extends Component {
             );
         } else {
             return (
-                <View style={styles.loadingIconWrapper}>
-                    <Image source={require('../../common/img/loading.gif')} style={styles.loadingIcon}/>
-                </View>
+                <LoadingIcon/>
             );
         }
     }
 }
 
+const dpi = Common.getRatio();
+const wid = Common.winWidth();
+const hei = Common.winHeight();
+const t1 = 0.1*wid;
+const t2 = 0.55*wid;
+const t3 = 0.25*wid;
+const thei = 0.06*hei;
 var styles = StyleSheet.create({
     frame: {
-        padding: 10,
+        padding: 10*dpi,
         opacity: 0.8,
     },
-    loadingIconWrapper: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    loadingIcon: {
-        width: 30,
-        height: 30,
-    },
     explain: {
-        fontSize: 15,
+        fontSize: 15*dpi,
         color: '#FFFFFF',
         opacity: 0.7,
         textAlign: 'center',
-        marginBottom: 10,
+        marginBottom: 10*dpi,
     },
     thead: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderBottomWidth: 1.2,
+        borderBottomWidth: 1.2*dpi,
         borderColor: '#FFFFFF',
-        height: 28,
+        height: thei,
     },
     headText: {
-        fontSize: 18,
+        fontSize: 18*dpi,
         color: '#FFFFFF',
     },
     th1: {
         alignItems: 'center',
-        width: 40,
+        width: t1,
     },
     th2: {
         alignItems: 'flex-start',
-        width: 180,
-        paddingLeft: 5,
+        width: t2,
     },
     th3: {
         alignItems: 'center',
-        width: 100,
+        width: t3,
     },
     topTr: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderBottomWidth: 0.6,
+        borderBottomWidth: 0.6*dpi,
         borderColor: '#FFFFFF',
-        height: 40,
+        height: thei,
         backgroundColor: '#000000',
         opacity: 0.3,
     },
     postTr: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderBottomWidth: 0.6,
+        borderBottomWidth: 0.6*dpi,
         borderColor: '#FFFFFF',
-        height: 40,
+        height: thei,
     },
     bodyText: {
-        fontSize: 16,
+        fontSize: 16*dpi,
         color: '#FFFFFF',
     },
     td1: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: 40,
+        width: t1,
     },
     td2: {
         justifyContent: 'center',
-        width: 180,
-        paddingLeft: 5,
+        width: t2,
     },
     td3: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: 100,
+        width: t3,
     },
     moreBtn: {
-        width: 80,
-        height: 30,
-        borderWidth: 1,
-        borderRadius: 20,
+        width: 0.2*wid,
+        height: 0.05*hei,
+        borderWidth: 1*dpi,
+        borderRadius: 20*dpi,
         borderColor: '#FFFFFF',
-        padding: 5,
         alignItems: 'center',
         alignSelf:'center',
         justifyContent: 'center',
         opacity: 0.6,
-        marginTop: 3,
+        marginTop: 5*dpi,
     },
     moreBtnText: {
         color: '#FFFFFF',
-        fontSize: 15
+        fontSize: 15*dpi
     },
 });

@@ -11,6 +11,7 @@ import {
 import {Actions} from 'react-native-router-flux';
 
 import PrivateAddr from '../../common/private/address';
+import Common from "../../common/common";
 
 export default class PostAdd extends Component {
     constructor(props) {
@@ -96,7 +97,7 @@ export default class PostAdd extends Component {
                     console.log(responseJson);
                     if (responseJson.message == "SUCCESS") {
                         alert('수정 성공!');
-                        this.goTo();
+                        Actions.main({goTo:'post'});
                     } else {
                         alert('오류가 발생했습니다.\n다시 시도해주세요!');
                     }
@@ -115,10 +116,6 @@ export default class PostAdd extends Component {
 
     removePost(){
 
-    }
-
-    goTo() {
-        Actions.main({goTo: 'postRead', post_id: this.props.post_id});
     }
 
     render() {
@@ -167,68 +164,56 @@ export default class PostAdd extends Component {
 
 
                 </ScrollView>
-                <TouchableOpacity
-                    style={styles.navBackBtn}
-                    underlayColor={'#AAAAAA'}
-                    onPress={() => this.goTo()}
-                >
-                    <Image source={require('../../common/img/navArrow.png')}
-                           style={styles.navBackArrow}/>
-                </TouchableOpacity>
-                <TouchableHighlight
-                    style={styles.rightBtn}
-                    underlayColor={'#000000'}
-                    onPress={() => this.addPost()}
-                >
-                    <Text style={styles.rightBtnText}>확인</Text>
-                </TouchableHighlight>
             </View>
         );
     }
 }
 
+const dpi = Common.getRatio();
+const wid = Common.winWidth();
+const hei = Common.winHeight();
 const navArrowSize = 40;
 const navArrowWrapperSize = navArrowSize + 10;
 var styles = StyleSheet.create({
     frame: {
-        paddingTop: 10,
+        paddingTop: 10*dpi,
     },
     inputContent: {
-        width: 275,
-        fontSize: 15,
+        width: 0.75*wid,
+        height: 350*dpi,
+        fontSize: 15*dpi,
         color: '#FFFFFF',
-        padding: 15,
-        paddingTop: 15,
-        height: 350,
+        padding: 15*dpi,
+        paddingTop: 15*dpi,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 15*dpi,
         alignSelf: 'center',
         backgroundColor: 'transparent',
-        marginBottom: 5,
+        marginBottom: 5*dpi,
         opacity: 0.7
     },
     input: { //입력칸
-        width: 275,
-        fontSize: 15,
+        width: 0.75*wid,
+        height: 0.075*hei,
+        fontSize: 15*dpi,
         color: '#FFFFFF',
-        padding: 15,
-        height: 50,
+        padding: 15*dpi,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 15*dpi,
         alignSelf: 'center',
         backgroundColor: 'transparent',
-        marginBottom: 5,
+        marginBottom: 5*dpi,
         opacity: 0.7
     },
     attachBtn: {
-        width: 275,
-        padding: 15,
-        height: 50,
+        width: 0.2*wid,
+        padding: 15*dpi,
+        height: 0.04*hei,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 15*dpi,
         alignSelf: 'center',
         backgroundColor: 'transparent',
         opacity: 0.7
@@ -236,36 +221,7 @@ var styles = StyleSheet.create({
     btnText: {
         textAlign: 'center',
         color: '#FFFFFF',
+        fontSize:16*dpi,
         opacity: 0.9
-    },
-    navBackBtn: {
-        width: navArrowWrapperSize,
-        height: navArrowWrapperSize,
-        position: 'absolute',
-        top: -51,
-        left: 15,
-    },
-    navBackArrow: {
-        width: navArrowSize,
-        height: navArrowSize,
-        opacity: 0.3,
-    },
-    rightBtn: {
-        position: 'absolute',
-        top: -45,
-        right: 15,
-        width: 80,
-        height: 30,
-        borderWidth: 1,
-        borderRadius: 20,
-        borderColor: '#FFFFFF',
-        padding: 5,
-        alignItems: 'center',
-        justifyContent: 'center',
-        opacity: 0.6
-    },
-    rightBtnText: {
-        color: '#FFFFFF',
-        fontSize: 15
     },
 });

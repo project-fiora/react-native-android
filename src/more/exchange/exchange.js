@@ -23,7 +23,7 @@ export default class Exchange extends Component {
                 <Text style={styles.devText}>
                     개발자 후원하기{'\n'}{'\n'}
                     BTC ▼{'\n'}1HkJXbAu6SZGhYcCLBhoLUqxqzv38ud15H{'\n'}{'\n'}
-                    <Image source={require('../common/img/ds_btc_qrcode.png')} style={styles.btcQrCodeImg}/>
+                    <Image source={require('../../common/img/ds_btc_qrcode.png')} style={styles.btcQrCodeImg}/>
                     {'\n'}{'\n'}
                     ETH ▼{'\n'}0x067D4CCED4E804F7A1B1B85870B434E074689E2F{'\n'}{'\n'}
                     XRP ▼{'\n'}rp2diYfVtpbgEMyaoWnuaWgFCAkqCAEg28{'\n'}(TAG : 1019635554){'\n'}

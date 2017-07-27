@@ -11,6 +11,7 @@ import {
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from '../../common/private/address';
 import Common from "../../common/common";
+import LoadingIcon from "../../common/loadingIcon";
 
 export default class Notice extends Component {
     constructor(props) {
@@ -46,9 +47,7 @@ export default class Notice extends Component {
         return (
             <View style={styles.box}>
                 {this.state.load==false &&
-                <Image
-                    source={require('../../common/img/loading.gif')}
-                    style={styles.loadingIcon}/>
+                <LoadingIcon/>
                 }
                 {this.state.load==true &&
                     this.state.noticeList.map((notice, i) => {
@@ -88,13 +87,6 @@ class NoticeBtn extends Component {
 
 const dpi = Common.getRatio();
 var styles = StyleSheet.create({
-    loadingIcon: {
-        width: 40*dpi,
-        height: 40*dpi,
-        marginTop: 40*dpi,
-        alignSelf:'center',
-        opacity:0.9,
-    },
     btn: {
         flexDirection:'row',
         borderBottomWidth: 0.5,

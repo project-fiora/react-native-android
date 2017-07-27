@@ -11,6 +11,7 @@ import {
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "../../common/private/address";
 import Common from '../../common/common';
+import LoadingIcon from "../../common/loadingIcon";
 
 export default class Post extends Component {
     constructor(props) {
@@ -206,310 +207,284 @@ export default class Post extends Component {
     render() {
         if (this.state.load == true) {
             return (
-                <View style={styles.frame}>
-                    <ScrollView>
+                <View>
+                    <ScrollView contentContainerStyle={styles.frame}>
                         <View>
-                            <View style={styles.commentRow}>
-                                <Text style={styles.title}>{this.state.post.title}</Text>
-                                <View>
-                                    <Text style={styles.date}>{Common.modifyDate(this.state.post.written_date)}</Text>
-                                    <Text style={styles.name}>{this.state.post.writter_name}</Text>
+                            <View>
+                                <View style={styles.commentRow}>
+                                    <Text style={styles.title}>{this.state.post.title}</Text>
+                                    <View>
+                                        <Text
+                                            style={styles.date}>{Common.modifyDate(this.state.post.written_date)}</Text>
+                                        <Text style={styles.name}>{this.state.post.writter_name}</Text>
+                                    </View>
+                                </View>
+
+
+                                <View style={styles.contentsWrapper}>
+                                    {this.state.post.contents.split("\\n").map((content, i) => {
+                                        return (
+                                            <Text key={i} style={styles.content}>{content}</Text>
+                                        );
+                                    })}
                                 </View>
                             </View>
-
-
-                            <View style={styles.contentsWrapper}>
-                                {this.state.post.contents.split("\\n").map((content, i) => {
+                            <Text style={styles.commentLength}>댓글 {this.state.post.comment_list.length}개</Text>
+                            {this.state.post.comment_list.map((comment, i) => {
+                                if (comment.posibleEdditAndDelete) { //자신이 쓴 댓글은 수정/삭제 버튼이있다
                                     return (
-                                        <Text key={i} style={styles.content}>{content}</Text>
-                                    );
-                                })}
-                            </View>
-                        </View>
-                        <Text style={styles.commentLength}>댓글 {this.state.post.comment_list.length}개</Text>
-                        {this.state.post.comment_list.map((comment, i) => {
-                            if (comment.posibleEdditAndDelete) { //자신이 쓴 댓글은 수정/삭제 버튼이있다
+                                        <View key={i} style={styles.commentView}>
+                                            <View style={styles.commentRow}>
+                                                <Text style={styles.commentWriter}>{comment.writter_name}</Text>
+                                                <Text
+                                                    style={styles.commentDate}>{Common.modifyDate(comment.written_date)}</Text>
+                                            </View>
+                                            <View style={styles.commentContentRow}>
+
+                                                {this.state.post.comment_list[i].editStatus &&
+                                                <TextInput
+                                                    style={styles.inputEditComment}
+                                                    multiline={true}
+                                                    numberOfLines={5}
+                                                    value={this.state.post.comment_list[i].contents}
+                                                    onChangeText={(comment_edit) => {
+                                                        this.editCommentText(comment_edit, i)
+                                                    }}
+                                                    placeholderTextColor="#FFFFFF"
+                                                    autoCapitalize='none'
+                                                    autoCorrect={false}
+                                                    maxLength={1000}
+                                                />
+                                                }
+                                                {this.state.post.comment_list[i].editStatus != true &&
+                                                <View>
+                                                    {comment.contents.split("\\n").map((content, i) => {
+                                                        return (
+                                                            <Text key={i}
+                                                                  style={styles.commentContents}>{content}</Text>
+                                                        )
+                                                    })}
+                                                </View>
+                                                }
+                                                <View style={styles.commentRow}>
+                                                    {this.state.post.comment_list[i].editStatus &&
+                                                    <TouchableOpacity
+                                                        onPress={() => this.editComment(comment.comment_id, this.state.post.comment_list[i].contents)}
+                                                    >
+                                                        <Text style={styles.commentEditBtnText}>저장</Text>
+                                                    </TouchableOpacity>
+                                                    }
+                                                    {this.state.post.comment_list[i].editStatus != true &&
+                                                    <TouchableOpacity
+                                                        onPress={() => this.editCommentBtn(i)}
+                                                    >
+                                                        <Text style={styles.commentEditBtnText}>수정</Text>
+                                                    </TouchableOpacity>
+                                                    }
+
+                                                    <Text style={styles.commentEditBtnTextBetween}> | </Text>
+                                                    <TouchableOpacity
+                                                        onPress={() => this.deleteComment(comment.comment_id)}
+                                                    >
+                                                        <Text style={styles.commentEditBtnText}>삭제</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    )
+                                }
                                 return (
                                     <View key={i} style={styles.commentView}>
                                         <View style={styles.commentRow}>
                                             <Text style={styles.commentWriter}>{comment.writter_name}</Text>
-                                            <Text style={styles.commentDate}>{Common.modifyDate(comment.written_date)}</Text>
+                                            <Text
+                                                style={styles.commentDate}>{Common.modifyDate(comment.written_date)}</Text>
                                         </View>
-                                        <View style={styles.commentContentRow}>
-
-                                            {this.state.post.comment_list[i].editStatus &&
-                                            <TextInput
-                                                style={styles.inputEditComment}
-                                                multiline={true}
-                                                numberOfLines={5}
-                                                value={this.state.post.comment_list[i].contents}
-                                                onChangeText={(comment_edit) => {
-                                                    this.editCommentText(comment_edit, i)
-                                                }}
-                                                placeholderTextColor="#FFFFFF"
-                                                autoCapitalize='none'
-                                                autoCorrect={false}
-                                                maxLength={1000}
-                                            />
-                                            }
-                                            {this.state.post.comment_list[i].editStatus != true &&
-                                            <View>
-                                                {comment.contents.split("\\n").map((content, i) => {
-                                                    return (
-                                                        <Text key={i} style={styles.commentContents}>{content}</Text>
-                                                    )
-                                                })}
-                                            </View>
-                                            }
-                                            <View style={styles.commentRow}>
-                                                {this.state.post.comment_list[i].editStatus &&
-                                                <TouchableOpacity
-                                                    onPress={() => this.editComment(comment.comment_id, this.state.post.comment_list[i].contents)}
-                                                >
-                                                    <Text style={styles.commentEditBtnText}>저장</Text>
-                                                </TouchableOpacity>
-                                                }
-                                                {this.state.post.comment_list[i].editStatus != true &&
-                                                <TouchableOpacity
-                                                    onPress={() => this.editCommentBtn(i)}
-                                                >
-                                                    <Text style={styles.commentEditBtnText}>수정</Text>
-                                                </TouchableOpacity>
-                                                }
-
-                                                <Text style={styles.commentEditBtnTextBetween}> | </Text>
-                                                <TouchableOpacity
-                                                    onPress={() => this.deleteComment(comment.comment_id)}
-                                                >
-                                                    <Text style={styles.commentEditBtnText}>삭제</Text>
-                                                </TouchableOpacity>
-                                            </View>
+                                        <View style={styles.commentRow}>
+                                            <Text style={styles.commentContents}>{comment.contents}</Text>
                                         </View>
                                     </View>
                                 )
-                            }
-                            return (
-                                <View key={i} style={styles.commentView}>
-                                    <View style={styles.commentRow}>
-                                        <Text style={styles.commentWriter}>{comment.writter_name}</Text>
-                                        <Text style={styles.commentDate}>{Common.modifyDate(comment.written_date)}</Text>
-                                    </View>
-                                    <View style={styles.commentRow}>
-                                        <Text style={styles.commentContents}>{comment.contents}</Text>
-                                    </View>
-                                </View>
-                            )
-                        })}
-                        <View style={styles.commentAddRow}>
-                            <TextInput
-                                style={styles.inputComment}
-                                multiline={true}
-                                numberOfLines={3}
-                                value={this.state.comment}
-                                onChangeText={(comment) => this.setState({comment: comment})}
-                                placeholder={'댓글 내용'}
-                                placeholderTextColor="#FFFFFF"
-                                autoCapitalize='none'
-                                autoCorrect={false}
-                                maxLength={1000}
-                            />
-                            <TouchableHighlight
-                                style={styles.commentBtn}
-                                underlayColor={'#000000'}
-                                onPress={() => this.addComment()}
-                            >
-                                <Text style={styles.commentBtnText}>등록</Text>
-                            </TouchableHighlight>
+                            })}
+                            <View style={styles.commentAddRow}>
+                                <TextInput
+                                    style={styles.inputComment}
+                                    multiline={true}
+                                    numberOfLines={3}
+                                    value={this.state.comment}
+                                    onChangeText={(comment) => this.setState({comment: comment})}
+                                    placeholder={'댓글 내용'}
+                                    placeholderTextColor="#FFFFFF"
+                                    autoCapitalize='none'
+                                    autoCorrect={false}
+                                    maxLength={1000}
+                                />
+                                <TouchableHighlight
+                                    style={styles.commentBtn}
+                                    underlayColor={'#000000'}
+                                    onPress={() => this.addComment()}
+                                >
+                                    <Text style={styles.commentBtnText}>등록</Text>
+                                </TouchableHighlight>
+                            </View>
                         </View>
                     </ScrollView>
                     {/*/////////////////자신이 쓴 게시물일 경우///////////////*/}
-                    {this.state.post.possibleEdditAndDelete &&
-                    <TouchableOpacity
-                        style={styles.editBtn}
-                        onPress={() => this.editPost(this.props.post_id)}
-                    >
-                        <Text style={styles.editBtnText}>수정</Text>
-                    </TouchableOpacity>
-                    }
+                    {/*{this.state.post.possibleEdditAndDelete &&*/}
+                    {/*<TouchableOpacity*/}
+                        {/*style={styles.editBtn}*/}
+                        {/*onPress={() => this.editPost(this.props.post_id)}*/}
+                    {/*>*/}
+                        {/*<Text style={styles.editBtnText}>수정</Text>*/}
+                    {/*</TouchableOpacity>*/}
+                    {/*}*/}
                 </View>
             );
         } else {
             return (
-                <View style={styles.loadingIconWrapper}>
-                    <Image source={require('../../common/img/loading.gif')} style={styles.loadingIcon}/>
-                </View>
+                <LoadingIcon/>
             );
         }
     }
 }
 
-const commentBtnHeight = 90;
+const dpi = Common.getRatio();
+const wid = Common.winWidth();
+const hei = Common.winHeight();
+const commentBtnHeight = 90*dpi;
 var styles = StyleSheet.create({
     frame: {
-        paddingTop: 20,
-        paddingLeft: 30,
-        paddingRight: 30,
-        paddingBottom: 55,
+        paddingTop: 20*dpi,
+        paddingLeft: 20*dpi,
+        paddingRight: 20*dpi,
+        paddingBottom: 80*dpi,
         opacity: 0.8,
-
-    },
-    loadingIconWrapper: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    loadingIcon: {
-        width: 30,
-        height: 30,
     },
     title: {
-        fontSize: 18,
+        fontSize: 18*dpi,
         color: '#FFFFFF',
         opacity: 0.8,
-        marginBottom: 15,
+        marginBottom: 15*dpi,
     },
     date: {
-        fontSize: 13,
+        fontSize: 13*dpi,
         color: '#FFFFFF',
         opacity: 0.8,
         textAlign: 'right',
-        marginBottom: 5,
+        marginBottom: 5*dpi,
     },
     name: {
-        fontSize: 14,
+        fontSize: 14*dpi,
         color: '#FFFFFF',
         opacity: 0.8,
         textAlign: 'right',
-        marginBottom: 15,
+        marginBottom: 15*dpi,
     },
     contentsWrapper: {
-        borderTopWidth:0.5,
+        borderTopWidth: 0.5*dpi,
         borderColor: '#FFFFFF',
-        marginBottom: 20,
-        paddingTop:15,
-        minHeight: 100,
+        marginBottom: 20*dpi,
+        paddingTop: 15*dpi,
+        minHeight: 100*dpi,
     },
     content: {
-        fontSize: 15,
+        fontSize: 15*dpi,
         color: '#FFFFFF',
         opacity: 0.8,
     },
     commentLength: {
-        fontSize: 15,
+        fontSize: 15*dpi,
         color: '#DBCEFF',
         opacity: 0.9,
-        paddingLeft: 10,
-        marginBottom: 10,
+        paddingLeft: 10*dpi,
+        marginBottom: 10*dpi,
     },
     commentView: { //댓글 뷰
         borderColor: '#FFFFFF',
-        borderWidth: 0.5,
-        borderRadius: 12,
-        padding: 10,
-        marginBottom: 5,
+        borderWidth: 0.5*dpi,
+        borderRadius: 12*dpi,
+        padding: 10*dpi,
+        marginBottom: 5*dpi,
     },
     commentRow: { //글쓴이, 날짜 뷰
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
     commentContentRow: { //댓글내용 수정 삭제 버튼 뷰
-        marginTop: 5,
+        marginTop: 5*dpi,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
     commentWriter: {
-        fontSize: 16,
+        fontSize: 16*dpi,
         color: '#FFFFFF',
         opacity: 0.9,
     },
     commentDate: {
-        fontSize: 13,
+        fontSize: 13*dpi,
         color: '#FFFFFF',
         opacity: 0.7,
     },
     commentContents: {
-        fontSize: 15,
+        maxWidth:0.5*wid,
+        fontSize: 15*dpi,
         color: '#FFFFFF',
         opacity: 0.8,
     },
     inputEditComment: {
-        width: 210,
-        height: 60,
+        width: 0.5*wid,
+        height: 0.09*hei,
         color: '#FFFFFF',
-        padding: 10,
-        paddingTop: 5,
+        padding: 10*dpi,
+        paddingTop: 5*dpi,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 7,
+        borderWidth: 1*dpi,
+        borderRadius: 7*dpi,
         backgroundColor: 'transparent',
         opacity: 0.5,
-        fontSize: 13,
+        fontSize: 13*dpi,
     },
     commentEditBtnText: { //수정/삭제
-        fontSize: 15,
+        fontSize: 16*dpi,
+        fontWeight:'700',
         color: '#FFFFFF',
         opacity: 0.8,
     },
     commentEditBtnTextBetween: { //수정/삭제 사이의 |
-        fontSize: 15,
+        fontSize: 15*dpi,
         color: '#FFFFFF',
         opacity: 0.8,
-        marginTop: -3,
+        marginTop: -3*dpi,
     },
     commentAddRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 5,
+        marginTop: 5*dpi,
     },
     inputComment: {
-        width: 235,
+        width: 0.64*wid,
         height: commentBtnHeight,
-        fontSize: 15,
+        fontSize: 15*dpi,
         color: '#FFFFFF',
-        padding: 15,
-        paddingTop: 15,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 12,
+        borderWidth: 1*dpi,
+        borderRadius: 12*dpi,
         alignSelf: 'center',
         backgroundColor: 'transparent',
         opacity: 0.5,
     },
     commentBtn: {
-        width: 70,
+        width: 0.24*wid,
         height: commentBtnHeight,
-        borderWidth: 1,
-        borderRadius: 12,
+        borderWidth: 1*dpi,
+        borderRadius: 12*dpi,
         borderColor: '#FFFFFF',
-        padding: 5,
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.5
     },
     commentBtnText: {
         color: '#FFFFFF',
-        fontSize: 15
-    },
-    editBtn: {
-        position: 'absolute',
-        top: -45,
-        right: 15,
-        width: 80,
-        height: 30,
-        borderWidth: 1,
-        borderRadius: 20,
-        borderColor: '#FFFFFF',
-        padding: 5,
-        alignItems: 'center',
-        justifyContent: 'center',
-        opacity: 0.6
-    },
-    editBtnText: {
-        color: '#FFFFFF',
-        fontSize: 15
+        fontSize: 15*dpi
     },
 });

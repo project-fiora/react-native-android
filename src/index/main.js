@@ -21,7 +21,7 @@ import MyWalletAdd from '../myWallet/myWalletAdd';
 import FriendWallet from '../friendWallet/friendWallet';
 import FriendWalletMng from '../friendWallet/friendWalletMng';
 
-import Exchange from '../exchange/exchange';
+import Exchange from '../more/exchange/exchange';
 
 import Coinmarketcap from "../price/coinmarketcap";
 import Cryptocompare from '../price/cryptocompare';
@@ -105,7 +105,11 @@ export default class Main extends Component {
                 title: '친구 관리', enableBackBtn: true, backBtnGoTo: 'friendWallet',
             });
         } else if (p == 'exchange') {
-            this.setState({title: '자동 거래'});
+            this.setState({
+                title: '자동 거래',
+                enableBackBtn: true, backBtnGoTo: 'more',
+            });
+
         } else if (p == 'more') {
             this.setState({
                 title: '더보기'
@@ -232,11 +236,14 @@ export default class Main extends Component {
 
                     {this.props.goTo === 'friendWallet' && <FriendWallet/>}
                     {this.props.goTo === 'friendWalletMng' && <FriendWalletMng/>}
-                    {this.props.goTo === 'exchange' && <Exchange/>}
+
 
                     {this.props.goTo === 'more' && <More/>}
+
                     {this.props.goTo === 'exchangeLink' && <ExchangeLink/>}
                     {this.props.goTo === 'exchangeSite' && <ExchangeSite link={this.props.link}/>}
+
+                    {this.props.goTo === 'exchange' && <Exchange/>}
                     {this.props.goTo === 'convert' && <Convert/>}
                     {/*{this.props.goTo === 'option' && <Option/>}*/}
                     {/*{this.props.goTo === 'optionDetail' && <OptionDetail/>}*/}

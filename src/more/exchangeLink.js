@@ -9,6 +9,7 @@ import {
     View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import Common from "../common/common";
 
 export default class exchangeLink extends Component {
     constructor(props) {
@@ -62,19 +63,20 @@ class LinkBtn extends Component {
     }
 }
 
+const dpi = Common.getRatio();
 var styles = StyleSheet.create({
     box: {
         // borderBottomWidth: 0.5,
         // borderColor: '#A0A0A0',
     },
     btn: {
-        borderBottomWidth: 0.5,
+        borderBottomWidth: 0.5*dpi,
         borderColor: '#FFFFFF',
-        padding: 20,
+        padding: 20*dpi,
     },
     menuText: {
         backgroundColor: 'transparent',
-        fontSize: 17,
+        fontSize: 17*dpi,
         color: 'white',
         opacity: 0.9
     }

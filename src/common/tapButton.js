@@ -57,10 +57,12 @@ const images = {
 };
 
 const dpi = Common.getRatio();
+const wid = Common.winWidth();
+const hei = Common.winHeight();
 var styles = StyleSheet.create({
     taps: {
         width:'100%',
-        height: 80*dpi,
+        height: 0.14*hei,
         backgroundColor: 'transparent',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -70,16 +72,17 @@ var styles = StyleSheet.create({
         padding:5*dpi,
     },
     tab: {
+        maxWidth:0.18*wid,
         justifyContent: 'center',
     },
     img: {
+        width:0.11*hei,
+        height:0.11*hei,
         marginTop: -8*dpi,
-        height: '95%',
-        width: '95%',
         alignSelf:'center',
     },
     boxText: {
-        minWidth: 50*dpi,
+        // minWidth: 50*dpi,
         marginTop: -9*dpi,
         color:'#FFFFFF',
         fontSize:14,

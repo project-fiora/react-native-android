@@ -16,10 +16,11 @@ export default class More extends Component {
         return (
             <ScrollView>
                 <MoreBtn text="거래소 바로가기" img={images.exchange} goTo="exchangeLink"/>
-                <MoreBtn text="coin -> KRW" img={images.convert} goTo="convert"/>
+                <MoreBtn text="자동거래" img={images.post} goTo="exchange"/>
+                <MoreBtn text="모의환전" img={images.convert} goTo="convert"/>
                 <MoreBtn text="커뮤니티" img={images.post} goTo="post"/>
                 <MoreBtn text="공지사항" img={images.notice} goTo="notice"/>
-                <MoreBtn text="버전정보" img={images.version} goTo="version"/>
+                {/*<MoreBtn text="버전정보" img={images.version} goTo="version"/>*/}
                 <MoreBtn text="문의하기" img={images.ask} goTo="inquire"/>
                 <MoreBtn text="로그아웃" img={images.logout} goTo="logout"/>
             </ScrollView>

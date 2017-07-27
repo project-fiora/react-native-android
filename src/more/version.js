@@ -8,6 +8,7 @@ import {
     Text, TouchableHighlight,
     View
 } from 'react-native';
+import Common from "../common/common";
 
 export default class Version extends Component {
     constructor(props) {
@@ -65,34 +66,36 @@ export default class Version extends Component {
     }
 }
 
+const dpi = Common.getRatio();
+const wid = Common.winWidth();
+const hei = Common.winHeight();
 var styles = StyleSheet.create({
     frame:{
-          paddingTop:20,
+          paddingTop:20*dpi,
     },
     btnWrapper: {
-        marginTop:20,
+        marginTop:20*dpi,
         alignItems: "center",
     },
     updateBtn: {
-        width: 80,
-        height: 30,
-        borderWidth: 1,
-        borderRadius: 20,
+        width: 0.2*wid,
+        height: 0.04*hei,
+        borderWidth: 1*dpi,
+        borderRadius: 20*dpi,
         borderColor: '#FFFFFF',
-        padding: 5,
         alignItems: 'center',
+        justifyContent:'center',
         opacity:0.6
     },
     btnText: {
         color: '#FFFFFF',
-        fontSize: 15
+        fontSize: 15*dpi
     },
     centerTxt:{
         color:'#FFFFFF',
         opacity:0.8,
-        padding:1,
-        fontSize:17,
+        padding:1*dpi,
+        fontSize:17*dpi,
         textAlign:'center',
-        // borderWidth:1,
     },
 });
