@@ -207,6 +207,61 @@ class Common extends Component {
             });
         }
     }
+
+    // walletId: this.props.id,
+    // walletName: this.state.name,
+    // walletAddr: this.state.addr,
+    // walletType: this.state.TYPE[this.state.currentTYPE],
+    static editWallet() {
+        if (StateStore.edit_walletName() == "") {
+            alert('지갑 이름을 입력하세요!');
+            return false;
+        } else if (StateStore.edit_walletAddr() == "") {
+            alert('지갑 주소를 입력하세요!');
+            return false;
+        } else {
+            AsyncStorage.getItem('Token', (err, result) => {
+                if (err != null) {
+                    alert(err);
+                    return false;
+                }
+                const token = JSON.parse(result).token;
+                try {
+                    fetch(PrivateAddr.getAddr() + 'wallet/edit', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': token
+                        },
+                        body: JSON.stringify({
+                            walletId: StateStore.edit_walletId(),
+                            walletName: StateStore.edit_walletName(),
+                            walletAddr: StateStore.edit_walletAddr(),
+                            walletType: StateStore.edit_walletType(),
+                        })
+                    }).then((response) => {
+                        return response.json()
+                    })
+                        .then((responseJson) => {
+                            if (responseJson.message == "SUCCESS") {
+                                alert('지갑 수정 성공!');
+                                Actions.main({goTo: 'myWallet'});
+                            } else {
+                                alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                            }
+                        })
+                        .catch((error) => {
+                            alert('Network Connection Failed');
+                            console.error(error);
+                        }).done();
+
+                } catch (err) {
+                    alert('수정실패 ' + err);
+                    return false;
+                }
+            });
+        }
+    }
 }
 
 export default Common;

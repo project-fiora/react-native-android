@@ -11,6 +11,7 @@ import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
 import LoadingIcon from "../common/loadingIcon";
+import StateStore from "../common/stateStore";
 
 export default class MyWalletEdit extends Component {
     constructor(props) {
@@ -26,11 +27,13 @@ export default class MyWalletEdit extends Component {
             currentTYPE: 0,
             token: '',
         };
-        this.getToken();
+
     }
 
-    componentDidMount() {
-        this.getMyWallet();
+    async componentDidMount() {
+        StateStore.setEdit_walletId(this.props.id);
+        await this.getToken();
+        await this.getMyWallet();
     }
 
     async getToken() {
@@ -49,6 +52,9 @@ export default class MyWalletEdit extends Component {
             .then((responseJson) => {
                 if (responseJson.message == "SUCCESS") {
                     const type = responseJson.wallet.wallet_type;
+                    StateStore.setEdit_walletAddr(responseJson.wallet.wallet_add);
+                    StateStore.setEdit_walletName(responseJson.wallet.wallet_name);
+                    StateStore.setEdit_walletType(type);
                     for (var i = 0; i < this.state.TYPE.length; i++) {
                         if (this.state.TYPE[i] == type) {
                             this.setState({
@@ -117,52 +123,9 @@ export default class MyWalletEdit extends Component {
         )
     }
 
-    editWallet() {
-        if (this.state.name == "") {
-            alert('지갑 이름을 입력하세요!');
-            return false;
-        } else if (this.state.addr == "") {
-            alert('지갑 주소를 입력하세요!');
-            return false;
-        } else {
-            try {
-                fetch(PrivateAddr.getAddr() + 'wallet/edit', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': this.state.token
-                    },
-                    body: JSON.stringify({
-                        walletId: this.props.id,
-                        walletName: this.state.name,
-                        walletAddr: this.state.addr,
-                        walletType: this.state.TYPE[this.state.currentTYPE],
-                    })
-                }).then((response) => {
-                    return response.json()
-                })
-                    .then((responseJson) => {
-                        if (responseJson.message == "SUCCESS") {
-                            alert('지갑 수정 성공!');
-                            Actions.main({goTo: 'myWallet'});
-                        } else {
-                            alert('오류가 발생했습니다.\n다시 시도해주세요!');
-                        }
-                    })
-                    .catch((error) => {
-                        alert('Network Connection Failed');
-                        console.error(error);
-                    }).done();
-
-            } catch (err) {
-                alert('수정실패 ' + err);
-                return false;
-            }
-        }
-    }
-
     setType(i) {
         this.setState({currentTYPE: i, onClickBox: !this.state.onClickBox});
+        StateStore.setEdit_walletType(this.state.TYPE[this.state.currentTYPE]);
     }
 
     render() {
@@ -177,7 +140,10 @@ export default class MyWalletEdit extends Component {
                         <TextInput
                             style={styles.inputWalletName}
                             value={this.state.name}
-                            onChangeText={(name) => this.setState({name: name})}
+                            onChangeText={(name) => {
+                                this.setState({name: name});
+                                StateStore.setEdit_walletName(name);
+                            }}
                             placeholder={'지갑 이름'}
                             placeholderTextColor="#FFFFFF"
                             autoCapitalize='none'
@@ -228,7 +194,10 @@ export default class MyWalletEdit extends Component {
                         <TextInput
                             style={styles.inputWalletAddr}
                             value={this.state.addr}
-                            onChangeText={(addr) => this.setState({addr: addr})}
+                            onChangeText={(addr) => {
+                                this.setState({addr: addr});
+                                StateStore.setEdit_walletAddr(addr);
+                            }}
                             placeholder={'지갑 주소'}
                             placeholderTextColor="#FFFFFF"
                             autoCapitalize='none'

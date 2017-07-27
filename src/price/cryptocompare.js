@@ -33,7 +33,12 @@ export default class Cryptocompare extends Component {
         );
     }
 
+    componentWillUnmount(){
+        clearInterval();
+    }
+
     getRate() {
+        this.setState({refreshing:true});
         fetch("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USD%22%2C%22KRW%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
             .then((response) => response.json())
             .then((responseJson) => {
@@ -61,6 +66,9 @@ export default class Cryptocompare extends Component {
 
             <ScrollView contentContainerStyle={styles.priceWrapper}>
                 {this.state.load == false &&
+                <LoadingIcon/>
+                }
+                {this.state.refreshing == true &&
                 <LoadingIcon/>
                 }
                 <Text style={styles.explain}>
@@ -478,7 +486,7 @@ const styles = StyleSheet.create({
     },
     origin: {
         marginTop: 10 * dpi,
-        marginRight: 12 * dpi,
+        marginRight: 0.05 * wid,
         textAlign: 'right',
         alignSelf: 'flex-end',
         color: '#FFFFFF',

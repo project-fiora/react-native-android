@@ -5,6 +5,7 @@
 
 import React, {Component} from 'react';
 import {
+    ScrollView,
     StyleSheet,
     Text, TextInput, TouchableHighlight,
     View
@@ -13,6 +14,7 @@ import {Actions} from 'react-native-router-flux';
 
 import PrivateAddr from '../common/private/address';
 import Common from "../common/common";
+import LoadingIcon from "../common/loadingIcon";
 
 export default class Inquire extends Component {
     constructor(props) {
@@ -21,6 +23,7 @@ export default class Inquire extends Component {
         this.state = {
             content:'',
             senderEmail: '',
+            loading:false,
         };
     }
 
@@ -33,7 +36,7 @@ export default class Inquire extends Component {
             alert('답변 받을 이메일 주소를 입력해주세요!');
             return false;
         }
-        alert('전송이 완료 될때까지\n잠시만 기다려주세요');
+        this.setState({loading:true});
         fetch(PrivateAddr.getAddr()+'inquire', {
             method: 'POST',
             headers: {
@@ -56,12 +59,15 @@ export default class Inquire extends Component {
             .catch((error) => {
                 alert('Network Connection Failed');
                 console.error(error);
-            }).done();
+            }).done(()=>this.setState({loading:false}));
     }
 
     render() {
         return (
-                <View style={styles.frame}>
+                <ScrollView contentContainerStyle={styles.frame}>
+                    {this.state.loading&&
+                    <LoadingIcon/>
+                    }
                     <TextInput
                         style={styles.inputContent}
                         multiline={true}
@@ -85,17 +91,13 @@ export default class Inquire extends Component {
                         multiline={false}
                         autoFocus={true}
                     />
-                    {/*<TouchableHighlight*/}
-                        {/*style={styles.attachBtn}*/}
-                        {/*underlayColor={'#000000'}*/}
-                        {/*onPress={*/}
-                            {/*() => {*/}
-                                {/*alert('wallet');*/}
-                            {/*}*/}
-                        {/*}*/}
-                    {/*>*/}
-                        {/*<Text style={styles.btnText}>스크린샷, 이미지 첨부</Text>*/}
-                    {/*</TouchableHighlight>*/}
+                    <TouchableHighlight
+                        style={styles.attachBtn}
+                        underlayColor={'#000000'}
+                        onPress={() => {this.sendMail()}}
+                    >
+                        <Text style={styles.btnText}>보내기</Text>
+                    </TouchableHighlight>
                     {/*<TouchableHighlight*/}
                         {/*style={styles.rightBtn}*/}
                         {/*underlayColor={'#000000'}*/}
@@ -103,7 +105,7 @@ export default class Inquire extends Component {
                     {/*>*/}
                         {/*<Text style={styles.rightBtnText}>전송</Text>*/}
                     {/*</TouchableHighlight>*/}
-                </View>
+                </ScrollView>
         );
     }
 }
@@ -114,6 +116,7 @@ const hei = Common.winHeight();
 var styles = StyleSheet.create({
     frame:{
         paddingTop:10*dpi,
+        paddingBottom:15*dpi,
     },
     inputContent:{
         width: 0.7*wid,
@@ -145,15 +148,16 @@ var styles = StyleSheet.create({
         opacity: 0.7
     },
     attachBtn:{
-        width: 0.7*wid,
+        width: 0.5*wid,
         padding: 15*dpi,
-        height: 50*dpi,
+        height: 40*dpi,
         borderColor: '#FFFFFF',
         borderWidth: 1*dpi,
         borderRadius: 15*dpi,
         alignSelf: 'center',
+        justifyContent:'center',
         backgroundColor: 'transparent',
-        opacity: 0.7
+        opacity: 0.8
     },
     btnText:{
         textAlign:'center',

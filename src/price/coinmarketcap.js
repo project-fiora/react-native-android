@@ -32,6 +32,10 @@ export default class Coinmarketcap extends Component {
         );
     }
 
+    componentWillUnmount(){
+        clearInterval();
+    }
+
     getPriceInfo() {
         this.setState({refreshing:true},()=>{
             fetch("https://api.coinmarketcap.com/v1/ticker/?limit=6")
@@ -308,7 +312,7 @@ const styles = StyleSheet.create({
     },
     origin: {
         marginTop: 10*dpi,
-        marginRight: 12*dpi,
+        marginRight: 0.05 * wid,
         textAlign: 'right',
         alignSelf: 'flex-end',
         color: '#FFFFFF',

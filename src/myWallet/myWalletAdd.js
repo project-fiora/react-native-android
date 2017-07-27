@@ -26,39 +26,30 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
             TYPE: ['BTC', 'ETH', 'ETC', 'XRP', 'LTC', 'DASH'],
             currentTYPE: 0,
         };
-        this.setToken();
-        this.getWalletInfo();
     }
 
-    async setToken() {
-        try {
-            const token = await AsyncStorage.getItem('Token');
-            if (token !== null) {
-                this.setState({token: token});
-            }
-        } catch (err) {
-            alert('토큰 정보 가져오기 실패! : ' + err);
-        }
+    async componentDidMount(){
+        // await this.getWalletInfo();
     }
 
-    async getWalletInfo() {
-        try {
-            const code = await AsyncStorage.getItem('walletAddQrcodeTmp');
-            if (code !== null) {
-                this.setState({addr: code});
-            }
-            const name = await AsyncStorage.getItem('walletAddNameTmp');
-            if (name !== null) {
-                this.setState({name: name});
-            }
-        } catch (error) {
-            alert('지갑 정보 가져오기 실패! : ' + error);
-        }
-    }
+    // async getWalletInfo() {
+    //     try {
+    //         const code = StateStorage.walletAddr;
+    //         if (code !== null) {
+    //             await this.setState({addr: code});
+    //         }
+    //         const name = StateStorage.walletName;
+    //         if (name !== null) {
+    //             await this.setState({name: name});
+    //         }
+    //     } catch (error) {
+    //         alert('지갑 정보 가져오기 실패! : ' + error);
+    //     }
+    // }
 
-    async qrScanner() {
+    qrScanner() {
         try {
-            await AsyncStorage.setItem('walletAddNameTmp', this.state.name);
+            StateStorage.setName(this.state.name);
             Actions.scanner();
         } catch (error) {
             alert("지갑 이름 저장 오류 : " + error);
@@ -151,16 +142,16 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                         multiline={false}
                     />
 
-                    <Text style={styles.explainQRcode}>QR코드를 스캔해서 편하게 지갑주소를 입력하세요!</Text>
-                    <TouchableOpacity
-                        style={styles.scannerBtn}
-                        underlayColor={'#000000'}
-                        onPress={() => this.qrScanner()}
-                    >
-                        <Text style={styles.qrBtnText}>
-                            QR코드 스캐너
-                        </Text>
-                    </TouchableOpacity>
+                    <Text style={styles.explainQRcode}>QR코드 스캐너는 업데이트 될 예정입니다!</Text>
+                    {/*<TouchableOpacity*/}
+                        {/*style={styles.scannerBtn}*/}
+                        {/*underlayColor={'#000000'}*/}
+                        {/*onPress={() => this.qrScanner()}*/}
+                    {/*>*/}
+                        {/*<Text style={styles.qrBtnText}>*/}
+                            {/*QR코드 스캐너*/}
+                        {/*</Text>*/}
+                    {/*</TouchableOpacity>*/}
                 </ScrollView>
             </View>
         );

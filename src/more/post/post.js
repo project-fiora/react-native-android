@@ -43,7 +43,6 @@ export default class Post extends Component {
                     "Accept": "*/*",
                 }
             }).then((response) => response.json()).then((responseJson) => {
-                console.log(responseJson);
                 if (responseJson.message == "SUCCESS") {
                     this.setState({
                         topList: responseJson.top,

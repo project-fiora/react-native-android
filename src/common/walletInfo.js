@@ -40,7 +40,5 @@ const styles = StyleSheet.create({
     },
     qrCodeWrapper: {
         alignSelf: 'center',
-        width: 0.65 * wid,
-        height: 0.65 * wid,
     },
 });

@@ -42,6 +42,7 @@ import NoticeDetail from "../more/notice/noticeDetail";
 import Version from '../more/version';
 import Inquire from '../more/inquire';
 import Common from "../common/common";
+import PostAddEdit from "../more/post/postAddEdit";
 
 export default class Main extends Component {
     constructor(props) {
@@ -88,6 +89,7 @@ export default class Main extends Component {
             this.setState({
                 title: '지갑 수정',
                 enableBackBtn: true, backBtnGoTo: 'myWalletMng',
+                enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callEditWallet'
             });
         } else if (p == 'myWalletAdd') {
             this.setState({
@@ -148,11 +150,14 @@ export default class Main extends Component {
         } else if (p == 'postAdd') {
             this.setState({
                 title: '게시물 작성',
+                enableBackBtn: true, backBtnGoTo: 'post',
+                enableRightBtn: true, rightBtnText: '등록', rightBtnGoTo: 'postWrite'
             });
         } else if (p == 'postEdit') {
             this.setState({
                 title: '게시물 수정',
-                enableBackBtn: false,
+                enableBackBtn: true, backBtnGoTo: 'post',
+                enableRightBtn: true, rightBtnText: '등록', rightBtnGoTo: 'postEdit'
             });
         } else if (p == 'notice') {
             this.setState({
@@ -180,6 +185,12 @@ export default class Main extends Component {
     goTo(part) {
         if(part == 'callAddWallet'){
             Common.addWallet();
+        } else if(part=='callEditWallet'){
+            Common.editWallet();
+        } else if(part=='postWrite'){
+            PostAddEdit.writePost();
+        } else if(part=='postEdit'){
+            PostAddEdit.editPost();
         } else {
             Actions.main({goTo: part});
         }
@@ -250,13 +261,8 @@ export default class Main extends Component {
                     {this.props.goTo === 'post' && <Post/>}
                     {this.props.goTo === 'postRead' && <PostRead post_id={this.props.post_id}/>}
                     {this.props.goTo === 'postAdd' && <PostAdd/>}
-                    {this.props.goTo === 'postEdit' && <PostAdd
-                        post_id={this.props.post_id}
-                        title={this.props.title}
-                        contents={this.props.contents}
-                        edit={this.props.edit}
-                    />
-                    }
+                    {this.props.goTo === 'postEdit' && <PostAdd post_id={this.props.post_id}/>}
+
                     {this.props.goTo === 'notice' && <Notice/>}
                     {this.props.goTo === 'noticeDetail' &&
                     <NoticeDetail id={this.props.id}
