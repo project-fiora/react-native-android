@@ -13,6 +13,7 @@ import CheckBox from 'react-native-checkbox';
 import styles from './index_style';
 import PrivateAddr from '../common/private/address';
 import Common from "../common/common";
+import LoadingIcon from "../common/loadingIcon";
 
 export default class Join extends Component {
     constructor(props) {
@@ -207,9 +208,7 @@ export default class Join extends Component {
             <View pointerEvents={this.state.enable}>
                 <ScrollView contentContainerStyle={styles.loginContainer}>
                     {this.state.enable == 'none' &&
-                    <Image
-                        source={require('../common/img/loading.gif')}
-                        style={styles.loadingIcon}/>
+                    <LoadingIcon/>
                     }
                     <View style={styles.inputWrapper}>
                         <Image source={require('../common/img/user.png')} style={styles.inputTextIcon}/>

@@ -12,6 +12,7 @@ import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
 import WalletInfo from "../common/walletInfo";
+import LoadingIcon from "../common/loadingIcon";
 
 export default class MyWallet extends Component {
     constructor(props) {
@@ -37,8 +38,8 @@ export default class MyWallet extends Component {
     }
 
     async getMyWallet() {
-        await AsyncStorage.getItem('Token', (err,result) => {
-            if(err!=null){
+        await AsyncStorage.getItem('Token', (err, result) => {
+            if (err != null) {
                 alert(err);
                 return false;
             }
@@ -53,6 +54,7 @@ export default class MyWallet extends Component {
                 .then((responseJson) => {
                     if (responseJson.message == "SUCCESS") {
                         var list = responseJson.list;
+                        console.log(list);
                         if (list.length == 0) {
                             this.setState({walletList: [], load: true});
                         } else {
@@ -102,127 +104,120 @@ export default class MyWallet extends Component {
 
     render() {
         return (
-            <ScrollView contentContainerStyle={styles.frame}>
-                <View style={styles.content}>
-                    {this.state.load == false &&
-                    <View>
-                        <Image
-                            source={require('../common/img/loading.gif')}
-                            style={styles.loadingIcon}/>
-                    </View>
-                    }
-                    {(this.state.load == true && this.state.walletList.length == 0) &&
-                    <View>
-                        <Text style={styles.titleText}>
-                            아직 지갑이 한개도 없어요!{'\n'}
-                            오른쪽 상단의 지갑 관리 버튼을 통해서{'\n'}
-                            지갑을 추가하세요!
-                        </Text>
-                    </View>
-                    }
-                    {(this.state.load == true && this.state.walletList.length != 0) &&
-                    <View>
-                        <Text style={styles.titleText}>아래 버튼을 눌러서 지갑을 선택하세요!</Text>
-                        <TouchableOpacity
-                            underlayColor={'#AAAAAA'}
-                            onPress={() => this.setState({onClickBox: !this.state.onClickBox})}
-                        >
-                            <View style={styles.selectBoxWrapper}>
-                                <View style={styles.selectBoxRow}>
-                                    <Text style={styles.selectBoxText}>
-                                        {this.state.walletList[this.state.currentWallet].wallet_name}
-                                    </Text>
-                                    <View style={styles.selectBoxIconWrapper}>
-                                        <Text style={styles.selectIcon}>
-                                            ▼
+            <View>
+                {this.state.load == false &&
+                <LoadingIcon/>
+                }
+                <ScrollView contentContainerStyle={styles.frame}>
+                    <View style={styles.content}>
+                        {(this.state.load == true && this.state.walletList.length == 0) &&
+                        <View>
+                            <Text style={styles.titleText}>
+                                아직 지갑이 한개도 없어요!{'\n'}
+                                오른쪽 상단의 지갑 관리 버튼을 통해서{'\n'}
+                                지갑을 추가하세요!
+                            </Text>
+                        </View>
+                        }
+                        {(this.state.load == true && this.state.walletList.length != 0) &&
+                        <View>
+                            <Text style={styles.titleText}>아래 버튼을 눌러서 지갑을 선택하세요!</Text>
+                            <TouchableOpacity
+                                underlayColor={'#AAAAAA'}
+                                onPress={() => this.setState({onClickBox: !this.state.onClickBox})}
+                            >
+                                <View style={styles.selectBoxWrapper}>
+                                    <View style={styles.selectBoxRow}>
+                                        <Text style={styles.selectBoxText}>
+                                            {this.state.walletList[this.state.currentWallet].wallet_name}
                                         </Text>
+                                        <View style={styles.selectBoxIconWrapper}>
+                                            <Text style={styles.selectIcon}>
+                                                ▼
+                                            </Text>
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                        </TouchableOpacity>
-                        {(() => {
-                            if (this.state.onClickBox == true) {
-                                return this.state.walletList.map((wallet, i) => {
-                                    if (this.state.currentWallet != i)
-                                        return (
-                                            <TouchableOpacity
-                                                underlayColor={'#AAAAAA'}
-                                                onPress={() => this.showWallet(i, wallet.wallet_type, wallet.wallet_add)}
-                                                key={i}
-                                            >
-                                                <View style={styles.selectBoxWrapper}>
-                                                    <View style={styles.selectBoxRow}>
-                                                        <Text style={styles.selectBoxText}>
-                                                            {wallet.wallet_name}
-                                                        </Text>
+                            </TouchableOpacity>
+                            {(() => {
+                                if (this.state.onClickBox == true) {
+                                    return this.state.walletList.map((wallet, i) => {
+                                        if (this.state.currentWallet != i)
+                                            return (
+                                                <TouchableOpacity
+                                                    underlayColor={'#AAAAAA'}
+                                                    onPress={() => this.showWallet(i, wallet.wallet_type, wallet.wallet_add)}
+                                                    key={i}
+                                                >
+                                                    <View style={styles.selectBoxWrapper}>
+                                                        <View style={styles.selectBoxRow}>
+                                                            <Text style={styles.selectBoxText}>
+                                                                {wallet.wallet_name}
+                                                            </Text>
+                                                        </View>
                                                     </View>
-                                                </View>
-                                            </TouchableOpacity>
-                                        );
-                                })
+                                                </TouchableOpacity>
+                                            );
+                                    })
+                                }
+                            })()}
+                            {this.state.walletList.length != 0 &&
+                            <WalletInfo
+                                wallet_name={this.state.walletList[this.state.currentWallet].wallet_name}
+                                wallet_type={this.state.walletList[this.state.currentWallet].wallet_type}
+                                balance={this.state.balance}
+                                wallet_add={this.state.walletList[this.state.currentWallet].wallet_add}
+                                qrcode={this.state.qrcode}
+                            />
                             }
-                        })()}
-                        {this.state.walletList.length != 0 &&
-                        <WalletInfo
-                            wallet_name={this.state.walletList[this.state.currentWallet].wallet_name}
-                            wallet_type={this.state.walletList[this.state.currentWallet].wallet_type}
-                            balance={this.state.balance}
-                            wallet_add={this.state.walletList[this.state.currentWallet].wallet_add}
-                            qrcode={this.state.qrcode}
-                        />
+                        </View>
                         }
+
                     </View>
-                    }
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </View>
         );
     }
 }
 
 const dpi = Common.getRatio();
 const wid = Common.winWidth();
-const hei= Common.winHeight();
+const hei = Common.winHeight();
 const styles = StyleSheet.create({
     frame: {
-        padding:20*dpi,
+        padding: 20 * dpi,
     },
     content: {
-        marginTop: 5*dpi,
+        marginTop: 5 * dpi,
         opacity: 0.8,
     },
     contentText: {
         color: '#FFFFFF',
-        fontSize: 17*dpi,
-        marginTop: 10*dpi,
+        fontSize: 17 * dpi,
+        marginTop: 10 * dpi,
         opacity: 0.8,
-        marginBottom: 5*dpi,
+        marginBottom: 5 * dpi,
         alignSelf: 'flex-start',
-    },
-    loadingIcon: {
-        width: 30*dpi,
-        height: 30*dpi,
-        marginTop: 30*dpi,
-        alignSelf: 'center',
     },
     titleText: {
         alignSelf: 'center',
         color: '#FFFFFF',
-        fontSize: 17*dpi,
-        marginBottom: 10*dpi,
+        fontSize: 17 * dpi,
+        marginBottom: 10 * dpi,
         opacity: 0.8,
     },
     selectBoxWrapper: {
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: '#000000',
-        width: 0.55*wid,
-        height: 0.055*hei,
-        opacity: 0.4*dpi,
+        width: 0.55 * wid,
+        height: 0.055 * hei,
+        opacity: 0.4 * dpi,
         borderColor: '#FFFFFF',
-        borderWidth: 1*dpi,
-        borderRadius: 10*dpi,
-        paddingLeft: 17*dpi,
-        paddingRight: 15*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 10 * dpi,
+        paddingLeft: 17 * dpi,
+        paddingRight: 15 * dpi,
     },
     selectBoxRow: {
         flexDirection: 'row',
@@ -231,19 +226,19 @@ const styles = StyleSheet.create({
     selectBoxText: {
         alignSelf: 'flex-start',
         color: '#FFFFFF',
-        fontSize: 17*dpi,
+        fontSize: 17 * dpi,
     },
     selectBoxIconWrapper: {
         alignItems: 'flex-end',
     },
     selectIcon: {
         color: '#FFFFFF',
-        fontSize: 17*dpi,
+        fontSize: 17 * dpi,
         opacity: 0.9,
     },
     qrCode: {
-        marginTop: 5*dpi,
-        width: 100*dpi,
-        height: 100*dpi,
+        marginTop: 5 * dpi,
+        width: 100 * dpi,
+        height: 100 * dpi,
     },
 });

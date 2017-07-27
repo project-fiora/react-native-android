@@ -22,7 +22,7 @@ stateStore.walletName = ()=>{
 stateStore.walletAddr = ()=>{
     return this.walletAddr;
 }
-stateStore.walletType= ()=>{
+stateStore.walletType = ()=>{
     return this.walletType;
 }
 

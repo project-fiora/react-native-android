@@ -12,10 +12,8 @@ import {
 
 import {Actions} from 'react-native-router-flux';
 import {observer} from 'mobx-react/native';
-import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
 import StateStorage from '../common/stateStore';
-
 
 const MyWalletAdd = observer(class MyWalletAdd extends Component {
     constructor(props) {
@@ -80,7 +78,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                 <ScrollView contentContainerStyle={styles.frame}>
                     <Text style={styles.explain}>여기서 지갑을 추가해보세요!</Text>
                     <TextInput
-                        style={styles.inputId}
+                        style={styles.inputName}
                         value={this.state.name}
                         onChangeText={(name) => {
                             this.setState({name: name});
@@ -159,7 +157,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                         underlayColor={'#000000'}
                         onPress={() => this.qrScanner()}
                     >
-                        <Text style={styles.rightBtnText}>
+                        <Text style={styles.qrBtnText}>
                             QR코드 스캐너
                         </Text>
                     </TouchableOpacity>
@@ -169,51 +167,51 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
     }
 });
 
+const dpi = Common.getRatio();
 const wid = Common.winWidth();
-const hei = Common.winHeight();
+const hei= Common.winHeight();
 const styles = StyleSheet.create({
     frame: {
         alignItems: 'center',
-        paddingBottom: 85,
     },
     explain: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 20,
-        margin: 15,
+        fontSize: 20*dpi,
+        margin: 15*dpi,
     },
-    inputId: {
-        width: 230,
-        height: 50,
-        fontSize: 15,
+    inputName: {
+        width: 0.6*wid,
+        height: 0.075*hei,
+        fontSize: 15*dpi,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 15*dpi,
         alignSelf: 'center',
         backgroundColor: '#000000',
         opacity: 0.3,
-        marginBottom: 10,
-        paddingLeft: 15,
+        marginBottom: 10*dpi,
+        paddingLeft: 15*dpi,
     },
     explain2: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 15,
-        margin: 15,
+        fontSize: 15*dpi,
+        margin: 15*dpi,
     },
     selectBoxWrapper: {
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: '#000000',
-        width: 230,
-        height: 35,
+        width: 0.6*wid,
+        height: 0.065*hei,
         opacity: 0.4,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 10,
-        paddingLeft: 17,
-        paddingRight: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 10*dpi,
+        paddingLeft: 17*dpi,
+        paddingRight: 15*dpi,
     },
     selectBoxRow: {
         flexDirection: 'row',
@@ -222,48 +220,52 @@ const styles = StyleSheet.create({
     selectBoxText: {
         alignSelf: 'flex-start',
         color: '#FFFFFF',
-        fontSize: 17,
+        fontSize: 17*dpi,
     },
     selectBoxIconWrapper: {
         alignItems: 'flex-end',
     },
     selectIcon: {
         color: '#FFFFFF',
-        fontSize: 17,
+        fontSize: 17*dpi,
         opacity: 0.9,
     },
     inputWalletAddr: {
-        width: 230,
-        height: 45,
-        fontSize: 13,
+        width: 0.6*wid,
+        height: 0.07*hei,
+        fontSize: 13*dpi,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 15*dpi,
         alignSelf: 'center',
         backgroundColor: '#000000',
         opacity: 0.3,
-        marginTop: 10,
-        marginBottom: 10,
-        paddingLeft: 15,
+        marginTop: 10*dpi,
+        marginBottom: 10*dpi,
+        paddingLeft: 15*dpi,
     },
     explainQRcode: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 15,
-        margin: 10,
+        fontSize: 15*dpi,
+        margin: 10*dpi,
     },
     scannerBtn: {
-        width: 150,
-        height: 40,
-        borderWidth: 1,
-        borderRadius: 20,
+        width: 0.4*wid,
+        height: 0.06*hei,
+        borderWidth: 1*dpi,
+        borderRadius: 20*dpi,
         borderColor: '#FFFFFF',
-        padding: 5,
+        padding: 5*dpi,
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6,
-        marginBottom: 10,
+        marginBottom: 10*dpi,
+    },
+    qrBtnText:{
+        color:'#FFFFFF',
+        fontSize:17*dpi,
     },
 });
 

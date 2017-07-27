@@ -11,6 +11,7 @@ import {
     View,
 } from 'react-native';
 import Common from "../common/common";
+import LoadingIcon from "../common/loadingIcon";
 
 export default class Coinmarketcap extends Component {
     constructor(props) {
@@ -32,14 +33,16 @@ export default class Coinmarketcap extends Component {
     }
 
     getPriceInfo() {
-        fetch("https://api.coinmarketcap.com/v1/ticker/?limit=6")
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({list: responseJson, refreshing: false});
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        this.setState({refreshing:true},()=>{
+            fetch("https://api.coinmarketcap.com/v1/ticker/?limit=6")
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    this.setState({list: responseJson, refreshing: false});
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        });
     }
 
     render() {
@@ -48,6 +51,9 @@ export default class Coinmarketcap extends Component {
             <ScrollView
                 contentContainerStyle={styles.priceWrapper}
             >
+                {this.state.refreshing&&
+                    <LoadingIcon/>
+                }
                 <Text style={styles.explain}>
                     실시간 시세 차이에 주의하세요!
                 </Text>

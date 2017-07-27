@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "../common/private/address";
+import Common from "../common/common";
+import LoadingIcon from "../common/loadingIcon";
 
 export default class MyWalletEdit extends Component {
     constructor(props) {
@@ -165,12 +167,9 @@ export default class MyWalletEdit extends Component {
 
     render() {
         return (
-            <View>
                 <ScrollView contentContainerStyle={styles.frame}>
                     {this.state.load == false &&
-                    <Image
-                        source={require('../common/img/loading.gif')}
-                        style={styles.loadingIcon}/>
+                    <LoadingIcon/>
                     }
                     {this.state.load == true &&
                     <View>
@@ -242,88 +241,60 @@ export default class MyWalletEdit extends Component {
                             underlayColor={'#000000'}
                             onPress={() => this.removeWallet()}
                         >
-                            <Text style={styles.rightBtnText}>지갑 삭제</Text>
+                            <Text style={styles.removeBtnText}>지갑 삭제</Text>
                         </TouchableHighlight>
                     </View>
                     }
                 </ScrollView>
-                <TouchableHighlight
-                    style={styles.rightBtn}
-                    underlayColor={'#000000'}
-                    onPress={() => this.editWallet()}
-                >
-                    <Text style={styles.rightBtnText}>저장</Text>
-                </TouchableHighlight>
-            </View>
         );
     }
 }
 
-// return(
-//     <TextInput
-//         style={{borderWidth:1, borderColor:'#000000',height:80,marginBottom:20,}}
-//         value={this.state.walletList[i].name}
-//         onChangeText={(name) => {
-//             var stateCopy = Object.assign({}, this.state);
-//             stateCopy.walletList = stateCopy.walletList.slice();
-//             stateCopy.walletList[i] = Object.assign({}, stateCopy.walletList[i]);
-//             stateCopy.walletList[i].name = name;
-//             this.setState(stateCopy);
-//             }
-//         }
-//         key={i}
-//     />
-// );
-
+const dpi = Common.getRatio();
+const wid = Common.winWidth();
+const hei= Common.winHeight();
 const styles = StyleSheet.create({
-    loadingIcon: {
-        width: 40,
-        height: 40,
-        alignSelf: 'center',
-        marginTop: 40,
-    },
     frame: {
         alignItems: 'center',
-        paddingBottom: 85,
     },
     explain: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 15,
-        margin: 15,
+        fontSize: 15*dpi,
+        margin: 15*dpi,
     },
     inputWalletName: {
-        width: 220,
-        height: 50,
-        fontSize: 15,
+        width: 0.6*wid,
+        height: 0.075*hei,
+        fontSize: 15*dpi,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 15*dpi,
         alignSelf: 'center',
         backgroundColor: '#000000',
         opacity: 0.3,
-        marginBottom: 5,
-        paddingLeft: 20,
+        marginBottom: 5*dpi,
+        paddingLeft: 20*dpi,
     },
     explain2: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 15,
-        margin: 15,
+        fontSize: 15*dpi,
+        margin: 15*dpi,
     },
     selectBoxWrapper: {
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: '#000000',
-        width: 220,
-        height: 35,
+        width: 0.6*wid,
+        height: 0.075*hei,
         opacity: 0.4,
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 10,
-        paddingLeft: 17,
-        paddingRight: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 10*dpi,
+        paddingLeft: 17*dpi,
+        paddingRight: 15*dpi,
     },
     selectBoxRow: {
         flexDirection: 'row',
@@ -332,59 +303,44 @@ const styles = StyleSheet.create({
     selectBoxText: {
         alignSelf: 'flex-start',
         color: '#FFFFFF',
-        fontSize: 17,
+        fontSize: 17*dpi,
     },
     selectBoxIconWrapper: {
         alignItems: 'flex-end',
     },
     selectIcon: {
         color: '#FFFFFF',
-        fontSize: 17,
+        fontSize: 17*dpi,
         opacity: 0.9,
     },
     inputWalletAddr: {
-        width: 320,
-        height: 45,
-        fontSize: 13,
+        width: 0.6*wid,
+        height: 0.075*hei,
+        fontSize: 14*dpi,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 15,
+        borderWidth: 1*dpi,
+        borderRadius: 15*dpi,
         alignSelf: 'center',
         backgroundColor: '#000000',
         opacity: 0.3,
-        marginTop: 10,
-        marginBottom: 5,
-        paddingLeft: 12,
+        marginTop: 10*dpi,
+        marginBottom: 10*dpi,
+        paddingLeft: 12*dpi,
     },
     removeBtn: {
-        width: 80,
-        height: 30,
-        borderWidth: 1,
-        borderRadius: 20,
+        width: 0.3*wid,
+        height: 0.05*hei,
+        borderWidth: 1*dpi,
+        borderRadius: 20*dpi,
         borderColor: '#FFFFFF',
-        padding: 5,
         alignSelf:'center',
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6
     },
-    rightBtn: {
-        position: 'absolute',
-        top: -45,
-        right: 15,
-        width: 80,
-        height: 30,
-        borderWidth: 1,
-        borderRadius: 20,
-        borderColor: '#FFFFFF',
-        padding: 5,
-        alignItems: 'center',
-        justifyContent: 'center',
-        opacity: 0.6
-    },
-    rightBtnText: {
+    removeBtnText: {
         color: '#FFFFFF',
-        fontSize: 15
+        fontSize: 15*dpi
     },
 });

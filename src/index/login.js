@@ -13,6 +13,7 @@ import styles from './index_style';
 
 import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
+import LoadingIcon from "../common/loadingIcon";
 
 
 export default class Login extends Component {
@@ -75,14 +76,10 @@ export default class Login extends Component {
     }
 
     render() {
-        const dpi = Common.getRatio();
         return (
             <View style={styles.loginContainer} pointerEvents={this.state.enableTouch}>
                 {this.state.logining == true &&
-                <View style={styles.loadingIconWrapper}>
-                    <Image source={require('../common/img/loading.gif')} style={styles.loadingIcon}/>
-                </View>
-
+                <LoadingIcon/>
                 }
                 <Image source={require('../common/img/mainIcon.png')} style={styles.mainIcon}/>
                 <View style={styles.inputWrapper}>

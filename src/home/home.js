@@ -9,6 +9,7 @@ import {
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
+import LoadingIcon from "../common/loadingIcon";
 
 export default class Home extends Component {
     constructor(props) {
@@ -47,7 +48,7 @@ export default class Home extends Component {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({nickname:responseJson.nickname, nicknameLoad:true});
+                this.setState({nickname: responseJson.nickname, nicknameLoad: true});
             })
             .catch((error) => {
                 alert('Network Connection Fail : ' + error);
@@ -183,72 +184,74 @@ export default class Home extends Component {
 
     render() {
         return (
-            <ScrollView contentContainerStyle={styles.homeWrapper}>
-                <Text style={styles.txt}>
-                    {(this.state.nicknameLoad==false||this.state.confirmLoad==false||this.state.mysideLoad==false) &&
-                    <Text>로딩 중 ..{'\n'}</Text>
-                    }
-                    '{this.state.nickname!=undefined && this.state.nickname}'님 환영합니다!{'\n'}
-                </Text>
-                <TouchableOpacity
-                    style={styles.rightBtn}
-                    underlayColor={'#000000'}
-                    onPress={() => Actions.main({goTo:'post'})}
-                >
-                    <Text style={styles.txt}>커뮤니티 바로가기</Text>
-                </TouchableOpacity>
+            <View>
+                {(this.state.nicknameLoad == false || this.state.confirmLoad == false || this.state.mysideLoad == false) &&
+                <LoadingIcon/>
+                }
+                <ScrollView contentContainerStyle={styles.homeWrapper}>
+                    <Text style={styles.txt}>
+                        '{this.state.nickname != undefined && this.state.nickname}'님 환영합니다!{'\n'}
+                    </Text>
+                    <TouchableOpacity
+                        style={styles.rightBtn}
+                        underlayColor={'#000000'}
+                        onPress={() => Actions.main({goTo: 'post'})}
+                    >
+                        <Text style={styles.txt}>커뮤니티 바로가기</Text>
+                    </TouchableOpacity>
 
-                <Text style={styles.warningText}>
-                    ** 이 앱을 사용하는 도중에 발생하는
-                </Text>
-                <Text style={styles.warningText2}>
-                    모든 책임은 사용자 본인에게 있습니다 **
-                </Text>
-                <View>
-                    {(this.state.confirmLoad == true && this.state.confirmList.length != 0) &&
+                    <Text style={styles.warningText}>
+                        ** 이 앱을 사용하는 도중에 발생하는
+                    </Text>
+                    <Text style={styles.warningText2}>
+                        모든 책임은 사용자 본인에게 있습니다 **
+                    </Text>
                     <View>
-                        <Text style={styles.listTitle}>친구 요청이 왔어요!</Text>
-                        {this.state.confirmList.map((list, i) => {
-                            return (
-                                <View style={styles.rowViewWrapper} key={i}>
-                                    <Text style={styles.waitListText}>
+                        {(this.state.confirmLoad == true && this.state.confirmList.length != 0) &&
+                        <View>
+                            <Text style={styles.listTitle}>친구 요청이 왔어요!</Text>
+                            {this.state.confirmList.map((list, i) => {
+                                return (
+                                    <View style={styles.rowViewWrapper} key={i}>
+                                        <Text style={styles.waitListText}>
+                                            {list.nickname}
+                                        </Text>
+                                        <View style={styles.rowView}>
+                                            <TouchableOpacity
+                                                style={styles.confirmBtn}
+                                                onPress={() => this.confirmRequest(list.id)}
+                                            >
+                                                <Text style={styles.btnText}>수락</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity
+                                                style={styles.confirmBtn}
+                                                onPress={() => this.denyRequest(list.id)}
+                                            >
+                                                <Text style={styles.btnText}>거절</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                );
+                            })}
+                        </View>
+                        }
+                        {(this.state.mysideLoad == true && this.state.mysideConfirmList.length != 0) &&
+                        <View>
+                            <Text style={styles.listTitle}>친구 요청 목록(대기중)</Text>
+                            {this.state.mysideConfirmList.map((list, i) => {
+                                return (
+                                    <Text style={styles.listText} key={i}>
                                         {list.nickname}
                                     </Text>
-                                    <View style={styles.rowView}>
-                                        <TouchableOpacity
-                                            style={styles.confirmBtn}
-                                            onPress={() => this.confirmRequest(list.id)}
-                                        >
-                                            <Text style={styles.btnText}>수락</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            style={styles.confirmBtn}
-                                            onPress={() => this.denyRequest(list.id)}
-                                        >
-                                            <Text style={styles.btnText}>거절</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            );
-                        })}
+                                );
+                            })}
+                        </View>
+                        }
+                        {/*<Text>Local Storage를 초기화하면 오류가 발생할수있음</Text>*/}
+                        {/*<Text style={styles.btn} onPress={this.clearStorage}>앱 Local Storage 삭제</Text>*/}
                     </View>
-                    }
-                    {(this.state.mysideLoad == true && this.state.mysideConfirmList.length != 0) &&
-                    <View>
-                        <Text style={styles.listTitle}>친구 요청 목록(대기중)</Text>
-                        {this.state.mysideConfirmList.map((list, i) => {
-                            return (
-                                <Text style={styles.listText} key={i}>
-                                    {list.nickname}
-                                </Text>
-                            );
-                        })}
-                    </View>
-                    }
-                    {/*<Text>Local Storage를 초기화하면 오류가 발생할수있음</Text>*/}
-                    {/*<Text style={styles.btn} onPress={this.clearStorage}>앱 Local Storage 삭제</Text>*/}
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </View>
         );
     }
 }
@@ -257,31 +260,31 @@ export default class Home extends Component {
 const dpi = Common.getRatio();
 const styles = StyleSheet.create({
     homeWrapper: {
-        padding: 40*dpi,
+        padding: 40 * dpi,
     },
     txt: {
         color: '#FFFFFF',
         opacity: 0.8,
-        padding: 1*dpi,
-        fontSize: 17*dpi,
+        padding: 1 * dpi,
+        fontSize: 17 * dpi,
     },
     warningText: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 15*dpi,
+        fontSize: 15 * dpi,
     },
     warningText2: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 15*dpi,
+        fontSize: 15 * dpi,
     },
     btn: {
-        marginTop: 20*dpi,
+        marginTop: 20 * dpi,
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 25*dpi,
+        fontSize: 25 * dpi,
     },
-    rowViewWrapper:{
+    rowViewWrapper: {
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
@@ -289,40 +292,40 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     confirmBtn: {
-        width: 80*dpi,
-        height: 30*dpi,
-        borderWidth: 1*dpi,
-        borderRadius: 20*dpi,
+        width: 80 * dpi,
+        height: 30 * dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 20 * dpi,
         borderColor: '#FFFFFF',
-        padding: 5*dpi,
+        padding: 5 * dpi,
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6,
-        marginRight:1*dpi,
+        marginRight: 1 * dpi,
     },
     btnText: {
         color: '#FFFFFF',
-        fontSize: 15*dpi,
+        fontSize: 15 * dpi,
         alignSelf: 'center',
         justifyContent: 'center',
     },
     listTitle: {
         color: '#FFFFFF',
-        fontSize: 18*dpi,
+        fontSize: 18 * dpi,
         opacity: 0.8,
-        marginTop: 10*dpi,
-        marginBottom: 10*dpi,
+        marginTop: 10 * dpi,
+        marginBottom: 10 * dpi,
     },
     waitListText: {
         color: '#FFFFFF',
-        fontSize: 16*dpi,
+        fontSize: 16 * dpi,
         opacity: 0.8,
         justifyContent: 'center',
         alignSelf: 'center',
     },
     listText: {
         color: '#FFFFFF',
-        fontSize: 16*dpi,
+        fontSize: 16 * dpi,
         opacity: 0.8,
         justifyContent: 'center',
     },

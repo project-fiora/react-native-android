@@ -24,19 +24,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical:20*dpi,
     },
-    loadingIconWrapper: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    loadingIcon: {
-        width: 50*dpi,
-        height: 50*dpi,
-    },
     mainIcon: { //MEMBER LOG-IN Image
         width: 130*dpi,
         height: 130*dpi,

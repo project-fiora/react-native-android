@@ -173,6 +173,8 @@ class Common extends Component {
                 const token = JSON.parse(result).token;
                 try {
                     //post api call
+                    if(StateStore.walletType()==undefined)
+                        StateStore.setType('BTC');
                     fetch(PrivateAddr.getAddr() + 'wallet/add', {
                         method: 'POST',
                         headers: {
