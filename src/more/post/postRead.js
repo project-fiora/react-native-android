@@ -533,6 +533,7 @@ var styles = StyleSheet.create({
         height: commentBtnHeight,
         fontSize: 15 * dpi,
         color: '#FFFFFF',
+        padding:10*dpi,
         borderColor: '#FFFFFF',
         borderWidth: 1 * dpi,
         borderRadius: 12 * dpi,

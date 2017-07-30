@@ -19,7 +19,7 @@ export default class Post extends Component {
 
         this.state = {
             topList: [],
-            postList:[],
+            postList: [],
             currentPage: 0,
             load: false,
         };
@@ -48,7 +48,7 @@ export default class Post extends Component {
                         topList: responseJson.top,
                         postList: responseJson.list,
                         load: true,
-                        currentPage:this.state.currentPage+1
+                        currentPage: this.state.currentPage + 1
                     });
                 } else {
                     alert("게시판 정보를 가져올 수 없습니다");
@@ -61,16 +61,17 @@ export default class Post extends Component {
     }
 
     readPost(post_id) {
-        Actions.main({goTo:'postRead', post_id:post_id});
+        Actions.main({goTo: 'postRead', post_id: post_id});
     }
 
     render() {
-        if(this.state.load==true){
+        if (this.state.load == true) {
             return (
                 <ScrollView contentContainerStyle={styles.frame}>
                     {/*<Text style={styles.explain}>*/}
-                        {/*상단의 게시물 3개는 추천이 많은 게시물입니다*/}
+                    {/*상단의 게시물 3개는 추천이 많은 게시물입니다*/}
                     {/*</Text>*/}
+
                     <View style={styles.thead}>
                         <View style={styles.th1}>
                             <Text style={styles.headText}>
@@ -90,8 +91,8 @@ export default class Post extends Component {
                     </View>
 
                     {this.state.topList.map((top, i) => {
-                        if (top.title.length > 13) {
-                            top.title = top.title.substr(0, 12) + "...";
+                        if (top.title.length > 11) {
+                            top.title = top.title.substr(0, 10) + "...";
                         }
                         if (top.nickname.length > 6) {
                             top.nickname = top.nickname.substr(0, 6) + "...";
@@ -167,31 +168,32 @@ export default class Post extends Component {
 const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
-const t1 = 0.1*wid;
-const t2 = 0.55*wid;
-const t3 = 0.25*wid;
-const thei = 0.06*hei;
+const t1 = 0.09 * wid;
+const t2 = 0.51 * wid;
+const t3 = 0.3 * wid;
+const thei = 0.06 * hei;
 var styles = StyleSheet.create({
     frame: {
-        padding: 10*dpi,
+        padding: 10 * dpi,
         opacity: 0.8,
     },
     explain: {
-        fontSize: 15*dpi,
+        fontSize: 15 * dpi,
         color: '#FFFFFF',
         opacity: 0.7,
         textAlign: 'center',
-        marginBottom: 10*dpi,
+        marginBottom: 10 * dpi,
     },
     thead: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderBottomWidth: 1.2*dpi,
+        borderBottomWidth: 1.2 * dpi,
         borderColor: '#FFFFFF',
+        paddingVertical:thei/6,
         height: thei,
     },
     headText: {
-        fontSize: 18*dpi,
+        fontSize: 17 * dpi,
         color: '#FFFFFF',
     },
     th1: {
@@ -209,7 +211,7 @@ var styles = StyleSheet.create({
     topTr: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderBottomWidth: 0.6*dpi,
+        borderBottomWidth: 0.6 * dpi,
         borderColor: '#FFFFFF',
         height: thei,
         backgroundColor: '#000000',
@@ -218,12 +220,12 @@ var styles = StyleSheet.create({
     postTr: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderBottomWidth: 0.6*dpi,
+        borderBottomWidth: 0.6 * dpi,
         borderColor: '#FFFFFF',
         height: thei,
     },
     bodyText: {
-        fontSize: 16*dpi,
+        fontSize: 16 * dpi,
         color: '#FFFFFF',
     },
     td1: {
@@ -241,19 +243,19 @@ var styles = StyleSheet.create({
         width: t3,
     },
     moreBtn: {
-        width: 0.2*wid,
-        height: 0.05*hei,
-        borderWidth: 1*dpi,
-        borderRadius: 20*dpi,
+        width: 0.2 * wid,
+        height: 0.05 * hei,
+        borderWidth: 1 * dpi,
+        borderRadius: 20 * dpi,
         borderColor: '#FFFFFF',
         alignItems: 'center',
-        alignSelf:'center',
+        alignSelf: 'center',
         justifyContent: 'center',
         opacity: 0.6,
-        marginTop: 5*dpi,
+        marginTop: 5 * dpi,
     },
     moreBtnText: {
         color: '#FFFFFF',
-        fontSize: 15*dpi
+        fontSize: 15 * dpi
     },
 });

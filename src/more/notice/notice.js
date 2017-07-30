@@ -50,7 +50,7 @@ export default class Notice extends Component {
                 <LoadingIcon/>
                 }
                 {this.state.load==true &&
-                    this.state.noticeList.map((notice, i) => {
+                    this.state.noticeList.reverse().map((notice, i) => {
                     return (<NoticeBtn title={notice.title}
                                        content={notice.contents}
                                        date={notice.create_date}

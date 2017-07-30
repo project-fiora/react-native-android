@@ -104,11 +104,11 @@ export default class MyWallet extends Component {
 
     render() {
         return (
-            <View>
+            <ScrollView>
                 {this.state.load == false &&
                 <LoadingIcon/>
                 }
-                <ScrollView contentContainerStyle={styles.frame}>
+                <View contentContainerStyle={styles.frame}>
                     <View style={styles.content}>
                         {(this.state.load == true && this.state.walletList.length == 0) &&
                         <View>
@@ -174,8 +174,8 @@ export default class MyWallet extends Component {
                         }
 
                     </View>
-                </ScrollView>
-            </View>
+                </View>
+            </ScrollView>
         );
     }
 }

@@ -146,14 +146,14 @@ export default class FriendWallet extends Component {
 
     render() {
         return (
-            <View>
+            <ScrollView>
                 {this.state.load == false &&
                 <LoadingIcon/>
                 }
                 {(this.state.load == true && this.state.secondLoad == false) &&
                 <LoadingIcon/>
                 }
-                <ScrollView contentContainerStyle={styles.frame}>
+                <View style={styles.frame}>
                     <View style={styles.content}>
                         {(this.state.load == true && this.state.friendList.length == 0) &&
                         <View>
@@ -271,8 +271,8 @@ export default class FriendWallet extends Component {
                         </View>
                         }
                     </View>
-                </ScrollView>
-            </View>
+                </View>
+            </ScrollView>
         );
     }
 }

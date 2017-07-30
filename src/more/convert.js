@@ -149,6 +149,7 @@ var styles = StyleSheet.create({
         opacity: 0.8,
         fontSize: 17*dpi,
         textAlign: 'center',
+        margin:10*dpi,
     },
     inputCoinValue: {
         width: 0.6*wid,
@@ -161,7 +162,6 @@ var styles = StyleSheet.create({
         alignSelf: 'center',
         backgroundColor: '#000000',
         opacity: 0.3,
-        margin: 15*dpi,
         paddingLeft: 20*dpi,
     },
     selectBoxWrapper: {
@@ -176,7 +176,6 @@ var styles = StyleSheet.create({
         borderRadius: 10*dpi,
         paddingLeft: 17*dpi,
         paddingRight: 15*dpi,
-        marginTop:10*dpi,
     },
     selectBoxRow: {
         flexDirection: 'row',

@@ -192,20 +192,26 @@ export default class Home extends Component {
                     <Text style={styles.txt}>
                         '{this.state.nickname != undefined && this.state.nickname}'님 환영합니다!{'\n'}
                     </Text>
-                    <TouchableOpacity
-                        style={styles.rightBtn}
-                        underlayColor={'#000000'}
-                        onPress={() => Actions.main({goTo: 'post'})}
-                    >
-                        <Text style={styles.txt}>커뮤니티 바로가기</Text>
-                    </TouchableOpacity>
-
                     <Text style={styles.warningText}>
                         ** 이 앱을 사용하는 도중에 발생하는
                     </Text>
                     <Text style={styles.warningText2}>
                         모든 책임은 사용자 본인에게 있습니다 **
                     </Text>
+                    <TouchableOpacity
+                        style={styles.postBtn}
+                        underlayColor={'#000000'}
+                        onPress={() => Actions.main({goTo: 'post'})}
+                    >
+                        <Text style={styles.txt}>커뮤니티 바로가기</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.postBtn}
+                        underlayColor={'#000000'}
+                        onPress={() => Actions.main({goTo: 'convert'})}
+                    >
+                        <Text style={styles.txt}>모의환전 바로가기</Text>
+                    </TouchableOpacity>
                     <View>
                         {(this.state.confirmLoad == true && this.state.confirmList.length != 0) &&
                         <View>
@@ -260,7 +266,7 @@ export default class Home extends Component {
 const dpi = Common.getRatio();
 const styles = StyleSheet.create({
     homeWrapper: {
-        padding: 40 * dpi,
+        padding: 30 * dpi,
     },
     txt: {
         color: '#FFFFFF',
@@ -278,6 +284,10 @@ const styles = StyleSheet.create({
         opacity: 0.8,
         fontSize: 15 * dpi,
     },
+    postBtn: {
+        marginTop: 15 * dpi,
+        margin:10*dpi,
+    },
     btn: {
         marginTop: 20 * dpi,
         color: '#FFFFFF',
@@ -292,7 +302,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     confirmBtn: {
-        width: 80 * dpi,
+        width: 70 * dpi,
         height: 30 * dpi,
         borderWidth: 1 * dpi,
         borderRadius: 20 * dpi,
@@ -301,7 +311,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6,
-        marginRight: 1 * dpi,
+        margin: 1 * dpi,
     },
     btnText: {
         color: '#FFFFFF',

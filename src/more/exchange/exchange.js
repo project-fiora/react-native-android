@@ -9,6 +9,7 @@ import {
     Text, TextInput, TouchableHighlight,
     View
 } from 'react-native';
+import Common from "../../common/common";
 
 export default class Exchange extends Component {
     render() {
@@ -33,26 +34,27 @@ export default class Exchange extends Component {
     }
 }
 
-
+const wid = Common.winWidth();
+const dpi = Common.getRatio();
 const styles = StyleSheet.create({
     frame:{
-        padding:20,
+        padding:20*dpi,
     },
     txt:{
         color:'#FFFFFF',
         opacity:0.8,
-        padding:1,
-        fontSize:17,
+        padding:1*dpi,
+        fontSize:17*dpi,
     },
     devText:{
         color:'#FFFFFF',
         opacity:0.8,
-        padding:1,
-        fontSize:15,
+        padding:1*dpi,
+        fontSize:17*dpi,
     },
     btcQrCodeImg:{
-        width:150,
-        height:150,
+        width:0.6*wid,
+        height:0.6*wid,
     },
 });
 
