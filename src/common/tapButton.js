@@ -69,10 +69,9 @@ var styles = StyleSheet.create({
         borderTopWidth: 1*dpi,
         borderColor: '#FFFFFF',
         opacity:0.6,
-        padding:5*dpi,
     },
     tab: {
-        maxWidth:0.18*wid,
+        maxWidth:0.19*wid,
         justifyContent: 'center',
     },
     img: {
@@ -82,10 +81,9 @@ var styles = StyleSheet.create({
         alignSelf:'center',
     },
     boxText: {
-        // minWidth: 50*dpi,
-        marginTop: -9*dpi,
+        marginTop: -10*dpi,
         color:'#FFFFFF',
-        fontSize:14,
+        fontSize:16*dpi,
         textAlign:'center',
     }
 });

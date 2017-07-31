@@ -17,7 +17,7 @@ const wid = Common.winWidth();
 const styles = StyleSheet.create({
     loadingIconWrapper: {
         position: 'absolute',
-        top: 0.5*wid,
+        top: 0.45*wid,
         left: 0,
         right: 0,
         bottom: 0,

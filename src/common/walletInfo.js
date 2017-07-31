@@ -6,7 +6,7 @@ import Common from "./common";
 export default class WalletInfo extends Component {
     render() {
         return (
-            <View>
+            <View style={styles.frame}>
                 <Text style={styles.contentText}>
                     {/*지갑번호 : {this.props.wallet_Id}{'\n'}*/}
                     지갑이름 : {this.props.wallet_name}{'\n'}
@@ -18,7 +18,7 @@ export default class WalletInfo extends Component {
                 <View style={styles.qrCodeWrapper}>
                     <QRCode
                         value={this.props.qrcode}
-                        size={220}
+                        size={200}
                         bgColor='black'
                         fgColor='white'/>
                 </View>
@@ -30,6 +30,9 @@ export default class WalletInfo extends Component {
 const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const styles = StyleSheet.create({
+    frame:{
+        alignItems:'center'
+    },
     contentText: {
         color: '#FFFFFF',
         fontSize: 17 * dpi,

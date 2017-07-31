@@ -22,6 +22,7 @@ export default class FriendWallet extends Component {
             friendList: [],
             walletList: [],
             load: false,
+            secondLoad: false,
             onClickFriendBox: false,
             onClickBox: false,
             enable: 'none',
@@ -77,43 +78,37 @@ export default class FriendWallet extends Component {
                     "Authorization": token,
                     'Accept': 'application/json',
                 }
-            })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    if (responseJson.message == "SUCCESS") {
-                        var list = responseJson.list;
-                        if (list.length == 0) {
-                            this.setState({walletList: [], load: true, secondLoad: true, enable: null});
-                        } else {
-                            Promise.resolve()
-                                .then(() => {
-                                    Common.getBalance(list[this.state.currentWallet].wallet_type, list[this.state.currentWallet].wallet_add)
-                                })
-                                .then(result => {
-                                    var balance;
-                                    if (Number.isInteger(result)) {
-                                        balance = (parseInt(result) / 100000000) + " " + list[this.state.currentWallet].wallet_type;
-                                    } else {
-                                        balance = result;
-                                    }
-                                    this.setState({
-                                        walletList: list,
-                                        balance: balance,
-                                        load: true,
-                                        secondLoad: true,
-                                        enable: null
-                                    });
-                                });
-                        }
+            }).then((response) => response.json()).then((responseJson) => {
+                if (responseJson.message == "SUCCESS") {
+                    var list = responseJson.list;
+                    if (list.length == 0) {
+                        this.setState({walletList: [], load: true, secondLoad: true, enable: null});
                     } else {
-                        alert("친구지갑정보를 가져올 수 없습니다");
-                        return false;
+                        Promise.resolve().then(() => {
+                            Common.getBalance(list[this.state.currentWallet].wallet_type, list[this.state.currentWallet].wallet_add)
+                        }).then(result => {
+                            var balance;
+                            if (Number.isInteger(result)) {
+                                balance = (parseInt(result) / 100000000) + " " + list[this.state.currentWallet].wallet_type;
+                            } else {
+                                balance = result;
+                            }
+                            this.setState({
+                                walletList: list,
+                                balance: balance,
+                                load: true,
+                                secondLoad: true,
+                                enable: null
+                            });
+                        });
                     }
-                })
-                .catch((error) => {
-                    console.error(error);
-                })
-                .done();
+                } else {
+                    alert("친구지갑정보를 가져올 수 없습니다");
+                    return false;
+                }
+            }).catch((error) => {
+                console.error(error);
+            }).done();
         });
     }
 
@@ -129,54 +124,101 @@ export default class FriendWallet extends Component {
     }
 
     showWallet(i, type, addr) {
-        this.setState({load: false}, () =>
-            Promise.resolve()
-                .then(() => Common.getBalance(type, addr))
-                .then(result => {
-                    var balance;
-                    if (Number.isInteger(result)) {
-                        balance = (parseInt(result) / 100000000) + " " + type;
-                    } else {
-                        balance = result;
-                    }
-                    this.setState({balance: balance, currentWallet: i, onClickBox: !this.state.onClickBox, load: true});
-                })
+        this.setState({secondLoad: false}, () =>
+            Promise.resolve().then(() => Common.getBalance(type, addr)).then(result => {
+                var balance;
+                if (Number.isInteger(result)) {
+                    balance = (parseInt(result) / 100000000) + " " + type;
+                } else {
+                    balance = result;
+                }
+                this.setState({
+                    balance: balance,
+                    currentWallet: i,
+                    onClickBox: !this.state.onClickBox,
+                    secondLoad: true
+                });
+            })
         );
     }
 
     render() {
         return (
-            <ScrollView>
-                {this.state.load == false &&
+            <ScrollView contentContainerStyle={styles.frame}>
+                {(!this.state.secondLoad || !this.state.load) &&
                 <LoadingIcon/>
                 }
-                {(this.state.load == true && this.state.secondLoad == false) &&
-                <LoadingIcon/>
-                }
-                <View style={styles.frame}>
-                    <View style={styles.content}>
-                        {(this.state.load == true && this.state.friendList.length == 0) &&
+                <View style={styles.content}>
+                    {(this.state.load&&this.state.friendList.length == 0) &&
+                    <View>
+                        <Text style={styles.titleText}>
+                            아직 친구가 한명도 없어요!{'\n'}
+                            오른쪽 상단의 친구 관리에서{'\n'}
+                            친구를 추가해보세요!
+                        </Text>
+                    </View>
+                    }
+                    {/*////////////////친구 리스트 select Box////////////////////*/}
+                    {(this.state.load&&this.state.friendList.length != 0) &&
+                    <View pointerEvents={this.state.enable}>
+                        <Text style={styles.titleText}>아래 버튼을 눌러서 친구와 친구지갑을 선택하세요!</Text>
+                        <TouchableOpacity
+                            underlayColor={'#AAAAAA'}
+                            onPress={() => this.setState({onClickFriendBox: !this.state.onClickFriendBox})}
+                        >
+                            <View style={styles.selectBoxWrapper}>
+                                <View style={styles.selectBoxRow}>
+                                    <View style={styles.selectBoxTextWrapper}>
+                                        <Text style={styles.selectBox}>
+                                            {this.state.friendList[this.state.currentFriend].nickname}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.selectBoxIconWrapper}>
+                                        <Text style={styles.selectIcon}>
+                                            ▼
+                                        </Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                        {(() => {
+                            if (this.state.onClickFriendBox == true) {
+                                return this.state.friendList.map((friend, i) => {
+                                    if (this.state.currentFriend != i)
+                                        return (
+                                            <TouchableOpacity
+                                                underlayColor={'#AAAAAA'}
+                                                onPress={() => this.showFriend(i, friend.id)}
+                                                key={i}
+                                            >
+                                                <View style={styles.selectBoxWrapper}>
+                                                    <Text style={styles.selectBox}>
+                                                        {friend.nickname}
+                                                    </Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        );
+                                })
+                            }
+                        })()}
+                        <View style={styles.blank}/>
+                        {/*////////////////친구 리스트 select Box////////////////////*/}
+                        {(this.state.secondLoad && this.state.walletList.length == 0) &&
                         <View>
-                            <Text style={styles.titleText}>
-                                아직 친구가 한명도 없어요!{'\n'}
-                                오른쪽 상단의 친구 관리에서{'\n'}
-                                친구를 추가해보세요!
-                            </Text>
+                            <Text style={styles.titleText}>친구 지갑이 없어요!</Text>
                         </View>
                         }
-                        {/*////////////////친구 리스트 select Box////////////////////*/}
-                        {(this.state.load == true && this.state.friendList.length != 0) &&
-                        <View pointerEvents={this.state.enable}>
-                            <Text style={styles.titleText}>아래 버튼을 눌러서 친구와 친구지갑을 선택하세요!</Text>
+                        {(this.state.secondLoad && this.state.walletList.length != 0) &&
+                        <View>
                             <TouchableOpacity
                                 underlayColor={'#AAAAAA'}
-                                onPress={() => this.setState({onClickFriendBox: !this.state.onClickFriendBox})}
+                                onPress={() => this.setState({onClickBox: !this.state.onClickBox})}
                             >
                                 <View style={styles.selectBoxWrapper}>
                                     <View style={styles.selectBoxRow}>
                                         <View style={styles.selectBoxTextWrapper}>
                                             <Text style={styles.selectBox}>
-                                                {this.state.friendList[this.state.currentFriend].nickname}
+                                                {this.state.walletList[this.state.currentWallet].wallet_name}
                                             </Text>
                                         </View>
                                         <View style={styles.selectBoxIconWrapper}>
@@ -188,18 +230,18 @@ export default class FriendWallet extends Component {
                                 </View>
                             </TouchableOpacity>
                             {(() => {
-                                if (this.state.onClickFriendBox == true) {
-                                    return this.state.friendList.map((friend, i) => {
-                                        if (this.state.currentFriend != i)
+                                if (this.state.onClickBox == true) {
+                                    return this.state.walletList.map((wallet, i) => {
+                                        if (this.state.currentWallet != i)
                                             return (
                                                 <TouchableOpacity
                                                     underlayColor={'#AAAAAA'}
-                                                    onPress={() => this.showFriend(i, friend.id)}
+                                                    onPress={() => this.showWallet(i, wallet.wallet_type, wallet.wallet_add)}
                                                     key={i}
                                                 >
                                                     <View style={styles.selectBoxWrapper}>
                                                         <Text style={styles.selectBox}>
-                                                            {friend.nickname}
+                                                            {wallet.wallet_name}
                                                         </Text>
                                                     </View>
                                                 </TouchableOpacity>
@@ -207,70 +249,19 @@ export default class FriendWallet extends Component {
                                     })
                                 }
                             })()}
-                            <View style={styles.blank}/>
-                            {/*////////////////친구 리스트 select Box////////////////////*/}
-                            {(this.state.load == true && this.state.secondLoad == true && this.state.walletList.length == 0) &&
-                            <View>
-                                <Text style={styles.titleText}>친구 지갑이 없어요!</Text>
-                            </View>
+                            {(this.state.load&&this.state.secondLoad&&this.state.walletList.length != 0) &&
+                            <WalletInfo
+                                wallet_name={this.state.walletList[this.state.currentWallet].wallet_name}
+                                wallet_type={this.state.walletList[this.state.currentWallet].wallet_type}
+                                balance={this.state.balance}
+                                wallet_add={this.state.walletList[this.state.currentWallet].wallet_add}
+                                qrcode={this.state.qrcode}
+                            />
                             }
-                            {(this.state.load == true && this.state.secondLoad == true && this.state.walletList.length != 0) &&
-                            <View>
-                                <TouchableOpacity
-                                    underlayColor={'#AAAAAA'}
-                                    onPress={() => this.setState({onClickBox: !this.state.onClickBox})}
-                                >
-                                    <View style={styles.selectBoxWrapper}>
-                                        <View style={styles.selectBoxRow}>
-                                            <View style={styles.selectBoxTextWrapper}>
-                                                <Text style={styles.selectBox}>
-                                                    {this.state.walletList[this.state.currentWallet].wallet_name}
-                                                </Text>
-                                            </View>
-                                            <View style={styles.selectBoxIconWrapper}>
-                                                <Text style={styles.selectIcon}>
-                                                    ▼
-                                                </Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                                {(() => {
-                                    if (this.state.onClickBox == true) {
-                                        return this.state.walletList.map((wallet, i) => {
-                                            if (this.state.currentWallet != i)
-                                                return (
-                                                    <TouchableOpacity
-                                                        underlayColor={'#AAAAAA'}
-                                                        onPress={() => this.showWallet(i, wallet.wallet_type, wallet.wallet_add)}
-                                                        key={i}
-                                                    >
-                                                        <View style={styles.selectBoxWrapper}>
-                                                            <Text style={styles.selectBox}>
-                                                                {wallet.wallet_name}
-                                                            </Text>
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                );
-                                        })
-                                    }
-                                })()}
-                                {this.state.walletList.length != 0 &&
-                                <WalletInfo
-                                    wallet_name={this.state.walletList[this.state.currentWallet].wallet_name}
-                                    wallet_type={this.state.walletList[this.state.currentWallet].wallet_type}
-                                    balance={this.state.balance}
-                                    wallet_add={this.state.walletList[this.state.currentWallet].wallet_add}
-                                    qrcode={this.state.qrcode}
-                                />
-                                }
-                            </View>
-                            }
-
-
                         </View>
                         }
                     </View>
+                    }
                 </View>
             </ScrollView>
         );
@@ -282,9 +273,8 @@ const wid = Common.winWidth();
 const hei = Common.winHeight();
 const styles = StyleSheet.create({
     frame: {
-        paddingTop: 15 * dpi,
-        paddingLeft: 20 * dpi,
-        paddingRight: 20 * dpi,
+        flex: 1,
+        padding: 15 * dpi,
     },
     content: {
         marginTop: 5 * dpi,
@@ -312,8 +302,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: '#000000',
-        width: 0.6 * wid,
-        height: 0.075 * hei,
+        width: 0.55 * wid,
+        height: 0.055 * hei,
         opacity: 0.4,
         borderColor: '#FFFFFF',
         borderWidth: 1 * dpi,
