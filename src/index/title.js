@@ -28,6 +28,10 @@ export default class Title extends Component {
         this.setState({currentPage: 'join'});
     }
 
+    componentWillUnmount() {
+        clearInterval();
+    }
+
     render() {
         return (
             <ImageBackground imageStyle={styles.backgroundImg}

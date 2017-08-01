@@ -22,6 +22,7 @@ export default class Post extends Component {
             post: {},
             comment: '',
             load: false,
+            like: false,
         };
     }
 
@@ -49,6 +50,7 @@ export default class Post extends Component {
                     StateStore.setEdit_postContents(responseJson.contents);
                     this.setState({
                         post: responseJson,
+                        like: responseJson.like,
                         load: true,
                     });
                 } else {
@@ -59,6 +61,60 @@ export default class Post extends Component {
                 console.error(error);
             }).done();
         });
+    }
+
+    onClickLike() { //좋아요 버튼
+        if (this.state.like) { //이미 좋아요 상태라면!
+            // DELETE /api/post/postlikedelete 좋아요를 취소한다
+            try {
+                //좋아요 취소
+                fetch(PrivateAddr.getAddr() + "post/postlikedelete?post_id=" + this.props.post_id, {
+                    method: 'DELETE', headers: {
+                        "Authorization": this.state.token,
+                        "Accept": "*/*",
+                    }
+                })
+                    .then((response) => response.json())
+                    .then((responseJson) => {
+                        if (responseJson.message == "SUCCESS") {
+                            this.setState({like: false});
+                        } else {
+                            alert("좋아요 취소 실패");
+                            return false;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            } catch (err) {
+                alert('좋아요 취소 실패 ' + err);
+                return false;
+            }
+        } else { //좋아요가 true가 아닐때
+            // POST /api/post/postlike //조아요!
+            console.log(this.props.post_id);
+            fetch(PrivateAddr.getAddr() + 'post/postlike?post_id='+this.props.post_id, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': this.state.token,
+                }
+            }).then((response) => {
+                return response.json()
+            }).then((responseJson) => {
+                console.log(responseJson);
+                if (responseJson.message == "SUCCESS") {
+                    this.setState({like: true});
+                } else {
+                    alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                }
+            }).catch((error) => {
+                alert('Network Connection Failed');
+                console.error(error);
+                return false;
+            }).done();
+        }
     }
 
     editPost() {
@@ -295,7 +351,26 @@ export default class Post extends Component {
                                     })}
                                 </View>
                             </View>
-                            <Text style={styles.commentLength}>댓글 {this.state.post.comment_list.length}개</Text>
+                            <View style={styles.commentRow}>
+                                <Text style={styles.commentLength}>
+                                    댓글 {this.state.post.comment_list.length}개
+                                </Text>
+                                <TouchableOpacity
+                                    onPress={() => this.onClickLike()}
+                                >
+                                    {!this.state.like &&
+                                    <Text style={styles.likeBtn}>
+                                        추천
+                                    </Text>
+                                    }
+                                    {this.state.like &&
+                                    <Text style={styles.likeCancelBtn}>
+                                        추천 취소
+                                    </Text>
+                                    }
+                                </TouchableOpacity>
+                            </View>
+                            {/*//////////////////////////////댓글 갯수////////////////////////////////////////*/}
                             {this.state.post.comment_list.map((comment, i) => {
                                 if (comment.posibleEdditAndDelete) { //자신이 쓴 댓글은 수정/삭제 버튼이있다
                                     return (
@@ -441,7 +516,7 @@ var styles = StyleSheet.create({
     },
     name: {
         fontSize: 14 * dpi,
-        color: '#FFFFFF',
+        color: '#FFECDA',
         opacity: 0.8,
         textAlign: 'right',
         marginBottom: 15 * dpi,
@@ -465,6 +540,20 @@ var styles = StyleSheet.create({
         paddingLeft: 10 * dpi,
         marginBottom: 10 * dpi,
     },
+    likeBtn: {
+        fontSize: 16 * dpi,
+        color: '#FFFFFF',
+        opacity: 0.9,
+        paddingRight: 10 * dpi,
+        marginBottom: 10 * dpi,
+    },
+    likeCancelBtn: {
+        fontSize: 16 * dpi,
+        color: '#DBCEFF',
+        opacity: 0.9,
+        paddingRight: 10 * dpi,
+        marginBottom: 10 * dpi,
+    },
     commentView: { //댓글 뷰
         borderColor: '#FFFFFF',
         borderWidth: 0.5 * dpi,
@@ -483,7 +572,7 @@ var styles = StyleSheet.create({
     },
     commentWriter: {
         fontSize: 16 * dpi,
-        color: '#FFFFFF',
+        color: '#FFECDA',
         opacity: 0.9,
     },
     commentDate: {
@@ -513,7 +602,7 @@ var styles = StyleSheet.create({
     commentEditBtnText: { //수정/삭제
         fontSize: 15 * dpi,
         fontWeight: '600',
-        color: '#FFFFFF',
+        color: '#FFC9C3',
         opacity: 0.8,
     },
     commentEditBtnTextBetween: { //수정/삭제 사이의 |
@@ -533,13 +622,13 @@ var styles = StyleSheet.create({
         height: commentBtnHeight,
         fontSize: 15 * dpi,
         color: '#FFFFFF',
-        padding:10*dpi,
+        padding: 10 * dpi,
         borderColor: '#FFFFFF',
         borderWidth: 1 * dpi,
         borderRadius: 12 * dpi,
         alignSelf: 'center',
         backgroundColor: 'transparent',
-        opacity: 0.5,
+        opacity: 0.65,
     },
     commentBtn: {
         width: 0.24 * wid,
@@ -549,7 +638,7 @@ var styles = StyleSheet.create({
         borderColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: 0.5
+        opacity: 0.65
     },
     commentBtnText: {
         color: '#FFFFFF',

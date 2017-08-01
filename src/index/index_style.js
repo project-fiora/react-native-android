@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
         maxWidth: 118*dpi,
         justifyContent: 'center',
         alignItems: 'center',
+        alignSelf: 'center',
         borderWidth: 1*dpi,
         borderRadius: 20*dpi,
         borderColor: '#FFFFFF',

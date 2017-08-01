@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
         fontSize:17*dpi,
     },
     btcQrCodeImg:{
-        width:0.6*wid,
-        height:0.6*wid,
+        width:0.7*wid,
+        height:0.7*wid,
     },
 });
 

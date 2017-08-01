@@ -97,27 +97,62 @@ export default class Post extends Component {
                         if (top.nickname.length > 6) {
                             top.nickname = top.nickname.substr(0, 6) + "...";
                         }
-                        return (
-                            <View key={i} style={styles.topTr}>
-                                <View style={styles.td1}>
-                                    <Text style={styles.bodyText}>
-                                        {top.likes_count}
-                                    </Text>
+                        let c_count = "";
+                        if (top.c_count > 0) {
+                            c_count = "[" + top.c_count + "]";
+                        }
+
+                        if(i==this.state.topList.length-1){
+                            return(
+                                <View key={i}>
+                                    <TouchableOpacity
+                                        onPress={() => this.readPost(top.post_id)}
+                                        style={styles.topTr}>
+                                        <View style={styles.td1}>
+                                            <Text style={styles.bodyText}>
+                                                {top.likes_count}
+                                            </Text>
+                                        </View>
+                                        <View style={styles.td2}>
+                                            <Text style={styles.bodyText}>
+                                                {top.title} <Text style={styles.c_count}>{c_count}</Text>
+                                            </Text>
+                                        </View>
+                                        <View style={styles.td3}>
+                                            <Text style={styles.bodyText}>
+                                                {top.nickname}
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={styles.heavyHr}/>
                                 </View>
-                                <TouchableOpacity
-                                    onPress={() => this.readPost(top.post_id)}
-                                    style={styles.td2}>
-                                    <Text style={styles.bodyText}>
-                                        {top.title}
-                                    </Text>
-                                </TouchableOpacity>
-                                <View style={styles.td3}>
-                                    <Text style={styles.bodyText}>
-                                        {top.nickname}
-                                    </Text>
+                            );
+                        } else {
+                            return (
+                                <View key={i}>
+                                    <TouchableOpacity
+                                        onPress={() => this.readPost(top.post_id)}
+                                        style={styles.topTr}>
+                                        <View style={styles.td1}>
+                                            <Text style={styles.bodyText}>
+                                                {top.likes_count}
+                                            </Text>
+                                        </View>
+                                        <View style={styles.td2}>
+                                            <Text style={styles.bodyText}>
+                                                {top.title} <Text style={styles.c_count}>{c_count}</Text>
+                                            </Text>
+                                        </View>
+                                        <View style={styles.td3}>
+                                            <Text style={styles.bodyText}>
+                                                {top.nickname}
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={styles.hr}/>
                                 </View>
-                            </View>
-                        )
+                            )
+                        }
                     })}
 
                     {this.state.postList.map((post, i) => {
@@ -127,25 +162,32 @@ export default class Post extends Component {
                         if (post.nickname.length > 6) {
                             post.nickname = post.nickname.substr(0, 6) + "...";
                         }
+                        let c_count = "";
+                        if (post.c_count > 0) {
+                            c_count = "[" + post.c_count + "]";
+                        }
                         return (
-                            <View key={i} style={styles.postTr}>
-                                <View style={styles.td1}>
-                                    <Text style={styles.bodyText}>
-                                        {post.likes_count}
-                                    </Text>
-                                </View>
+                            <View key={i}>
                                 <TouchableOpacity
                                     onPress={() => this.readPost(post.post_id)}
-                                    style={styles.td2}>
-                                    <Text style={styles.bodyText}>
-                                        {post.title}
-                                    </Text>
+                                    style={styles.postTr}>
+                                    <View style={styles.td1}>
+                                        <Text style={styles.bodyText}>
+                                            {post.likes_count}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.td2}>
+                                        <Text style={styles.bodyText}>
+                                            {post.title} <Text style={styles.c_count}>{c_count}</Text>
+                                        </Text>
+                                    </View>
+                                    <View style={styles.td3}>
+                                        <Text style={styles.bodyText}>
+                                            {post.nickname}
+                                        </Text>
+                                    </View>
                                 </TouchableOpacity>
-                                <View style={styles.td3}>
-                                    <Text style={styles.bodyText}>
-                                        {post.nickname}
-                                    </Text>
-                                </View>
+                                <View style={styles.hr}/>
                             </View>
                         )
                     })}
@@ -187,9 +229,9 @@ var styles = StyleSheet.create({
     thead: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderBottomWidth: 1.2 * dpi,
+        borderBottomWidth: 2 * dpi,
         borderColor: '#FFFFFF',
-        paddingVertical:thei/6,
+        paddingVertical: thei / 6,
         height: thei,
     },
     headText: {
@@ -211,22 +253,30 @@ var styles = StyleSheet.create({
     topTr: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderBottomWidth: 0.6 * dpi,
-        borderColor: '#FFFFFF',
         height: thei,
-        backgroundColor: '#000000',
-        opacity: 0.3,
+        opacity:0.8,
     },
     postTr: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        height: thei,
+        opacity:0.8,
+    },
+    hr: {
         borderBottomWidth: 0.6 * dpi,
         borderColor: '#FFFFFF',
-        height: thei,
+    },
+    heavyHr:{
+        borderBottomWidth: 1.5 * dpi,
+        borderColor: '#FFFFFF',
     },
     bodyText: {
         fontSize: 16 * dpi,
         color: '#FFFFFF',
+    },
+    c_count:{
+        fontSize: 16 * dpi,
+        color: '#DBCEFF',
     },
     td1: {
         justifyContent: 'center',

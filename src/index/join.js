@@ -30,7 +30,7 @@ export default class Join extends Component {
             confirmAuth: false,
             passwd: '',
             passwd2: '',
-            name: '',
+            nickname: '',
             agree: false,
             enable: null,
             enableNickname: false,
@@ -38,7 +38,7 @@ export default class Join extends Component {
     }
 
     componentWillUnmount() {
-        clearTimeout();
+        clearInterval();
     }
 
     join() {//회원가입 POST api call
@@ -57,7 +57,7 @@ export default class Join extends Component {
                                 body: JSON.stringify({
                                     email: this.state.email,
                                     password: this.state.passwd,
-                                    nickname: this.state.name
+                                    nickname: this.state.nickname
                                 })
                             }).then((response) => {
                                 return response.json()
@@ -127,7 +127,7 @@ export default class Join extends Component {
     }
 
     timer() {
-        setTimeout(
+        setInterval(
             () => {
                 if (this.state.authTimer > 0) {
                     this.setState({authTimer: this.state.authTimer - 1})
@@ -303,28 +303,49 @@ export default class Join extends Component {
                             multiline={false}
                         />
                     </View>
-
+                    {!this.state.enableNickname &&
+                    <View>
+                        <View style={styles.inputWrapper}>
+                            <Image source={require('../common/img/user.png')} style={styles.inputTextIcon}/>
+                            <TextInput
+                                style={styles.input}
+                                value={this.state.nickname}
+                                onChangeText={(name) => this.setState({nickname: name})}
+                                placeholder={'이름 혹은 닉네임'}
+                                placeholderTextColor="#FFFFFF"
+                                maxLength={10}
+                                autoCapitalize='none'
+                                multiline={false}
+                                autoCorrect={false}
+                            />
+                        </View>
+                        <TouchableHighlight
+                            style={styles.authBtn}
+                            underlayColor={'#000000'}
+                            onPress={() => this.checkNickname()}
+                        >
+                            <Text style={styles.authLabel}>닉네임 중복검사</Text>
+                        </TouchableHighlight>
+                    </View>
+                    }
+                    {this.state.enableNickname &&
                     <View style={styles.inputWrapper}>
                         <Image source={require('../common/img/user.png')} style={styles.inputTextIcon}/>
                         <TextInput
                             style={styles.input}
-                            value={this.state.name}
-                            onChangeText={(name) => this.setState({name: name})}
+                            value={this.state.nickname}
+                            onChangeText={(name) => this.setState({nickname: name})}
                             placeholder={'이름 혹은 닉네임'}
                             placeholderTextColor="#FFFFFF"
                             maxLength={10}
                             autoCapitalize='none'
                             multiline={false}
                             autoCorrect={false}
+                            editable={false}
                         />
                     </View>
-                    <TouchableHighlight
-                        style={styles.authBtn}
-                        underlayColor={'#000000'}
-                        onPress={() => this.checkNickname()}
-                    >
-                        <Text style={styles.authLabel}>닉네임 중복검사</Text>
-                    </TouchableHighlight>
+                    }
+
                     <Text style={styles.agreeText}>
                         ** 이 앱을 사용하는 도중에 발생하는{'\n'}모든 책임은 사용자 본인에게 있습니다 **
                     </Text>
