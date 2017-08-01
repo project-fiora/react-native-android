@@ -14,9 +14,9 @@ export default class Root extends Component {
     render() {
         return(
             <Router duration={0}>
-                <Scene key="root" direction="vertical" hideNavBar renderBackButton={()=>(null)}>
+                <Scene key="root" direction="vertical" hideNavBar>
                     <Scene key="title" component={Title} initial={true}/>
-                    <Scene key="main" component={Main} renderBackButton={()=>(null)}/>
+                    <Scene key="main" component={Main}/>
                     <Scene key="scanner" component={Scanner}/>
                 </Scene>
             </Router>

@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Common from "../common/common";
 import LoadingIcon from "../common/loadingIcon";
+import StateStore from "../common/stateStore";
 
 export default class Coinmarketcap extends Component {
     constructor(props) {
@@ -24,8 +25,9 @@ export default class Coinmarketcap extends Component {
     }
 
     componentDidMount() {
+        StateStore.setGlobalLoaded('auto');
         this.getPriceInfo();
-        setInterval(
+        setTimeout(
             () => {
                 this.getPriceInfo();
             }, 4000
@@ -33,7 +35,7 @@ export default class Coinmarketcap extends Component {
     }
 
     componentWillUnmount(){
-        clearInterval();
+        clearTimeout();
     }
 
     getPriceInfo() {

@@ -8,10 +8,18 @@ import {Actions} from 'react-native-router-flux';
 import Common from "./common";
 
 export default class TabButton extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+
+        };
+    }
+
     render() {
         return (
             <View style={styles.taps}>
-                <Tap img={images.home} text="홈" goTo="home"/>
+                <Tap img={images.home} text='홈' goTo="home"/>
                 <Tap img={images.price} text="시세" goTo="price"/>
                 <Tap img={images.wallet} text="내지갑" goTo="myWallet"/>
                 <Tap img={images.friendWallet} text="친구지갑" goTo="friendWallet"/>

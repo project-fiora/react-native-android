@@ -3,15 +3,16 @@
  */
 import React, {Component} from 'react';
 import {
-    ScrollView, StyleSheet, Alert, PixelRatio,
+    ScrollView, StyleSheet, Alert,
     Text, AsyncStorage, View, TouchableOpacity,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
 import LoadingIcon from "../common/loadingIcon";
+import TabButton from "../common/tapButton";
 
-export default class Home extends Component {
+class Home extends Component {
     constructor(props) {
         super(props);
 
@@ -340,3 +341,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+export default Home;

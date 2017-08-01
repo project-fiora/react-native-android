@@ -32,36 +32,41 @@ export default class FriendWallet extends Component {
         };
     }
 
-    componentDidMount() {
-        this.getFriendList();
+    async componentDidMount() {
+        await this.getFriendList();
     }
 
     async getFriendList() {
         await AsyncStorage.getItem('Token', (err, result) => {
-            if (err != null) {
-                alert(err);
-                return false;
-            }
-            const token = JSON.parse(result).token;
-            fetch(PrivateAddr.getAddr() + "friend/myfriend", {
-                method: 'GET', headers: {
-                    "Authorization": token,
-                    "Accept": "*/*",
-                }
-            }).then((response) => response.json()).then((responseJson) => {
-                if (responseJson.message == "SUCCESS") {
-                    this.setState({friendList: responseJson.list, load: true});
-                } else {
-                    alert("친구정보를 가져올 수 없습니다");
+            try{
+                if (err != null) {
+                    alert(err);
                     return false;
                 }
-            }).catch((error) => {
-                console.error(error);
-            }).done(() => {
-                if (this.state.friendList.length != 0) {
-                    this.getFriendWallet(this.state.friendList[this.state.currentFriend].id);
-                }
-            });
+                const token = JSON.parse(result).token;
+                fetch(PrivateAddr.getAddr() + "friend/myfriend", {
+                    method: 'GET', headers: {
+                        "Authorization": token,
+                        "Accept": "*/*",
+                    }
+                }).then((response) => response.json()).then((responseJson) => {
+                    if (responseJson.message == "SUCCESS") {
+                        this.setState({friendList: responseJson.list, load: true},()=>{
+                            if (this.state.friendList.length != 0) {
+                                this.getFriendWallet(this.state.friendList[this.state.currentFriend].id);
+                            }
+                        });
+                    } else {
+                        alert("친구정보를 가져올 수 없습니다");
+                        return false;
+                    }
+                }).catch((error) => {
+                    console.error(error);
+                }).done();
+            }catch(err){
+                console.error(err);
+                return false;
+            }
         });
     }
 

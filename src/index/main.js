@@ -43,6 +43,7 @@ import Version from '../more/version';
 import Inquire from '../more/inquire';
 import Common from "../common/common";
 import PostAddEdit from "../more/post/postAddEdit";
+import StateStore from "../common/stateStore";
 
 export default class Main extends Component {
     constructor(props) {
@@ -56,6 +57,7 @@ export default class Main extends Component {
             rightBtnGoTo: '',
             rightBtnText: '',
         };
+        StateStore.setGlobalLoaded('none');
         this.handleBack = (() => {
             Alert.alert(
                 '경고!',

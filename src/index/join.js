@@ -38,7 +38,7 @@ export default class Join extends Component {
     }
 
     componentWillUnmount() {
-        clearInterval();
+        clearTimeout();
     }
 
     join() {//회원가입 POST api call
@@ -127,7 +127,7 @@ export default class Join extends Component {
     }
 
     timer() {
-        setInterval(
+        setTimeout(
             () => {
                 if (this.state.authTimer > 0) {
                     this.setState({authTimer: this.state.authTimer - 1})

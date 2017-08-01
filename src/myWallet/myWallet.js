@@ -40,6 +40,10 @@ export default class MyWallet extends Component {
     async getMyWallet() {
         await AsyncStorage.getItem('Token', (err, result) => {
             try{
+                if (err != null) {
+                    alert(err);
+                    return false;
+                }
                 const token = JSON.parse(result).token;
                 fetch(PrivateAddr.getAddr() + "wallet/list", {
                     method: 'GET', headers: {
@@ -81,10 +85,6 @@ export default class MyWallet extends Component {
                 alert(err);
                 Actions.main({goTo:'home'});
             }
-            if (err != null) {
-                alert(err);
-                return false;
-            }
         });
     }
 
@@ -93,8 +93,6 @@ export default class MyWallet extends Component {
             Promise.resolve()
                 .then(() => Common.getBalance(type, addr))
                 .then(result => {
-                    console.log('show wallet ok');
-                    console.log(result);
                     var balance;
                     if (Number.isInteger(result)) {
                         balance = (parseInt(result) / 100000000) + " " + type;

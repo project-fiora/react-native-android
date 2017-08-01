@@ -1,6 +1,7 @@
 import {observable} from 'mobx';
 
 const stateStore = observable({
+    globalLoaded:'none',
     loaded:'',
     walletName:'',
     walletAddr:'',
@@ -15,6 +16,14 @@ const stateStore = observable({
     edit_postTitle:'',
     edit_postContents:'',
 });
+
+///Global loading control/////
+stateStore.setGlobalLoaded = (load)=>{
+    this.globalLoaded = load;
+};
+stateStore.globalLoaded = ()=>{
+    return this.globalLoaded;
+}
 
 ///loading control/////
 stateStore.setLoaded = (load)=>{

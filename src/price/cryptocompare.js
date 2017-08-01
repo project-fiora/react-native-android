@@ -4,14 +4,14 @@
 
 import React, {Component} from 'react';
 import {
-    RefreshControl,
     ScrollView,
     StyleSheet,
     Text,
-    View, Image
+    View,
 } from 'react-native';
 import Common from "../common/common";
 import LoadingIcon from "../common/loadingIcon";
+import StateStore from "../common/stateStore";
 
 export default class Cryptocompare extends Component {
     constructor(props) {
@@ -25,8 +25,9 @@ export default class Cryptocompare extends Component {
     }
 
     componentDidMount() {
+        StateStore.setGlobalLoaded('auto');
         this.getRate();
-        setInterval(
+        setTimeout(
             () => {
                 this.getRate();
             }, 4000
@@ -34,7 +35,11 @@ export default class Cryptocompare extends Component {
     }
 
     componentWillUnmount() {
-        clearInterval();
+        setTimeout(
+            () => {
+                clearTimeout();
+            }, 4000
+        );
     }
 
     getRate() {
@@ -53,11 +58,10 @@ export default class Cryptocompare extends Component {
         fetch("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,ETC,XRP,LTC,DASH&tsyms=BTC,KRW,BTC,USD")
             .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({cryptoList: responseJson.RAW, refreshing: false, load: true});
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+                this.setState({cryptoList: responseJson.RAW, refreshing: false, load: true})
+            }).catch((error) => {
+            console.error(error);
+        }).done();
     }
 
     render() {
