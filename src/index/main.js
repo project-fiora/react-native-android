@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import {
     Image, ImageBackground,
     StyleSheet, Text, TouchableHighlight, TouchableOpacity,
-    View
+    View, Alert, BackHandler
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 
@@ -56,6 +56,33 @@ export default class Main extends Component {
             rightBtnGoTo: '',
             rightBtnText: '',
         };
+        this.handleBack = (() => {
+            Alert.alert(
+                '경고!',
+                '앱이 종료됩니다',
+                [
+                    {
+                        text: 'Cancel', onPress: () => {
+                        return true;
+                    }, style: 'cancel'
+                    },
+                    {
+                        text: 'OK', onPress: () => {
+                        BackHandler.exitApp();
+                        return false;
+                    }
+                    },
+                ],
+            );
+            return true;
+        }).bind(this);
+    }
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBack);
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBack);
     }
 
     componentWillMount() { //title, backBtn handler

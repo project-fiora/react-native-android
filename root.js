@@ -4,7 +4,7 @@
 
 import React,{ Component } from 'react';
 
-import {Scene, Router} from 'react-native-router-flux';
+import {Scene, Router, } from 'react-native-router-flux';
 
 import Title from './src/index/title';
 import Main from './src/index/main';
@@ -14,9 +14,9 @@ export default class Root extends Component {
     render() {
         return(
             <Router duration={0}>
-                <Scene key="root" direction="vertical" hideNavBar>
+                <Scene key="root" direction="vertical" hideNavBar renderBackButton={()=>(null)}>
                     <Scene key="title" component={Title} initial={true}/>
-                    <Scene key="main" component={Main}/>
+                    <Scene key="main" component={Main} renderBackButton={()=>(null)}/>
                     <Scene key="scanner" component={Scanner}/>
                 </Scene>
             </Router>

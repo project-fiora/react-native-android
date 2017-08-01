@@ -1401,6 +1401,10 @@ exec-sh@^0.2.0:
   dependencies:
     merge "^1.1.3"
 
+exenv@^1.2.1:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
+
 expand-brackets@^0.1.4:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/expand-brackets/-/expand-brackets-0.1.5.tgz#df07284e342a807cd733ac5af72411e581d1177b"
@@ -3124,6 +3128,12 @@ react-mixin@^2.0.2:
     object-assign "^2.0.0"
     smart-mixin "^1.2.0"
 
+react-native-android-back-button@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-android-back-button/-/react-native-android-back-button-0.3.0.tgz#d890aa4d204b4a84146fdf862a45c58b1cb1b115"
+  dependencies:
+    react-side-effect "^1.0.2"
+
 "react-native-camera@git+https://github.com/lwansbrough/react-native-camera.git":
   version "0.9.4"
   resolved "git+https://github.com/lwansbrough/react-native-camera.git#97d5d7988ab083e8b43011237a6deaa6b4a10ae5"
@@ -3278,6 +3288,13 @@ react-proxy@^1.1.7:
   dependencies:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
+
+react-side-effect@^1.0.2:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-1.1.3.tgz#512c25abe0dec172834c4001ec5c51e04d41bc5c"
+  dependencies:
+    exenv "^1.2.1"
+    shallowequal "^1.0.1"
 
 react-static-container@1.0.1:
   version "1.0.1"
@@ -3613,6 +3630,10 @@ set-blocking@^2.0.0:
 setimmediate@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/setimmediate/-/setimmediate-1.0.5.tgz#290cbb232e306942d7d7ea9b83732ab7856f8285"
+
+shallowequal@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.0.2.tgz#1561dbdefb8c01408100319085764da3fcf83f8f"
 
 shell-quote@1.6.1, shell-quote@^1.6.1:
   version "1.6.1"
