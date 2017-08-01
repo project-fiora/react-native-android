@@ -141,7 +141,8 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         opacity: 0.8,
         fontSize: 16*dpi,
-        margin: 5*dpi,
+        marginTop: 15*dpi,
+        marginBottom: 10*dpi,
         textAlign: 'center',
     },
     thead: {

@@ -55,7 +55,6 @@ export default class Main extends Component {
             enableRightBtn: false,
             rightBtnGoTo: '',
             rightBtnText: '',
-            refreshGoTo: 'price',
         };
     }
 
@@ -67,9 +66,9 @@ export default class Main extends Component {
         } else if (p == 'price') {
             this.setState({
                 title: '시세 정보',
-                enableRightBtn: true, rightBtnText: '다른 정보', rightBtnGoTo: 'cryptocompare'
+                enableRightBtn: true, rightBtnText: '다른 정보', rightBtnGoTo: 'coinmarketcap'
             });
-        } else if (p == 'cryptocompare') {
+        } else if (p == 'coinmarketcap') {
             this.setState({
                 title: '시세 정보',
                 enableBackBtn: true, backBtnGoTo: 'price'
@@ -235,8 +234,8 @@ export default class Main extends Component {
                     </View>
                     <View style={styles.hr}/>
                     {this.props.goTo === 'home' && <Home/>}
-                    {this.props.goTo === 'price' && <Coinmarketcap/>}
-                    {this.props.goTo === 'cryptocompare' && <Cryptocompare/>}
+                    {this.props.goTo === 'price' && <Cryptocompare/>}
+                    {this.props.goTo === 'coinmarketcap' && <Coinmarketcap/>}
 
                     {this.props.goTo === 'myWallet' && <MyWallet/>}
                     {this.props.goTo === 'myWalletMng' && <MyWalletMng/>}
