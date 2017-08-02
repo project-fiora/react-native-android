@@ -50,76 +50,78 @@ export default class Coinmarketcap extends Component {
     render() {
         const tableHead = ['분류', '비율(BTC)', '순환공급량', 'Volume', '변화율', 'Price'];
         return (
-            <ScrollView contentContainerStyle={styles.priceWrapper}>
+            <ScrollView contentContainerStyle={styles.frame}>
                 {this.state.refreshing &&
                 <LoadingIcon/>
                 }
-                <Text style={styles.explain}>
-                    실시간 시세 차이에 주의하세요!
-                </Text>
-                <View style={styles.thead}>
-                    <View style={styles.th1}>
-                        <Text style={styles.htxt}>{tableHead[0]}</Text>
-                    </View>
-                    <View style={styles.th2}>
-                        <Text style={styles.htxt}>{tableHead[1]}</Text>
-                    </View>
-                    <View style={styles.th}>
-                        <Text style={styles.htxt}>{tableHead[2]}</Text>
-                    </View>
-                </View>
-                {this.state.list.map((info, i) => {
-                    return (
-                        <View key={i} style={styles.tr}>
-                            <View style={styles.td1}>
-                                <Text style={styles.title}>{info.symbol}</Text>
-                            </View>
-                            <View style={styles.td2}>
-                                <Text style={styles.txt}>{parseFloat(info.price_btc).toFixed(8)}</Text>
-                            </View>
-                            <View style={styles.td}>
-                                <Text style={styles.txt}>{info.available_supply} {info.symbol}</Text>
-                            </View>
+                <ScrollView contentContainerStyle={styles.priceWrapper}>
+                    <Text style={styles.explain}>
+                        실시간 시세 차이에 주의하세요!
+                    </Text>
+                    <View style={styles.thead}>
+                        <View style={styles.th1}>
+                            <Text style={styles.htxt}>{tableHead[0]}</Text>
                         </View>
-                    );
-                })}
-                <View style={styles.betweenTable}/>
-                {/*////////////////////////////////여기까지 첫번째 테이블////////////////////////////////*/}
-                <View style={styles.thead}>
-                    <View style={styles.th1}>
-                        <Text style={styles.htxt}>{tableHead[0]}</Text>
-                    </View>
-                    <View style={styles.th6}>
-                        <Text style={styles.htxt}>{tableHead[5]}</Text>
-                    </View>
-                    <View style={styles.th4}>
-                        <Text style={styles.htxt}>{tableHead[3]}</Text>
-                    </View>
-                    <View style={styles.th5}>
-                        <Text style={styles.htxt}>{tableHead[4]}</Text>
-                    </View>
-                </View>
-                {this.state.list.map((info, i) => {
-                    return (
-                        <View key={i} style={styles.tr}>
-                            <View style={styles.td1}>
-                                <Text style={styles.title}>{info.symbol}</Text>
-                            </View>
-                            <View style={styles.td6}>
-                                <Text style={styles.txt}>$ {parseFloat(info.price_usd).toFixed(1)}</Text>
-                            </View>
-                            <View style={styles.td4}>
-                                <Text style={styles.txt}>${parseFloat(info["24h_volume_usd"]).toFixed(0)}</Text>
-                            </View>
-                            <View style={styles.td5}>
-                                <Text style={styles.txt}>{parseFloat(info.percent_change_24h).toFixed(2)} %</Text>
-                            </View>
+                        <View style={styles.th2}>
+                            <Text style={styles.htxt}>{tableHead[1]}</Text>
                         </View>
-                    );
-                })}
-                <Text style={styles.origin}>
-                    데이터 출처 : http://coinmarketcap.com/
-                </Text>
+                        <View style={styles.th}>
+                            <Text style={styles.htxt}>{tableHead[2]}</Text>
+                        </View>
+                    </View>
+                    {this.state.list.map((info, i) => {
+                        return (
+                            <View key={i} style={styles.tr}>
+                                <View style={styles.td1}>
+                                    <Text style={styles.title}>{info.symbol}</Text>
+                                </View>
+                                <View style={styles.td2}>
+                                    <Text style={styles.txt}>{parseFloat(info.price_btc).toFixed(8)}</Text>
+                                </View>
+                                <View style={styles.td}>
+                                    <Text style={styles.txt}>{info.available_supply} {info.symbol}</Text>
+                                </View>
+                            </View>
+                        );
+                    })}
+                    <View style={styles.betweenTable}/>
+                    {/*////////////////////////////////여기까지 첫번째 테이블////////////////////////////////*/}
+                    <View style={styles.thead}>
+                        <View style={styles.th1}>
+                            <Text style={styles.htxt}>{tableHead[0]}</Text>
+                        </View>
+                        <View style={styles.th6}>
+                            <Text style={styles.htxt}>{tableHead[5]}</Text>
+                        </View>
+                        <View style={styles.th4}>
+                            <Text style={styles.htxt}>{tableHead[3]}</Text>
+                        </View>
+                        <View style={styles.th5}>
+                            <Text style={styles.htxt}>{tableHead[4]}</Text>
+                        </View>
+                    </View>
+                    {this.state.list.map((info, i) => {
+                        return (
+                            <View key={i} style={styles.tr}>
+                                <View style={styles.td1}>
+                                    <Text style={styles.title}>{info.symbol}</Text>
+                                </View>
+                                <View style={styles.td6}>
+                                    <Text style={styles.txt}>$ {parseFloat(info.price_usd).toFixed(1)}</Text>
+                                </View>
+                                <View style={styles.td4}>
+                                    <Text style={styles.txt}>${parseFloat(info["24h_volume_usd"]).toFixed(0)}</Text>
+                                </View>
+                                <View style={styles.td5}>
+                                    <Text style={styles.txt}>{parseFloat(info.percent_change_24h).toFixed(2)} %</Text>
+                                </View>
+                            </View>
+                        );
+                    })}
+                    <Text style={styles.origin}>
+                        데이터 출처 : http://coinmarketcap.com/
+                    </Text>
+                </ScrollView>
             </ScrollView>
         );
     }
@@ -129,8 +131,10 @@ const wid = Common.winWidth();
 const hei = Common.winHeight();
 const dpi = Common.getRatio();
 const styles = StyleSheet.create({
-    priceWrapper: {
+    frame:{
         flex: 1,
+    },
+    priceWrapper: {
         alignItems: 'center'
     },
     explain: {

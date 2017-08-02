@@ -50,7 +50,7 @@ export default class Cryptocompare extends Component {
                 this.setState({cryptoList: responseJson.RAW, refreshing: false, load: true})
             }).catch((error) => {
             console.error(error);
-        }).done(()=>{
+        }).done(() => {
             setTimeout(
                 () => {
                     this.getRate();
@@ -62,86 +62,88 @@ export default class Cryptocompare extends Component {
     render() {
         const tableHead = ['분류', 'KRW', 'USDKRW', 'USD', 'KR - US', 'BTC', ''];
         return (
-            <ScrollView contentContainerStyle={styles.priceWrapper}>
+            <ScrollView contentContainerStyle={styles.frame}>
                 {this.state.load == false &&
                 <LoadingIcon/>
                 }
                 {this.state.refreshing == true &&
                 <LoadingIcon/>
                 }
-                <Text style={styles.explain}>
-                    실시간 시세 차이에 주의하세요!
-                </Text>
-                {this.state.load == true &&
-                <View>
-                    <View style={styles.thead}>
-                        <View style={styles.th1}>
-                            <Text style={styles.htxt}>{tableHead[0]}</Text>
-                        </View>
-                        <View style={styles.th2}>
-                            <Text style={styles.htxt}>{tableHead[1]}</Text>
-                        </View>
-                        <View style={styles.th6}>
-                            <Text style={styles.htxt}>{tableHead[5]}</Text>
-                        </View>
-                    </View>
-                    <Tr1 val0={Object.getOwnPropertyNames(this.state.cryptoList)[0]}
-                         val1={this.state.cryptoList.BTC.KRW.PRICE} val2={this.state.cryptoList.BTC.BTC.PRICE}/>
-                    <Tr1 val0={Object.getOwnPropertyNames(this.state.cryptoList)[1]}
-                         val1={this.state.cryptoList.ETH.KRW.PRICE} val2={this.state.cryptoList.ETH.BTC.PRICE}/>
-                    <Tr1 val0={Object.getOwnPropertyNames(this.state.cryptoList)[2]}
-                         val1={this.state.cryptoList.ETC.KRW.PRICE} val2={this.state.cryptoList.ETC.BTC.PRICE}/>
-                    <Tr1 val0={Object.getOwnPropertyNames(this.state.cryptoList)[3]}
-                         val1={this.state.cryptoList.XRP.KRW.PRICE} val2={this.state.cryptoList.XRP.BTC.PRICE}/>
-                    <Tr1 val0={Object.getOwnPropertyNames(this.state.cryptoList)[4]}
-                         val1={this.state.cryptoList.LTC.KRW.PRICE} val2={this.state.cryptoList.LTC.BTC.PRICE}/>
-                    <Tr1 val0={Object.getOwnPropertyNames(this.state.cryptoList)[5]}
-                         val1={this.state.cryptoList.DASH.KRW.PRICE}
-                         val2={parseFloat(this.state.cryptoList.DASH.BTC.PRICE).toFixed(8)}/>
-                    <View style={styles.betweenTable}/>
-                    {/*////////////////////////////////여기까지 첫번째 테이블////////////////////////////////*/}
-                    <View style={styles.thead}>
-                        <View style={styles.th1}>
-                            <Text style={styles.htxt}>{tableHead[0]}</Text>
-                        </View>
-                        <View style={styles.th5}>
-                            <Text style={styles.htxt}>{tableHead[4]}</Text>
-                        </View>
-                        <View style={styles.th3}>
-                            <Text style={styles.htxt}>{tableHead[2]}</Text>
-                        </View>
-                    </View>
-
-                    {/*{Object.getOwnPropertyNames(this.state.cryptoList)[0]}*/}
-                    <Tr2 val0='BTC'
-                         val1={parseFloat(this.state.cryptoList.BTC.KRW.PRICE)}
-                         val2={(parseFloat(this.state.cryptoList.BTC.USD.PRICE) * parseFloat(this.state.rate)).toFixed(2)}
-                    />
-                    <Tr2 val0="ETH"
-                         val1={parseFloat(this.state.cryptoList.ETH.KRW.PRICE)}
-                         val2={(parseFloat(this.state.cryptoList.ETH.USD.PRICE) * parseFloat(this.state.rate)).toFixed(2)}
-                    />
-                    <Tr2 val0="ETC"
-                         val1={parseFloat(this.state.cryptoList.ETC.KRW.PRICE)}
-                         val2={(parseFloat(this.state.cryptoList.ETC.USD.PRICE) * parseFloat(this.state.rate)).toFixed(2)}
-                    />
-                    <Tr2 val0="XRP"
-                         val1={parseFloat(this.state.cryptoList.XRP.KRW.PRICE)}
-                         val2={(parseFloat(this.state.cryptoList.XRP.USD.PRICE) * parseFloat(this.state.rate)).toFixed(2)}
-                    />
-                    <Tr2 val0="LTC"
-                         val1={parseFloat(this.state.cryptoList.LTC.KRW.PRICE)}
-                         val2={(parseFloat(this.state.cryptoList.LTC.USD.PRICE) * parseFloat(this.state.rate)).toFixed(2)}
-                    />
-                    <Tr2 val0="DASH"
-                         val1={parseFloat(this.state.cryptoList.DASH.KRW.PRICE)}
-                         val2={(parseFloat(this.state.cryptoList.DASH.USD.PRICE) * parseFloat(this.state.rate)).toFixed(2)}
-                    />
-                    <Text style={styles.origin}>
-                        데이터 출처 : https://www.cryptocompare.com/
+                <ScrollView contentContainerStyle={styles.priceWrapper}>
+                    <Text style={styles.explain}>
+                        실시간 시세 차이에 주의하세요!
                     </Text>
-                </View>
-                }
+                    {this.state.load == true &&
+                    <View>
+                        <View style={styles.thead}>
+                            <View style={styles.th1}>
+                                <Text style={styles.htxt}>{tableHead[0]}</Text>
+                            </View>
+                            <View style={styles.th2}>
+                                <Text style={styles.htxt}>{tableHead[1]}</Text>
+                            </View>
+                            <View style={styles.th6}>
+                                <Text style={styles.htxt}>{tableHead[5]}</Text>
+                            </View>
+                        </View>
+                        <Tr1 val0={Object.getOwnPropertyNames(this.state.cryptoList)[0]}
+                             val1={this.state.cryptoList.BTC.KRW.PRICE} val2={this.state.cryptoList.BTC.BTC.PRICE}/>
+                        <Tr1 val0={Object.getOwnPropertyNames(this.state.cryptoList)[1]}
+                             val1={this.state.cryptoList.ETH.KRW.PRICE} val2={this.state.cryptoList.ETH.BTC.PRICE}/>
+                        <Tr1 val0={Object.getOwnPropertyNames(this.state.cryptoList)[2]}
+                             val1={this.state.cryptoList.ETC.KRW.PRICE} val2={this.state.cryptoList.ETC.BTC.PRICE}/>
+                        <Tr1 val0={Object.getOwnPropertyNames(this.state.cryptoList)[3]}
+                             val1={this.state.cryptoList.XRP.KRW.PRICE} val2={this.state.cryptoList.XRP.BTC.PRICE}/>
+                        <Tr1 val0={Object.getOwnPropertyNames(this.state.cryptoList)[4]}
+                             val1={this.state.cryptoList.LTC.KRW.PRICE} val2={this.state.cryptoList.LTC.BTC.PRICE}/>
+                        <Tr1 val0={Object.getOwnPropertyNames(this.state.cryptoList)[5]}
+                             val1={this.state.cryptoList.DASH.KRW.PRICE}
+                             val2={parseFloat(this.state.cryptoList.DASH.BTC.PRICE).toFixed(8)}/>
+                        <View style={styles.betweenTable}/>
+                        {/*////////////////////////////////여기까지 첫번째 테이블////////////////////////////////*/}
+                        <View style={styles.thead}>
+                            <View style={styles.th1}>
+                                <Text style={styles.htxt}>{tableHead[0]}</Text>
+                            </View>
+                            <View style={styles.th5}>
+                                <Text style={styles.htxt}>{tableHead[4]}</Text>
+                            </View>
+                            <View style={styles.th3}>
+                                <Text style={styles.htxt}>{tableHead[2]}</Text>
+                            </View>
+                        </View>
+
+                        {/*{Object.getOwnPropertyNames(this.state.cryptoList)[0]}*/}
+                        <Tr2 val0='BTC'
+                             val1={parseFloat(this.state.cryptoList.BTC.KRW.PRICE)}
+                             val2={(parseFloat(this.state.cryptoList.BTC.USD.PRICE) * parseFloat(this.state.rate)).toFixed(2)}
+                        />
+                        <Tr2 val0="ETH"
+                             val1={parseFloat(this.state.cryptoList.ETH.KRW.PRICE)}
+                             val2={(parseFloat(this.state.cryptoList.ETH.USD.PRICE) * parseFloat(this.state.rate)).toFixed(2)}
+                        />
+                        <Tr2 val0="ETC"
+                             val1={parseFloat(this.state.cryptoList.ETC.KRW.PRICE)}
+                             val2={(parseFloat(this.state.cryptoList.ETC.USD.PRICE) * parseFloat(this.state.rate)).toFixed(2)}
+                        />
+                        <Tr2 val0="XRP"
+                             val1={parseFloat(this.state.cryptoList.XRP.KRW.PRICE)}
+                             val2={(parseFloat(this.state.cryptoList.XRP.USD.PRICE) * parseFloat(this.state.rate)).toFixed(2)}
+                        />
+                        <Tr2 val0="LTC"
+                             val1={parseFloat(this.state.cryptoList.LTC.KRW.PRICE)}
+                             val2={(parseFloat(this.state.cryptoList.LTC.USD.PRICE) * parseFloat(this.state.rate)).toFixed(2)}
+                        />
+                        <Tr2 val0="DASH"
+                             val1={parseFloat(this.state.cryptoList.DASH.KRW.PRICE)}
+                             val2={(parseFloat(this.state.cryptoList.DASH.USD.PRICE) * parseFloat(this.state.rate)).toFixed(2)}
+                        />
+                        <Text style={styles.origin}>
+                            데이터 출처 : https://www.cryptocompare.com/
+                        </Text>
+                    </View>
+                    }
+                </ScrollView>
             </ScrollView>
         );
     }
@@ -198,9 +200,11 @@ const wid = Common.winWidth();
 const hei = Common.winHeight();
 const dpi = Common.getRatio();
 const styles = StyleSheet.create({
+    frame:{
+        flex: 1,
+    },
     priceWrapper: {
         alignItems: 'center',
-        flex: 1,
     },
     loadingIcon: {
         width: wid * 0.2,

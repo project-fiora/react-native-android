@@ -152,7 +152,7 @@ export default class FriendWallet extends Component {
                 {(!this.state.secondLoad || !this.state.load) &&
                 <LoadingIcon/>
                 }
-                <View style={styles.content}>
+                <ScrollView contentContainerStyle={styles.content}>
                     {(this.state.load && this.state.friendList.length == 0) &&
                     <View>
                         <Text style={styles.titleText}>
@@ -266,7 +266,7 @@ export default class FriendWallet extends Component {
                         }
                     </View>
                     }
-                </View>
+                </ScrollView>
             </ScrollView>
         );
     }
@@ -278,9 +278,9 @@ const hei = Common.winHeight();
 const styles = StyleSheet.create({
     frame: {
         flex: 1,
-        padding: 15 * dpi,
     },
     content: {
+        padding: 15 * dpi,
         marginTop: 5 * dpi,
         alignItems: 'center',
         opacity: 0.8,

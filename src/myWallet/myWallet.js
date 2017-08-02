@@ -110,7 +110,7 @@ export default class MyWallet extends Component {
                 {!this.state.load &&
                 <LoadingIcon/>
                 }
-                <View style={styles.content}>
+                <ScrollView contentContainerStyle={styles.content}>
                     {(this.state.load == true && this.state.walletList.length == 0) &&
                     <View>
                         <Text style={styles.titleText}>
@@ -173,7 +173,7 @@ export default class MyWallet extends Component {
                         }
                     </View>
                     }
-                </View>
+                </ScrollView>
             </ScrollView>
         );
     }
@@ -185,9 +185,9 @@ const hei = Common.winHeight();
 const styles = StyleSheet.create({
     frame: {
         flex: 1,
-        padding: 20 * dpi,
     },
     content: {
+        padding: 20 * dpi,
         marginTop: 5 * dpi,
         opacity: 0.8,
     },

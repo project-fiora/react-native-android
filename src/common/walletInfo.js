@@ -8,10 +8,6 @@ export default class WalletInfo extends Component {
         return (
             <View style={styles.frame}>
                 {/*지갑번호 : {this.props.wallet_Id}{'\n'}*/}
-                {/*<View style={styles.walletNameWrapper}>*/}
-                {/*<Text style={styles.walletName}>지갑이름</Text>*/}
-                {/*<Text style={styles.realWalletName}>{this.props.wallet_name}</Text>*/}
-                {/*</View>*/}
                 <View style={styles.betweenRow}>
                     <Text style={styles.textLeft}>지갑이름</Text>
                     <Text style={styles.textRight}>{this.props.wallet_name}</Text>
@@ -49,50 +45,39 @@ const styles = StyleSheet.create({
         marginVertical: 0.03 * hei,
         paddingHorizontal: 0.15 * wid,
     },
-    walletNameWrapper: {
-        marginVertical: 0.03 * hei,
-        opacity: 0.9,
-    },
-    walletName: {
-        // color: '#FFFFFF',
-        fontSize: 17 * dpi,
-        alignSelf: 'flex-start',
-    },
-    realWalletName: {
-        // color: '#FFFFFF',
-        fontSize: 17 * dpi,
-        alignSelf: 'flex-end',
-    },
     betweenRow: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginVertical: 5 * dpi,
     },
     textLeft: {
-        // color: '#FFFFFF',
+        color: '#FFFFFF',
         fontSize: 17 * dpi,
     },
     textRight: {
-        // color: '#FFFFFF',
+        color: '#FFFFFF',
         fontSize: 17 * dpi,
     },
     hr: {
+        borderColor: '#FFFFFF',
         borderTopWidth: 1 * dpi,
         // borderStyle:'dotted',  <= not working
     },
     balance: {
-        // color: '#FFFFFF',
-        fontSize: 17 * dpi,
+        color: '#FFFFFF',
+        fontSize: 19 * dpi,
     },
     realBalance: {
-        // color: '#FFFFFF',
-        fontSize: 17 * dpi,
+        color: '#FFFFFF',
+        fontSize: 19 * dpi,
     },
     qrCodeWrapper: {
         marginTop: 10 * dpi,
         alignSelf: 'center',
     },
     centerText: {
-        // color: '#FFFFFF',
+        marginTop: 3 * dpi,
+        color: '#FFFFFF',
         fontSize: 17 * dpi,
         textAlign: 'center',
     },
