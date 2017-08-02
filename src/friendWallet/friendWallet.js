@@ -263,7 +263,6 @@ export default class FriendWallet extends Component {
                             wallet_type={this.state.walletList[this.state.currentWallet].wallet_type}
                             balance={this.state.balance}
                             wallet_add={this.state.walletList[this.state.currentWallet].wallet_add}
-                            qrcode={this.state.qrcode}
                         />
                         }
                     </View>

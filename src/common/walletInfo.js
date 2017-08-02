@@ -27,7 +27,7 @@ export default class WalletInfo extends Component {
                 </View>
                 <View style={styles.qrCodeWrapper}>
                     <QRCode
-                        value={this.props.qrcode}
+                        value={this.props.wallet_add}
                         size={200}
                         bgColor='black'
                         fgColor='white'

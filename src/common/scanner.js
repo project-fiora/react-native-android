@@ -11,6 +11,8 @@ import Common from "./common";
 export default class Scanner extends Component {
     async onRead(obj) {
         alert('스캔 완료!\n' + obj.data + '\n지갑 주소를 확인하세요');
+        console.log("scanning");
+        console.log(obj);
         try {
             await AsyncStorage.setItem('walletAddQrcodeTmp', obj.data.toString());
         } catch (error) {
