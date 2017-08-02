@@ -4,7 +4,6 @@
 
 import React, {Component} from 'react';
 import {
-    RefreshControl,
     ScrollView,
     StyleSheet,
     Text,
@@ -12,7 +11,6 @@ import {
 } from 'react-native';
 import Common from "../common/common";
 import LoadingIcon from "../common/loadingIcon";
-import StateStore from "../common/stateStore";
 
 export default class Coinmarketcap extends Component {
     constructor(props) {
@@ -25,40 +23,36 @@ export default class Coinmarketcap extends Component {
     }
 
     componentDidMount() {
-        StateStore.setGlobalLoaded('auto');
         this.getPriceInfo();
-        setTimeout(
-            () => {
-                this.getPriceInfo();
-            }, 4000
-        );
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearTimeout();
     }
 
     getPriceInfo() {
-        this.setState({refreshing:true},()=>{
+        this.setState({refreshing: true}, () => {
             fetch("https://api.coinmarketcap.com/v1/ticker/?limit=6")
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    this.setState({list: responseJson, refreshing: false});
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+                .then((response) => response.json()).then((responseJson) => {
+                this.setState({list: responseJson, refreshing: false});
+            }).catch((error) => {
+                console.error(error);
+            }).done(() => {
+                setTimeout(
+                    () => {
+                        this.getPriceInfo();
+                    }, 5000
+                );
+            });
         });
     }
 
     render() {
         const tableHead = ['분류', '비율(BTC)', '순환공급량', 'Volume', '변화율', 'Price'];
         return (
-            <ScrollView
-                contentContainerStyle={styles.priceWrapper}
-            >
-                {this.state.refreshing&&
-                    <LoadingIcon/>
+            <ScrollView contentContainerStyle={styles.priceWrapper}>
+                {this.state.refreshing &&
+                <LoadingIcon/>
                 }
                 <Text style={styles.explain}>
                     실시간 시세 차이에 주의하세요!
@@ -142,184 +136,184 @@ const styles = StyleSheet.create({
     explain: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 16*dpi,
-        marginTop: 15*dpi,
-        marginBottom: 10*dpi,
+        fontSize: 16 * dpi,
+        marginTop: 15 * dpi,
+        marginBottom: 10 * dpi,
         textAlign: 'center',
     },
     thead: {
         width: wid * 0.9,
-        height: hei *0.04,
+        height: hei * 0.04,
         justifyContent: 'center',
         flexDirection: 'row',
     },
     th1: {
         flex: 1,
-        borderWidth: 1*dpi,
-        borderRadius: 7*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 7 * dpi,
         borderColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 1*dpi,
+        margin: 1 * dpi,
         backgroundColor: '#000000',
         opacity: 0.5,
     },
     th2: {
         flex: 1.9,
-        borderWidth: 1*dpi,
-        borderRadius: 7*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 7 * dpi,
         borderColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 1*dpi,
+        margin: 1 * dpi,
         backgroundColor: '#000000',
         opacity: 0.5,
     },
     th: {
         flex: 3,
-        borderWidth: 1*dpi,
-        borderRadius: 7*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 7 * dpi,
         borderColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 1*dpi,
+        margin: 1 * dpi,
         backgroundColor: '#000000',
         opacity: 0.5,
     },
     th4: {
         flex: 1.9,
-        borderWidth: 1*dpi,
-        borderRadius: 7*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 7 * dpi,
         borderColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 1*dpi,
+        margin: 1 * dpi,
         backgroundColor: '#000000',
         opacity: 0.5,
     },
     th5: {
         flex: 1.25,
-        borderWidth: 1*dpi,
-        borderRadius: 7*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 7 * dpi,
         borderColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 1*dpi,
+        margin: 1 * dpi,
         backgroundColor: '#000000',
         opacity: 0.5,
     },
     th6: { //비율
         flex: 1.5,
-        borderWidth: 1*dpi,
-        borderRadius: 7*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 7 * dpi,
         borderColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 1*dpi,
+        margin: 1 * dpi,
         backgroundColor: '#000000',
         opacity: 0.5,
     },
     htxt: {
         fontWeight: 'bold',
         color: '#FFFFFF',
-        fontSize: 10*dpi,
+        fontSize: 10 * dpi,
         opacity: 0.8
     },
     tr: {
         width: wid * 0.9,
-        height: hei *0.04,
+        height: hei * 0.04,
         flexDirection: 'row',
     },
     td1: { // 분류
         flex: 1,
-        borderWidth: 1*dpi,
-        borderRadius: 7*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 7 * dpi,
         borderColor: '#FFFFFF',
         backgroundColor: '#22214B',
         opacity: 0.5,
         alignItems: 'center',
-        justifyContent:'center',
-        margin: 1*dpi,
+        justifyContent: 'center',
+        margin: 1 * dpi,
     },
     td2: { //비율?
         flex: 1.9,
-        borderWidth: 1*dpi,
-        borderRadius: 7*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 7 * dpi,
         borderColor: '#FFFFFF',
         opacity: 0.8,
-        paddingRight: 3*dpi,
+        paddingRight: 3 * dpi,
         alignItems: 'flex-end',
-        justifyContent:'center',
-        margin: 1*dpi,
+        justifyContent: 'center',
+        margin: 1 * dpi,
     },
     td: { //supply
         flex: 3,
-        borderWidth: 1*dpi,
-        borderRadius: 7*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 7 * dpi,
         borderColor: '#FFFFFF',
         opacity: 0.8,
-        paddingRight: 3*dpi,
+        paddingRight: 3 * dpi,
         alignItems: 'flex-end',
-        justifyContent:'center',
-        margin: 1*dpi,
+        justifyContent: 'center',
+        margin: 1 * dpi,
     },
     td4: { //volume
         flex: 1.9,
-        borderWidth: 1*dpi,
-        borderRadius: 7*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 7 * dpi,
         borderColor: '#FFFFFF',
         opacity: 0.8,
-        paddingRight: 3*dpi,
+        paddingRight: 3 * dpi,
         alignItems: 'flex-end',
-        justifyContent:'center',
-        margin: 1*dpi,
+        justifyContent: 'center',
+        margin: 1 * dpi,
     },
     td5: {
         flex: 1.25,
-        borderWidth: 1*dpi,
-        borderRadius: 7*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 7 * dpi,
         borderColor: '#FFFFFF',
         opacity: 0.8,
-        paddingRight: 3*dpi,
+        paddingRight: 3 * dpi,
         alignItems: 'flex-end',
-        justifyContent:'center',
-        margin: 1*dpi,
+        justifyContent: 'center',
+        margin: 1 * dpi,
     },
     td6: { //price
         flex: 1.5,
-        borderWidth: 1*dpi,
-        borderRadius: 7*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 7 * dpi,
         borderColor: '#FFFFFF',
         opacity: 0.8,
-        paddingRight: 3*dpi,
+        paddingRight: 3 * dpi,
         alignItems: 'flex-end',
-        justifyContent:'center',
-        margin: 1*dpi,
+        justifyContent: 'center',
+        margin: 1 * dpi,
     },
     title: {
         color: '#FFFFFF',
-        fontSize: 14*dpi,
+        fontSize: 14 * dpi,
         fontWeight: 'bold',
     },
     htxt: {
         color: '#FFFFFF',
-        fontSize: 14*dpi,
+        fontSize: 14 * dpi,
         fontWeight: 'bold',
     },
     txt: {
         color: '#FFFFFF',
-        fontSize: 14*dpi,
+        fontSize: 14 * dpi,
     },
     betweenTable: {
-        margin: 5*dpi,
+        margin: 5 * dpi,
     },
     origin: {
-        marginTop: 10*dpi,
+        marginTop: 10 * dpi,
         marginRight: 0.05 * wid,
         textAlign: 'right',
         alignSelf: 'flex-end',
         color: '#FFFFFF',
-        fontSize: 13*dpi,
+        fontSize: 13 * dpi,
     },
 });
 

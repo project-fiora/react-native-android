@@ -23,7 +23,6 @@ export default class TabButton extends Component {
                 <Tap img={images.price} text="시세" goTo="price"/>
                 <Tap img={images.wallet} text="내지갑" goTo="myWallet"/>
                 <Tap img={images.friendWallet} text="친구지갑" goTo="friendWallet"/>
-                {/*<Tap img={images.exchange} text="자동거래" goTo="exchange"/>*/}
                 <Tap img={images.more} text="더보기" goTo="more"/>
             </View>
         )

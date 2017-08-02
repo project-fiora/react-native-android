@@ -38,7 +38,7 @@ export default class FriendWallet extends Component {
 
     async getFriendList() {
         await AsyncStorage.getItem('Token', (err, result) => {
-            try{
+            try {
                 if (err != null) {
                     alert(err);
                     return false;
@@ -51,7 +51,7 @@ export default class FriendWallet extends Component {
                     }
                 }).then((response) => response.json()).then((responseJson) => {
                     if (responseJson.message == "SUCCESS") {
-                        this.setState({friendList: responseJson.list, load: true},()=>{
+                        this.setState({friendList: responseJson.list, load: true}, () => {
                             if (this.state.friendList.length != 0) {
                                 this.getFriendWallet(this.state.friendList[this.state.currentFriend].id);
                             }
@@ -63,7 +63,7 @@ export default class FriendWallet extends Component {
                 }).catch((error) => {
                     console.error(error);
                 }).done();
-            }catch(err){
+            } catch (err) {
                 console.error(err);
                 return false;
             }
@@ -88,23 +88,22 @@ export default class FriendWallet extends Component {
                     var list = responseJson.list;
                     if (list.length == 0) {
                         this.setState({walletList: [], load: true, secondLoad: true, enable: null});
-                    } else {
-                        Promise.resolve().then(() => {
-                            Common.getBalance(list[this.state.currentWallet].wallet_type, list[this.state.currentWallet].wallet_add)
-                        }).then(result => {
-                            var balance;
-                            if (Number.isInteger(result)) {
-                                balance = (parseInt(result) / 100000000) + " " + list[this.state.currentWallet].wallet_type;
-                            } else {
-                                balance = result;
-                            }
-                            this.setState({
-                                walletList: list,
-                                balance: balance,
-                                load: true,
-                                secondLoad: true,
-                                enable: null
-                            });
+                    } else { //친구지갑이 하나라도 있으면, 잔액조회를 한다.
+                        this.setState({walletList: list, load: true, enable: null}, () => {
+                            Promise.resolve().then(() =>
+                                Common.getBalance(list[0].wallet_type, list[0].wallet_add)
+                            ).then(result => {
+                                var balance;
+                                if (Number.isInteger(result)) {
+                                    balance = (parseInt(result) / 100000000) + " " + type;
+                                } else {
+                                    balance = result;
+                                }
+                                this.setState({
+                                    balance: balance,
+                                    secondLoad: true
+                                });
+                            })
                         });
                     }
                 } else {
@@ -154,7 +153,7 @@ export default class FriendWallet extends Component {
                 <LoadingIcon/>
                 }
                 <View style={styles.content}>
-                    {(this.state.load&&this.state.friendList.length == 0) &&
+                    {(this.state.load && this.state.friendList.length == 0) &&
                     <View>
                         <Text style={styles.titleText}>
                             아직 친구가 한명도 없어요!{'\n'}
@@ -164,7 +163,7 @@ export default class FriendWallet extends Component {
                     </View>
                     }
                     {/*////////////////친구 리스트 select Box////////////////////*/}
-                    {(this.state.load&&this.state.friendList.length != 0) &&
+                    {(this.state.load && this.state.friendList.length != 0) &&
                     <View pointerEvents={this.state.enable}>
                         <Text style={styles.titleText}>아래 버튼을 눌러서 친구와 친구지갑을 선택하세요!</Text>
                         <TouchableOpacity
@@ -254,16 +253,16 @@ export default class FriendWallet extends Component {
                                     })
                                 }
                             })()}
-                            {(this.state.load&&this.state.secondLoad&&this.state.walletList.length != 0) &&
-                            <WalletInfo
-                                wallet_name={this.state.walletList[this.state.currentWallet].wallet_name}
-                                wallet_type={this.state.walletList[this.state.currentWallet].wallet_type}
-                                balance={this.state.balance}
-                                wallet_add={this.state.walletList[this.state.currentWallet].wallet_add}
-                                qrcode={this.state.qrcode}
-                            />
-                            }
                         </View>
+                        }
+                        {(this.state.load && this.state.secondLoad && this.state.walletList.length != 0) &&
+                        <WalletInfo
+                            wallet_name={this.state.walletList[this.state.currentWallet].wallet_name}
+                            wallet_type={this.state.walletList[this.state.currentWallet].wallet_type}
+                            balance={this.state.balance}
+                            wallet_add={this.state.walletList[this.state.currentWallet].wallet_add}
+                            qrcode={this.state.qrcode}
+                        />
                         }
                     </View>
                     }

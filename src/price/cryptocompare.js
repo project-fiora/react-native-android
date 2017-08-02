@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import Common from "../common/common";
 import LoadingIcon from "../common/loadingIcon";
-import StateStore from "../common/stateStore";
 
 export default class Cryptocompare extends Component {
     constructor(props) {
@@ -25,21 +24,11 @@ export default class Cryptocompare extends Component {
     }
 
     componentDidMount() {
-        StateStore.setGlobalLoaded('auto');
         this.getRate();
-        setTimeout(
-            () => {
-                this.getRate();
-            }, 4000
-        );
     }
 
     componentWillUnmount() {
-        setTimeout(
-            () => {
-                clearTimeout();
-            }, 4000
-        );
+        clearTimeout();
     }
 
     getRate() {
@@ -61,7 +50,13 @@ export default class Cryptocompare extends Component {
                 this.setState({cryptoList: responseJson.RAW, refreshing: false, load: true})
             }).catch((error) => {
             console.error(error);
-        }).done();
+        }).done(()=>{
+            setTimeout(
+                () => {
+                    this.getRate();
+                }, 5000
+            );
+        });
     }
 
     render() {

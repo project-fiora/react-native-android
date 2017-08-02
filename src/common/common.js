@@ -23,23 +23,23 @@ class Common extends Component {
         return copy;
     }
 
-    static getRatio(){
-        return (width*height)/(375*667);
+    static getRatio() {
+        return (width * height) / (375 * 667);
     }
 
-    static widthRatio(){ //iphone6 = 375
-        return 375/width;
+    static widthRatio() { //iphone6 = 375
+        return 375 / width;
     }
 
-    static heightRatio(){ //iphone6 = 667
-        return 667/height;
+    static heightRatio() { //iphone6 = 667
+        return 667 / height;
     }
 
-    static winWidth(){
+    static winWidth() {
         return width;
     }
 
-    static winHeight(){
+    static winHeight() {
         return height;
     }
 
@@ -52,20 +52,20 @@ class Common extends Component {
         var yearMonthDay = dateTime[0].split("-");
         var time = dateTime[1].split(":");
         //time[0] = 22 (시)
-        if(time[0]>12){
-            time[0] = "오후"+(time[0]-12);
-        } else{
-            time[0] = "오전"+time[0];
+        if (time[0] > 12) {
+            time[0] = "오후" + (time[0] - 12);
+        } else {
+            time[0] = "오전" + time[0];
         }
         //time[1] = 23 (분)
-        if(yearMonthDay[0]!=today.getFullYear()){ //년도가 다른경우 년도 추가
-            tmp += yearMonthDay[0]+"년 "; //
+        if (yearMonthDay[0] != today.getFullYear()) { //년도가 다른경우 년도 추가
+            tmp += yearMonthDay[0] + "년 "; //
         } else if ((today.getFullYear().toString() == yearMonthDay[0]
-            && "0"+(today.getMonth()+1)==yearMonthDay[1]
-            && today.getDate().toString() == yearMonthDay[2])==false) { //오늘이 아니면
-            tmp += yearMonthDay[1]+"월 "+yearMonthDay[2]+"일 "; //월 일 추가
+                && "0" + (today.getMonth() + 1) == yearMonthDay[1]
+                && today.getDate().toString() == yearMonthDay[2]) == false) { //오늘이 아니면
+            tmp += yearMonthDay[1] + "월 " + yearMonthDay[2] + "일 "; //월 일 추가
         }
-        tmp += time[0]+":"+time[1];
+        tmp += time[0] + ":" + time[1];
         return tmp;
     }
 
@@ -78,7 +78,7 @@ class Common extends Component {
                         if (responseJson.data != null) {
                             resolve(responseJson.data.balance);
                         } else {
-                            resolve('지갑주소 or 잔액조회 api error');
+                            resolve('조회 불가');
                         }
                     })
                     .catch((error) => {
@@ -100,7 +100,7 @@ class Common extends Component {
                         if (responseJson.balance != null || responseJson.balance != undefined) {
                             resolve(responseJson.balance);
                         } else {
-                            resolve('지갑주소 or 잔액조회 api error');
+                            resolve('조회 불가');
                         }
                     })
                     .catch((error) => {
@@ -114,10 +114,10 @@ class Common extends Component {
                             if (responseJson.result == 'success')
                                 resolve(responseJson.balances[0].value);
                             else
-                                resolve('지갑 주소 오류');
+                                resolve('조회 불가'); //주소오류
 
                         } else {
-                            resolve('잔액조회 api error');
+                            resolve('조회 불가'); //api오류
                         }
                     })
                     .catch((error) => {
@@ -130,7 +130,7 @@ class Common extends Component {
                         if (responseJson.status == 'success') {
                             resolve(responseJson.data.balance);
                         } else {
-                            resolve('지갑주소 or 잔액조회 api 오류');
+                            resolve('조회 불가');
                         }
                     })
                     .catch((error) => {
@@ -143,7 +143,7 @@ class Common extends Component {
                         if (responseJson.balance != null) {
                             resolve(responseJson.balance);
                         } else {
-                            resolve('지갑주소 or 잔액조회 api 오류');
+                            resolve('조회 불가');
                         }
                     })
                     .catch((error) => {
@@ -173,7 +173,7 @@ class Common extends Component {
                 const token = JSON.parse(result).token;
                 try {
                     //post api call
-                    if(StateStore.walletType()==undefined)
+                    if (StateStore.walletType() == undefined)
                         StateStore.setType('BTC');
                     fetch(PrivateAddr.getAddr() + 'wallet/add', {
                         method: 'POST',
@@ -197,9 +197,9 @@ class Common extends Component {
                             alert('오류가 발생했습니다.\n다시 시도해주세요!');
                         }
                     }).catch((error) => {
-                            alert('Network Connection Failed');
-                            console.error(error);
-                        }).done();
+                        alert('Network Connection Failed');
+                        console.error(error);
+                    }).done();
                     AsyncStorage.multiRemove(['walletAddNameTmp', 'walletAddQrcodeTmp']);
                 } catch (err) {
                     alert('지갑추가실패 : ' + err);
@@ -208,10 +208,6 @@ class Common extends Component {
         }
     }
 
-    // walletId: this.props.id,
-    // walletName: this.state.name,
-    // walletAddr: this.state.addr,
-    // walletType: this.state.TYPE[this.state.currentTYPE],
     static editWallet() {
         if (StateStore.edit_walletName() == "") {
             alert('지갑 이름을 입력하세요!');

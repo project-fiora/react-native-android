@@ -55,9 +55,9 @@ export default class MyWallet extends Component {
                     .then((responseJson) => {
                         if (responseJson.message == "SUCCESS") {
                             var list = responseJson.list;
-                            if (list.length == 0) {
+                            if (list.length == 0) { //지갑이 없으면
                                 this.setState({walletList: [], load: true});
-                            } else {
+                            } else { //지갑이 있으면, 잔액조회를 한다
                                 Promise.resolve()
                                     .then(() => Common.getBalance(list[this.state.currentWallet].wallet_type,
                                         list[this.state.currentWallet].wallet_add))
