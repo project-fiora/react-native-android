@@ -8,21 +8,23 @@ export default class WalletInfo extends Component {
         return (
             <View style={styles.frame}>
                 {/*지갑번호 : {this.props.wallet_Id}{'\n'}*/}
-                <View style={styles.betweenRow}>
-                    <Text style={styles.textLeft}>지갑이름</Text>
-                    <Text style={styles.textRight}>{this.props.wallet_name}</Text>
+                <View style={styles.infoWrapper}>
+                    <View style={styles.betweenRow}>
+                        <Text style={styles.textLeft}>지갑이름</Text>
+                        <Text style={styles.textRight}>{this.props.wallet_name}</Text>
+                    </View>
+                    <View style={styles.betweenRow}>
+                        <Text style={styles.textLeft}>지갑유형</Text>
+                        <Text style={styles.textRight}>{this.props.wallet_type}</Text>
+                    </View>
+                    <View style={styles.hr}/>
+                    <View style={styles.betweenRow}>
+                        <Text style={styles.balance}>잔 액</Text>
+                        <Text style={styles.realBalance}>{this.props.balance}</Text>
+                    </View>
+                    <View style={styles.hr}/>
+                    <View style={styles.hr}/>
                 </View>
-                <View style={styles.betweenRow}>
-                    <Text style={styles.textLeft}>지갑유형</Text>
-                    <Text style={styles.textRight}>{this.props.wallet_type}</Text>
-                </View>
-                <View style={styles.hr}/>
-                <View style={styles.betweenRow}>
-                    <Text style={styles.balance}>잔 액</Text>
-                    <Text style={styles.realBalance}>{this.props.balance}</Text>
-                </View>
-                <View style={styles.hr}/>
-                <View style={styles.hr}/>
                 <View style={styles.qrCodeWrapper}>
                     <QRCode
                         value={this.props.qrcode}
@@ -43,6 +45,8 @@ const hei = Common.winHeight();
 const styles = StyleSheet.create({
     frame: {
         marginVertical: 0.03 * hei,
+    },
+    infoWrapper:{
         paddingHorizontal: 0.15 * wid,
     },
     betweenRow: {
@@ -51,20 +55,23 @@ const styles = StyleSheet.create({
         marginVertical: 5 * dpi,
     },
     textLeft: {
-        color: '#FFFFFF',
+        color: '#DBCEFF',
         fontSize: 17 * dpi,
+        opacity: 0.7,
     },
     textRight: {
         color: '#FFFFFF',
         fontSize: 17 * dpi,
+        opacity: 0.9,
     },
     hr: {
         borderColor: '#FFFFFF',
-        borderTopWidth: 1 * dpi,
-        // borderStyle:'dotted',  <= not working
+        borderTopWidth: 0.6 * dpi,
+        opacity: 0.8,
+        // borderStyle:'dashed',  //<= not working
     },
     balance: {
-        color: '#FFFFFF',
+        color: '#DBCEFF',
         fontSize: 19 * dpi,
     },
     realBalance: {
@@ -76,7 +83,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     centerText: {
-        marginTop: 3 * dpi,
+        marginVertical: 3 * dpi,
         color: '#FFFFFF',
         fontSize: 17 * dpi,
         textAlign: 'center',

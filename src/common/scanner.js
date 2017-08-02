@@ -3,12 +3,13 @@
  */
 
 import React, {Component} from 'react';
-import {AsyncStorage, Text, TouchableOpacity, StyleSheet, View} from "react-native";
+import {AsyncStorage, Text, TouchableOpacity, StyleSheet} from "react-native";
 import {Actions} from 'react-native-router-flux';
 import QRCodeScanner from "react-native-qrcode-scanner";
+import Common from "./common";
 
 export default class Scanner extends Component {
-    async onRead(obj){
+    async onRead(obj) {
         alert('스캔 완료!\n' + obj.data + '\n지갑 주소를 확인하세요');
         try {
             await AsyncStorage.setItem('walletAddQrcodeTmp', obj.data.toString());
@@ -40,21 +41,22 @@ export default class Scanner extends Component {
     }
 }
 
+const dpi = Common.getRatio();
 const styles = StyleSheet.create({
     backBtn: {
-        width: 80,
-        height: 40,
-        borderWidth: 1,
-        borderRadius: 20,
+        width: 80 * dpi,
+        height: 40 * dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 20 * dpi,
         borderColor: '#000000',
-        padding: 5,
+        padding: 5 * dpi,
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6,
-        margin: 15,
+        margin: 15 * dpi,
     },
     btnText: {
         color: '#000000',
-        fontSize: 15
+        fontSize: 15 * dpi,
     },
 });

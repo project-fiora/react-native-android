@@ -143,15 +143,15 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                     />
 
                     <Text style={styles.explainQRcode}>QR코드 스캐너는 업데이트 될 예정입니다!</Text>
-                    {/*<TouchableOpacity*/}
-                        {/*style={styles.scannerBtn}*/}
-                        {/*underlayColor={'#000000'}*/}
-                        {/*onPress={() => this.qrScanner()}*/}
-                    {/*>*/}
-                        {/*<Text style={styles.qrBtnText}>*/}
-                            {/*QR코드 스캐너*/}
-                        {/*</Text>*/}
-                    {/*</TouchableOpacity>*/}
+                    <TouchableOpacity
+                        style={styles.scannerBtn}
+                        underlayColor={'#000000'}
+                        onPress={() => this.qrScanner()}
+                    >
+                        <Text style={styles.qrBtnText}>
+                            QR코드 스캐너
+                        </Text>
+                    </TouchableOpacity>
                 </ScrollView>
             </View>
         );
