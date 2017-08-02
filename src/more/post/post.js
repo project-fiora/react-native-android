@@ -68,10 +68,6 @@ export default class Post extends Component {
         if (this.state.load == true) {
             return (
                 <ScrollView contentContainerStyle={styles.frame}>
-                    {/*<Text style={styles.explain}>*/}
-                    {/*상단의 게시물 3개는 추천이 많은 게시물입니다*/}
-                    {/*</Text>*/}
-
                     <View style={styles.thead}>
                         <View style={styles.th1}>
                             <Text style={styles.headText}>
@@ -219,13 +215,6 @@ var styles = StyleSheet.create({
         padding: 10 * dpi,
         opacity: 0.8,
     },
-    explain: {
-        fontSize: 15 * dpi,
-        color: '#FFFFFF',
-        opacity: 0.7,
-        textAlign: 'center',
-        marginBottom: 10 * dpi,
-    },
     thead: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -235,7 +224,7 @@ var styles = StyleSheet.create({
         height: thei,
     },
     headText: {
-        fontSize: 17 * dpi,
+        fontSize: 16 * dpi,
         color: '#FFFFFF',
     },
     th1: {
@@ -271,11 +260,11 @@ var styles = StyleSheet.create({
         borderColor: '#FFFFFF',
     },
     bodyText: {
-        fontSize: 16 * dpi,
+        fontSize: 15 * dpi,
         color: '#FFFFFF',
     },
     c_count:{
-        fontSize: 16 * dpi,
+        fontSize: 14 * dpi,
         color: '#DBCEFF',
     },
     td1: {
@@ -306,6 +295,6 @@ var styles = StyleSheet.create({
     },
     moreBtnText: {
         color: '#FFFFFF',
-        fontSize: 15 * dpi
+        fontSize: 1 * dpi
     },
 });
