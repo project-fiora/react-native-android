@@ -54,6 +54,8 @@ export default class FriendWallet extends Component {
                         this.setState({friendList: responseJson.list, load: true}, () => {
                             if (this.state.friendList.length != 0) {
                                 this.getFriendWallet(this.state.friendList[this.state.currentFriend].id);
+                            } else {
+                                this.setState({secondLoad:true, enable:null});
                             }
                         });
                     } else {

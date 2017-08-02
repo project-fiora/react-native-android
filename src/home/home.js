@@ -193,12 +193,15 @@ class Home extends Component {
                     <Text style={styles.txt}>
                         '{this.state.nickname != undefined && this.state.nickname}'님 환영합니다!{'\n'}
                     </Text>
-                    <Text style={styles.warningText}>
-                        ** 이 앱을 사용하는 도중에 발생하는
-                    </Text>
-                    <Text style={styles.warningText2}>
-                        모든 책임은 사용자 본인에게 있습니다 **
-                    </Text>
+                    <View style={styles.warningWrapper}>
+                        <Text style={styles.warningText}>
+                            ** 이 앱을 사용하는 도중에 발생하는
+                        </Text>
+                        <Text style={styles.warningText2}>
+                            모든 책임은 사용자 본인에게 있습니다 **
+                        </Text>
+                    </View>
+                    <View style={styles.hr}/>
                     <TouchableOpacity
                         style={styles.postBtn}
                         underlayColor={'#000000'}
@@ -206,6 +209,7 @@ class Home extends Component {
                     >
                         <Text style={styles.txt}>커뮤니티 바로가기</Text>
                     </TouchableOpacity>
+                    <View style={styles.hr}/>
                     <TouchableOpacity
                         style={styles.postBtn}
                         underlayColor={'#000000'}
@@ -213,9 +217,10 @@ class Home extends Component {
                     >
                         <Text style={styles.txt}>모의환전 바로가기</Text>
                     </TouchableOpacity>
+                    <View style={styles.hr}/>
                     <View>
                         {(this.state.confirmLoad == true && this.state.confirmList.length != 0) &&
-                        <View>
+                        <View style={styles.acceptWrapper}>
                             <Text style={styles.listTitle}>친구 요청이 왔어요!</Text>
                             {this.state.confirmList.map((list, i) => {
                                 return (
@@ -242,6 +247,7 @@ class Home extends Component {
                             })}
                         </View>
                         }
+                        <View style={styles.hr}/>
                         {(this.state.mysideLoad == true && this.state.mysideConfirmList.length != 0) &&
                         <View>
                             <Text style={styles.listTitle}>친구 요청 목록(대기중)</Text>
@@ -263,7 +269,8 @@ class Home extends Component {
     }
 }
 
-// const dpi = Common.getDpi();
+const wid = Common.winWidth();
+const hei = Common.winHeight();
 const dpi = Common.getRatio();
 const styles = StyleSheet.create({
     homeWrapper: {
@@ -275,19 +282,30 @@ const styles = StyleSheet.create({
         padding: 1 * dpi,
         fontSize: 17 * dpi,
     },
+    warningWrapper: {
+        marginVertical: 10 * dpi,
+    },
     warningText: {
         color: '#FFFFFF',
         opacity: 0.8,
         fontSize: 15 * dpi,
+        textAlign:'left',
     },
     warningText2: {
         color: '#FFFFFF',
         opacity: 0.8,
         fontSize: 15 * dpi,
+        textAlign:'right',
+    },
+    hr: {
+        opacity: 0.5,
+        borderColor: '#FFFFFF',
+        borderTopWidth: 0.6 * dpi,
+        // borderStyle:'dotted',  <= not working
     },
     postBtn: {
         marginTop: 15 * dpi,
-        margin:10*dpi,
+        margin: 10 * dpi,
     },
     btn: {
         marginTop: 20 * dpi,
@@ -303,8 +321,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     confirmBtn: {
-        width: 70 * dpi,
-        height: 30 * dpi,
+        width: 0.15 * wid,
+        height: 0.04 * hei,
         borderWidth: 1 * dpi,
         borderRadius: 20 * dpi,
         borderColor: '#FFFFFF',
@@ -316,9 +334,12 @@ const styles = StyleSheet.create({
     },
     btnText: {
         color: '#FFFFFF',
-        fontSize: 15 * dpi,
+        fontSize: 14 * dpi,
         alignSelf: 'center',
         justifyContent: 'center',
+    },
+    acceptWrapper: {
+        marginVertical: 5 * dpi,
     },
     listTitle: {
         color: '#FFFFFF',
