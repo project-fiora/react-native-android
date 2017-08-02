@@ -5,7 +5,7 @@ const stateStore = observable({
     loaded:'',
     walletName:'',
     walletAddr:'',
-    walletType:'BTC',
+    walletType:'',
     edit_walletId:'',
     edit_walletName:'',
     edit_walletAddr:'',

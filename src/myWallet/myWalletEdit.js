@@ -67,8 +67,6 @@ export default class MyWalletEdit extends Component {
                             });
                         }
                     }
-
-
                 } else {
                     alert("지갑정보를 가져올 수 없습니다");
                     return false;
@@ -124,8 +122,9 @@ export default class MyWalletEdit extends Component {
     }
 
     setType(i) {
-        this.setState({currentTYPE: i, onClickBox: !this.state.onClickBox});
-        StateStore.setEdit_walletType(this.state.TYPE[this.state.currentTYPE]);
+        this.setState({currentTYPE: i, onClickBox: !this.state.onClickBox},()=>{
+            StateStore.setEdit_walletType(this.state.TYPE[this.state.currentTYPE]);
+        });
     }
 
     render() {

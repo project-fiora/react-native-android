@@ -29,27 +29,32 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
     }
 
     async componentDidMount(){
-        // await this.getWalletInfo();
+        await this.getWalletInfo();
     }
 
-    // async getWalletInfo() {
-    //     try {
-    //         const code = StateStorage.walletAddr;
-    //         if (code !== null) {
-    //             await this.setState({addr: code});
-    //         }
-    //         const name = StateStorage.walletName;
-    //         if (name !== null) {
-    //             await this.setState({name: name});
-    //         }
-    //     } catch (error) {
-    //         alert('지갑 정보 가져오기 실패! : ' + error);
-    //     }
-    // }
+    async getWalletInfo() {
+        try {
+            const code = StateStorage.walletAddr();
+            if (code !== null) {
+                await this.setState({addr: code});
+            }
+            const type = StateStorage.walletType();
+            if (type != undefined) {
+                await this.setState({currentTYPE: type});
+            }
+            const name = StateStorage.walletName();
+            if (name !== null) {
+                await this.setState({name: name});
+            }
+        } catch (error) {
+            alert('지갑 정보 가져오기 실패! : ' + error);
+        }
+    }
 
     qrScanner() {
         try {
             StateStorage.setName(this.state.name);
+            StateStorage.setType(this.state.currentTYPE);
             Actions.scanner();
         } catch (error) {
             alert("지갑 이름 저장 오류 : " + error);
@@ -67,7 +72,9 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
         return (
             <View>
                 <ScrollView contentContainerStyle={styles.frame}>
-                    <Text style={styles.explain}>여기서 지갑을 추가해보세요!</Text>
+                    <Text style={styles.explain}>
+                        여기서 지갑을 추가해보세요!
+                    </Text>
                     <TextInput
                         style={styles.inputName}
                         value={this.state.name}
@@ -142,7 +149,10 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                         multiline={false}
                     />
 
-                    <Text style={styles.explainQRcode}>QR코드 스캐너는 업데이트 될 예정입니다!</Text>
+                    <Text style={styles.explainQRcode}>
+                        QR코드 스캐너{'\n'}
+                        스캐너를 두번이상 열면 앱 종료되는 오류는 다음 업데이트에서 ㅎ_ㅎ
+                    </Text>
                     <TouchableOpacity
                         style={styles.scannerBtn}
                         underlayColor={'#000000'}

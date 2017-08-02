@@ -7,6 +7,7 @@ import {AsyncStorage, Text, TouchableOpacity, StyleSheet} from "react-native";
 import {Actions} from 'react-native-router-flux';
 import QRCodeScanner from "react-native-qrcode-scanner";
 import Common from "./common";
+import StateStorage from "./stateStore";
 
 export default class Scanner extends Component {
     async onRead(obj) {
@@ -14,7 +15,7 @@ export default class Scanner extends Component {
         console.log("scanning");
         console.log(obj);
         try {
-            await AsyncStorage.setItem('walletAddQrcodeTmp', obj.data.toString());
+            StateStorage.setAddr(obj.data.toString());
         } catch (error) {
             alert("스캔 후 저장 오류 : " + error);
         }

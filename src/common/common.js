@@ -153,11 +153,8 @@ class Common extends Component {
         });
     }
 
-    /////지갑추가..버튼 연결해야함
-    // walletName: this.state.name,
-    // walletAddr: this.state.addr,
-    // walletType: this.state.TYPE[this.state.currentTYPE],
     static async addWallet() {
+        const TYPE = ['BTC', 'ETH', 'ETC', 'XRP', 'LTC', 'DASH'];
         if (StateStore.walletName() == "") {
             alert("지갑 이름을 입력하세요!");
             return false;
@@ -173,8 +170,6 @@ class Common extends Component {
                 const token = JSON.parse(result).token;
                 try {
                     //post api call
-                    if (StateStore.walletType() == undefined)
-                        StateStore.setType('BTC');
                     fetch(PrivateAddr.getAddr() + 'wallet/add', {
                         method: 'POST',
                         headers: {
@@ -185,7 +180,7 @@ class Common extends Component {
                         body: JSON.stringify({
                             walletName: StateStore.walletName(),
                             walletAddr: StateStore.walletAddr(),
-                            walletType: StateStore.walletType(),
+                            walletType: TYPE[StateStore.walletType()],
                         })
                     }).then((response) => {
                         return response.json()
@@ -200,7 +195,9 @@ class Common extends Component {
                         alert('Network Connection Failed');
                         console.error(error);
                     }).done();
-                    AsyncStorage.multiRemove(['walletAddNameTmp', 'walletAddQrcodeTmp']);
+                    StateStore.setName('');
+                    StateStore.setType('BTC');
+                    StateStore.setAddr('');
                 } catch (err) {
                     alert('지갑추가실패 : ' + err);
                 }
@@ -237,19 +234,22 @@ class Common extends Component {
                         })
                     }).then((response) => {
                         return response.json()
-                    })
-                        .then((responseJson) => {
-                            if (responseJson.message == "SUCCESS") {
-                                alert('지갑 수정 성공!');
-                                Actions.main({goTo: 'myWallet'});
-                            } else {
-                                alert('오류가 발생했습니다.\n다시 시도해주세요!');
-                            }
-                        })
-                        .catch((error) => {
-                            alert('Network Connection Failed');
-                            console.error(error);
-                        }).done();
+                    }).then((responseJson) => {
+                        if (responseJson.message == "SUCCESS") {
+                            alert('지갑 수정 성공!');
+                            Actions.main({goTo: 'myWallet'});
+                        } else {
+                            alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                        }
+                    }).catch((error) => {
+                        alert('Network Connection Failed');
+                        console.error(error);
+                    }).done(() => {
+                        StateStore.setEdit_walletId('');
+                        StateStore.setEdit_walletName('');
+                        StateStore.setEdit_walletAddr('');
+                        StateStore.setEdit_walletType('');
+                    });
 
                 } catch (err) {
                     alert('수정실패 ' + err);
