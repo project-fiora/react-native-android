@@ -69,7 +69,7 @@ const hei = Common.winHeight();
 var styles = StyleSheet.create({
     taps: {
         width:'100%',
-        height: 0.14*hei,
+        height: 0.13*hei,
         backgroundColor: 'transparent',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -82,15 +82,15 @@ var styles = StyleSheet.create({
         justifyContent: 'center',
     },
     img: {
-        width:0.11*hei,
-        height:0.11*hei,
-        marginTop: -8*dpi,
+        width:0.1*hei,
+        height:0.1*hei,
+        marginTop: -7*dpi,
         alignSelf:'center',
     },
     boxText: {
-        marginTop: -10*dpi,
+        marginTop: -9*dpi,
         color:'#FFFFFF',
-        fontSize:16*dpi,
+        fontSize:14*dpi,
         textAlign:'center',
     }
 });

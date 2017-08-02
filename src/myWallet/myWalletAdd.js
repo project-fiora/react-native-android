@@ -70,8 +70,8 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
 
     render() {
         return (
-            <View>
-                <ScrollView contentContainerStyle={styles.frame}>
+            <ScrollView contentContainerStyle={styles.frame}>
+                <ScrollView contentContainerStyle={styles.content}>
                     <Text style={styles.explain}>
                         여기서 지갑을 추가해보세요!
                     </Text>
@@ -151,7 +151,8 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
 
                     <Text style={styles.explainQRcode}>
                         QR코드 스캐너{'\n'}
-                        스캐너를 두번이상 열면 앱 종료되는 오류는 다음 업데이트에서 ㅎ_ㅎ
+                        스캐너 사용시 자잘한 버그는..{'\n'}
+                        다음 업데이트에서 ㅎ_ㅎ
                     </Text>
                     <TouchableOpacity
                         style={styles.scannerBtn}
@@ -163,7 +164,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                         </Text>
                     </TouchableOpacity>
                 </ScrollView>
-            </View>
+            </ScrollView>
         );
     }
 });
@@ -172,7 +173,10 @@ const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei= Common.winHeight();
 const styles = StyleSheet.create({
-    frame: {
+    frame:{
+        flex:1,
+    },
+    content: {
         alignItems: 'center',
     },
     explain: {
@@ -247,6 +251,7 @@ const styles = StyleSheet.create({
         paddingLeft: 15*dpi,
     },
     explainQRcode: {
+        textAlign:'center',
         color: '#FFFFFF',
         opacity: 0.8,
         fontSize: 15*dpi,

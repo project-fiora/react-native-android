@@ -39,7 +39,7 @@ export default class MyWallet extends Component {
 
     async getMyWallet() {
         await AsyncStorage.getItem('Token', (err, result) => {
-            try{
+            try {
                 if (err != null) {
                     alert(err);
                     return false;
@@ -55,7 +55,7 @@ export default class MyWallet extends Component {
                     .then((responseJson) => {
                         if (responseJson.message == "SUCCESS") {
                             var list = responseJson.list;
-                            this.setState({walletList:list, load:true},()=>{
+                            this.setState({walletList: list, load: true}, () => {
                                 AsyncStorage.setItem('WalletList', JSON.stringify(this.state.walletList))
                             });
                         } else {
@@ -66,46 +66,48 @@ export default class MyWallet extends Component {
                     .catch((error) => {
                         console.error(error);
                     })
-                    .done(()=>{
-                        Promise.resolve()
-                            .then(() => Common.getBalance(this.state.walletList[this.state.currentWallet].wallet_type,
-                                this.state.walletList[this.state.currentWallet].wallet_add))
-                            .then(result => {
-                                var balance;
-                                if (Number.isInteger(result)) {
-                                    balance = (parseInt(result) / 100000000) + " " + this.state.walletList[this.state.currentWallet].wallet_type;
-                                } else {
-                                    balance = result;
-                                }
-                                this.setState({balance: balance});
-                            });
+                    .done(() => {
+                        if (this.state.walletList.length != 0) { //내 지갑이 있을때만 지갑 조회를 해야한다
+                            Promise.resolve()
+                                .then(() => Common.getBalance(this.state.walletList[this.state.currentWallet].wallet_type,
+                                    this.state.walletList[this.state.currentWallet].wallet_add))
+                                .then(result => {
+                                    var balance;
+                                    if (Number.isInteger(result)) {
+                                        balance = (parseInt(result) / 100000000) + " " + this.state.walletList[this.state.currentWallet].wallet_type;
+                                    } else {
+                                        balance = result;
+                                    }
+                                    this.setState({balance: balance});
+                                });
+                        }
                     });
-            }catch (err){
+            } catch (err) {
                 alert(err);
-                Actions.main({goTo:'home'});
+                Actions.main({goTo: 'home'});
             }
         });
     }
 
     showWallet(i, type, addr) {
         this.setState({
-            load: false,
-            currentWallet: i,
-            balance:'조회 중..',
-            onClickBox: !this.state.onClickBox,
-            load: true
+                load: false,
+                currentWallet: i,
+                balance: '조회 중..',
+                onClickBox: !this.state.onClickBox,
+                load: true
             }, () =>
-            Promise.resolve()
-                .then(() => Common.getBalance(type, addr))
-                .then(result => {
-                    var balance;
-                    if (Number.isInteger(result)) {
-                        balance = (parseInt(result) / 100000000) + " " + type;
-                    } else {
-                        balance = result;
-                    }
-                    this.setState({balance: balance});
-                })
+                Promise.resolve()
+                    .then(() => Common.getBalance(type, addr))
+                    .then(result => {
+                        var balance;
+                        if (Number.isInteger(result)) {
+                            balance = (parseInt(result) / 100000000) + " " + type;
+                        } else {
+                            balance = result;
+                        }
+                        this.setState({balance: balance});
+                    })
         );
     }
 

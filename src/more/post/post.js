@@ -90,8 +90,8 @@ export default class Post extends Component {
                         if (top.title.length > 11) {
                             top.title = top.title.substr(0, 10) + "...";
                         }
-                        if (top.nickname.length > 6) {
-                            top.nickname = top.nickname.substr(0, 6) + "...";
+                        if (top.nickname.length > 5) {
+                            top.nickname = top.nickname.substr(0, 5) + "...";
                         }
                         let c_count = "";
                         if (top.c_count > 0) {
@@ -152,11 +152,11 @@ export default class Post extends Component {
                     })}
 
                     {this.state.postList.map((post, i) => {
-                        if (post.title.length > 13) {
-                            post.title = post.title.substr(0, 12) + "...";
+                        if (post.title.length > 11) {
+                            post.title = post.title.substr(0, 10) + "...";
                         }
-                        if (post.nickname.length > 6) {
-                            post.nickname = post.nickname.substr(0, 6) + "...";
+                        if (post.nickname.length > 5) {
+                            post.nickname = post.nickname.substr(0, 5) + "...";
                         }
                         let c_count = "";
                         if (post.c_count > 0) {
@@ -224,7 +224,7 @@ var styles = StyleSheet.create({
         height: thei,
     },
     headText: {
-        fontSize: 16 * dpi,
+        fontSize: 15 * dpi,
         color: '#FFFFFF',
     },
     th1: {
@@ -252,7 +252,7 @@ var styles = StyleSheet.create({
         opacity:0.8,
     },
     hr: {
-        borderBottomWidth: 0.6 * dpi,
+        borderBottomWidth: 0.8 * dpi,
         borderColor: '#FFFFFF',
     },
     heavyHr:{
@@ -260,7 +260,7 @@ var styles = StyleSheet.create({
         borderColor: '#FFFFFF',
     },
     bodyText: {
-        fontSize: 15 * dpi,
+        fontSize: 14 * dpi,
         color: '#FFFFFF',
     },
     c_count:{
@@ -295,6 +295,6 @@ var styles = StyleSheet.create({
     },
     moreBtnText: {
         color: '#FFFFFF',
-        fontSize: 1 * dpi
+        fontSize: 14 * dpi
     },
 });
