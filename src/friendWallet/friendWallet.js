@@ -92,12 +92,12 @@ export default class FriendWallet extends Component {
                         this.setState({walletList: [], load: true, secondLoad: true, enable: null});
                     } else { //친구지갑이 하나라도 있으면, 잔액조회를 한다.
                         this.setState({walletList: list, load: true, enable: null}, () => {
-                            Promise.resolve().then(() =>
+                            Promise.resolve().then(() => //어차피 친구를 바꾸면 친구지갑의 첫번째것만 보여주면 된다
                                 Common.getBalance(list[0].wallet_type, list[0].wallet_add)
                             ).then(result => {
                                 var balance;
                                 if (Number.isInteger(result)) {
-                                    balance = (parseInt(result) / 100000000) + " " + type;
+                                    balance = (parseInt(result) / 100000000) + " " + list[0].wallet_type;
                                 } else {
                                     balance = result;
                                 }
