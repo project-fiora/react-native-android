@@ -29,6 +29,7 @@ export default class FriendWallet extends Component {
             currentFriend: 0,
             currentWallet: 0,
             token: '',
+            balance: '조회 중..',
         };
     }
 
@@ -51,13 +52,12 @@ export default class FriendWallet extends Component {
                     }
                 }).then((response) => response.json()).then((responseJson) => {
                     if (responseJson.message == "SUCCESS") {
-                        this.setState({friendList: responseJson.list, load: true}, () => {
-                            if (this.state.friendList.length != 0) {
-                                this.getFriendWallet(this.state.friendList[this.state.currentFriend].id);
-                            } else {
-                                this.setState({secondLoad:true, enable:null});
-                            }
-                        });
+                        this.setState({friendList: responseJson.list, load: true});
+                        if (responseJson.list.length != 0) {
+                            this.getFriendWallet(responseJson.list[this.state.currentFriend].id);
+                        } else {
+                            this.setState({secondLoad: true, enable: null});
+                        }
                     } else {
                         alert("친구정보를 가져올 수 없습니다");
                         return false;
@@ -88,33 +88,30 @@ export default class FriendWallet extends Component {
             }).then((response) => response.json()).then((responseJson) => {
                 if (responseJson.message == "SUCCESS") {
                     var list = responseJson.list;
-                    if (list.length == 0) {
-                        this.setState({walletList: [], load: true, secondLoad: true, enable: null});
-                    } else { //친구지갑이 하나라도 있으면, 잔액조회를 한다.
-                        this.setState({walletList: list, load: true, enable: null}, () => {
-                            Promise.resolve().then(() => //어차피 친구를 바꾸면 친구지갑의 첫번째것만 보여주면 된다
-                                Common.getBalance(list[0].wallet_type, list[0].wallet_add)
-                            ).then(result => {
-                                var balance;
-                                if (Number.isInteger(result)) {
-                                    balance = (parseInt(result) / 100000000) + " " + list[0].wallet_type;
-                                } else {
-                                    balance = result;
-                                }
-                                this.setState({
-                                    balance: balance,
-                                    secondLoad: true
-                                });
-                            })
-                        });
-                    }
+                    this.setState({walletList: list, load: true, enable: null, secondLoad: true});
                 } else {
                     alert("친구지갑정보를 가져올 수 없습니다");
                     return false;
                 }
             }).catch((error) => {
                 console.error(error);
-            }).done();
+            }).done(() => {
+                if (this.state.walletList.length != 0) {//친구 지갑이 있으면
+                    Promise.resolve().then(() => //어차피 친구를 바꾸면 친구지갑의 첫번째것만 보여주면 된다
+                        Common.getBalance(this.state.walletList[0].wallet_type, this.state.walletList[0].wallet_add)
+                    ).then(result => {
+                        var balance;
+                        if (Number.isInteger(result)) {
+                            balance = (parseInt(result) / 100000000) + " " + this.state.walletList[0].wallet_type;
+                        } else {
+                            balance = result;
+                        }
+                        this.setState({
+                            balance: balance
+                        });
+                    })
+                }
+            });
         });
     }
 
@@ -130,21 +127,22 @@ export default class FriendWallet extends Component {
     }
 
     showWallet(i, type, addr) {
-        this.setState({secondLoad: false}, () =>
-            Promise.resolve().then(() => Common.getBalance(type, addr)).then(result => {
-                var balance;
-                if (Number.isInteger(result)) {
-                    balance = (parseInt(result) / 100000000) + " " + type;
-                } else {
-                    balance = result;
-                }
-                this.setState({
-                    balance: balance,
-                    currentWallet: i,
-                    onClickBox: !this.state.onClickBox,
-                    secondLoad: true
-                });
-            })
+        this.setState({
+                balance: '조회 중..',
+                secondLoad: false,
+                currentWallet: i,
+                onClickBox: !this.state.onClickBox,
+                secondLoad: true
+            }, () =>
+                Promise.resolve().then(() => Common.getBalance(type, addr)).then(result => {
+                    var balance;
+                    if (Number.isInteger(result)) {
+                        balance = (parseInt(result) / 100000000) + " " + type;
+                    } else {
+                        balance = result;
+                    }
+                    this.setState({balance: balance});
+                })
         );
     }
 

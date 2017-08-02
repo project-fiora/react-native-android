@@ -55,23 +55,9 @@ export default class MyWallet extends Component {
                     .then((responseJson) => {
                         if (responseJson.message == "SUCCESS") {
                             var list = responseJson.list;
-                            if (list.length == 0) { //지갑이 없으면
-                                this.setState({walletList: [], load: true});
-                            } else { //지갑이 있으면, 잔액조회를 한다
-                                Promise.resolve()
-                                    .then(() => Common.getBalance(list[this.state.currentWallet].wallet_type,
-                                        list[this.state.currentWallet].wallet_add))
-                                    .then(result => {
-                                        var balance;
-                                        if (Number.isInteger(result)) {
-                                            balance = (parseInt(result) / 100000000) + " " + list[this.state.currentWallet].wallet_type;
-                                        } else {
-                                            balance = result;
-                                        }
-                                        this.setState({walletList: list, balance: balance, load: true},
-                                            () => AsyncStorage.setItem('WalletList', JSON.stringify(this.state.walletList)));
-                                    });
-                            }
+                            this.setState({walletList:list, load:true},()=>{
+                                AsyncStorage.setItem('WalletList', JSON.stringify(this.state.walletList))
+                            });
                         } else {
                             alert("지갑정보를 가져올 수 없습니다");
                             return false;
@@ -80,7 +66,20 @@ export default class MyWallet extends Component {
                     .catch((error) => {
                         console.error(error);
                     })
-                    .done();
+                    .done(()=>{
+                        Promise.resolve()
+                            .then(() => Common.getBalance(this.state.walletList[this.state.currentWallet].wallet_type,
+                                this.state.walletList[this.state.currentWallet].wallet_add))
+                            .then(result => {
+                                var balance;
+                                if (Number.isInteger(result)) {
+                                    balance = (parseInt(result) / 100000000) + " " + this.state.walletList[this.state.currentWallet].wallet_type;
+                                } else {
+                                    balance = result;
+                                }
+                                this.setState({balance: balance});
+                            });
+                    });
             }catch (err){
                 alert(err);
                 Actions.main({goTo:'home'});
@@ -89,7 +88,13 @@ export default class MyWallet extends Component {
     }
 
     showWallet(i, type, addr) {
-        this.setState({load: false}, () =>
+        this.setState({
+            load: false,
+            currentWallet: i,
+            balance:'조회 중..',
+            onClickBox: !this.state.onClickBox,
+            load: true
+            }, () =>
             Promise.resolve()
                 .then(() => Common.getBalance(type, addr))
                 .then(result => {
@@ -99,7 +104,7 @@ export default class MyWallet extends Component {
                     } else {
                         balance = result;
                     }
-                    this.setState({balance: balance, currentWallet: i, onClickBox: !this.state.onClickBox, load: true});
+                    this.setState({balance: balance});
                 })
         );
     }
