@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     centerText: {
         marginVertical: 3 * dpi,
         color: '#FFFFFF',
-        fontSize: 17 * dpi,
+        fontSize: 14 * dpi,
         textAlign: 'center',
     },
 });
