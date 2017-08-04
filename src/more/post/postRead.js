@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import {
     StyleSheet,
     Text, Alert,
-    View, AsyncStorage, TouchableOpacity, ScrollView, Image, TextInput, TouchableHighlight
+    View, AsyncStorage, TouchableOpacity, ScrollView, TextInput, TouchableHighlight
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "../../common/private/address";

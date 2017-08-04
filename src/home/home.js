@@ -10,7 +10,6 @@ import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
 import LoadingIcon from "../common/loadingIcon";
-import TabButton from "../common/tapButton";
 
 class Home extends Component {
     constructor(props) {

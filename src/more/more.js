@@ -22,6 +22,7 @@ export default class More extends Component {
                 <MoreBtn text="공지사항" img={images.notice} goTo="notice"/>
                 {/*<MoreBtn text="버전정보" img={images.version} goTo="version"/>*/}
                 <MoreBtn text="문의하기" img={images.ask} goTo="inquire"/>
+                <MoreBtn text="오픈소스 라이센스" img={images.notice} goTo="license"/>
                 <MoreBtn text="로그아웃" img={images.logout} goTo="logout"/>
             </ScrollView>
         );

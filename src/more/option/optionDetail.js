@@ -9,8 +9,6 @@ import {
     View
 } from 'react-native';
 
-import TabButton from '../../common/tapButton';
-
 export default class OptionDetail extends Component {
     constructor(props) {
         super(props);

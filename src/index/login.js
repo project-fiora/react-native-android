@@ -12,9 +12,7 @@ import CheckBox from 'react-native-checkbox';
 import styles from './index_style';
 
 import PrivateAddr from "../common/private/address";
-import Common from "../common/common";
 import LoadingIcon from "../common/loadingIcon";
-
 
 export default class Login extends Component {
     constructor(props) {
