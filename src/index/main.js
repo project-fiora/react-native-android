@@ -44,6 +44,7 @@ import Inquire from '../more/inquire';
 import Common from "../common/common";
 import PostAddEdit from "../more/post/postAddEdit";
 import StateStore from "../common/stateStore";
+import License from "../more/license";
 
 export default class Main extends Component {
     constructor(props) {
@@ -207,6 +208,11 @@ export default class Main extends Component {
                 title: '문의하기',
                 enableBackBtn: true, backBtnGoTo: 'more'
             });
+        } else if (p == 'license') {
+            this.setState({
+                title: '오픈소스 라이센스',
+                enableBackBtn: true, backBtnGoTo: 'more'
+            });
         }
     }
 
@@ -300,6 +306,7 @@ export default class Main extends Component {
                     }
                     {this.props.goTo === 'version' && <Version/>}
                     {this.props.goTo === 'inquire' && <Inquire/>}
+                    {this.props.goTo === 'license' && <License/>}
                 </View>
                 <TabButton/>
             </ImageBackground>

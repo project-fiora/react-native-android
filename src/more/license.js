@@ -24,11 +24,11 @@ export default class License extends Component {
     render() {
         return (
             <ScrollView contentContainerStyle={styles.frame}>
+                <ScrollView contentContainerStyle={styles.content}>
                 <Text style={styles.txt}>
                     {`
-                    **react**
-
-                    BSD License
+**react**
+BSD License
 
 For React software
 
@@ -59,10 +59,10 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-------------------------------------------------------------------------------------
-                    **react-native**
+--------------------------------------------------------------------
+**react-native**
 
-                    BSD License
+BSD License
 
 For React Native software
 
@@ -92,10 +92,10 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-                    ------------------------------------------------------------------------------------
-                    **react-native-router-flux**
+---------------------------------------------------------------------------
+**react-native-router-flux**
 
-                    MIT License
+MIT License
 
 Copyright (c) 2015-2017 aksonov
 
@@ -116,11 +116,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-                    ------------------------------------------------------------------------------------
-                    **react-native-qrcode-scanner**
-                    **react-native-checkbox**
+---------------------------------------------------------------------------
+**react-native-qrcode-scanner**
+**react-native-checkbox**
 
-                    The MIT License (MIT)
+The MIT License (MIT)
 
 Copyright (c) 2017 Moaaz Sidat
 
@@ -133,10 +133,10 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-                    ------------------------------------------------------------------------------------
-                    **react-native-qrcode**
+---------------------------------------------------------------------------
+**react-native-qrcode**
 
-                    Copyright 2017-present, cssivision
+Copyright 2017-present, cssivision
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation
@@ -150,10 +150,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-                    ------------------------------------------------------------------------------------
-                    **mobx-react/native**
+-----------------------------------------------------------------------------
+**mobx-react/native**
 
-                    The MIT License (MIT)
+The MIT License (MIT)
 
 Copyright (c) 2015 Michel Weststrate
 
@@ -174,9 +174,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-                    ------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
                     `}
                 </Text>
+                </ScrollView>
             </ScrollView>
         );
     }
@@ -188,6 +189,8 @@ const hei = Common.winHeight();
 var styles = StyleSheet.create({
     frame:{
         flex:1,
+    },
+    content:{
         padding:15*dpi,
     },
     txt:{

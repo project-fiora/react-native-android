@@ -57,7 +57,7 @@ class Tap extends Component {
 const images = {
     home: require('./img/home.png'),
     wallet: require('./img/wallet2.png'),
-    friendWallet: require('./img/friend.png'),
+    friendWallet: require('./img/friendWallet.png'),
     exchange: require('./img/exchange2.png'),
     price: require('./img/price.png'),
     more: require('./img/more.png'),
