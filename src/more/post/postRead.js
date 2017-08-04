@@ -295,6 +295,7 @@ export default class Post extends Component {
                     var stateCopy = Object.assign({}, this.state);
                     stateCopy.post.comment_list = stateCopy['post'].comment_list.slice();
                     stateCopy.post.comment_list.push(recentComment);
+                    stateCopy.comment = '';
                     this.setState(stateCopy);
                 } catch (err) {
                     alert("댓글 생성 에러\n" + err);
@@ -502,12 +503,14 @@ var styles = StyleSheet.create({
         opacity: 0.8,
     },
     title: {
+        width:0.5*wid,
         fontSize: 18 * dpi,
         color: '#FFFFFF',
         opacity: 0.8,
         marginBottom: 15 * dpi,
     },
     date: {
+        width:0.4*wid,
         fontSize: 13 * dpi,
         color: '#FFFFFF',
         opacity: 0.8,

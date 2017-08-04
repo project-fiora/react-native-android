@@ -87,12 +87,6 @@ export default class Post extends Component {
                     </View>
 
                     {this.state.topList.map((top, i) => {
-                        if (top.title.length > 11) {
-                            top.title = top.title.substr(0, 10) + "...";
-                        }
-                        if (top.nickname.length > 5) {
-                            top.nickname = top.nickname.substr(0, 5) + "...";
-                        }
                         let c_count = "";
                         if (top.c_count > 0) {
                             c_count = "[" + top.c_count + "]";
@@ -110,7 +104,7 @@ export default class Post extends Component {
                                             </Text>
                                         </View>
                                         <View style={styles.td2}>
-                                            <Text style={styles.bodyText}>
+                                            <Text numberOfLines={1} ellipsizeMode='middle' style={styles.bodyText}>
                                                 {top.title} <Text style={styles.c_count}>{c_count}</Text>
                                             </Text>
                                         </View>
@@ -135,7 +129,7 @@ export default class Post extends Component {
                                             </Text>
                                         </View>
                                         <View style={styles.td2}>
-                                            <Text style={styles.bodyText}>
+                                            <Text numberOfLines={1} ellipsizeMode='middle' style={styles.bodyText}>
                                                 {top.title} <Text style={styles.c_count}>{c_count}</Text>
                                             </Text>
                                         </View>
@@ -152,12 +146,6 @@ export default class Post extends Component {
                     })}
 
                     {this.state.postList.map((post, i) => {
-                        if (post.title.length > 11) {
-                            post.title = post.title.substr(0, 10) + "...";
-                        }
-                        if (post.nickname.length > 5) {
-                            post.nickname = post.nickname.substr(0, 5) + "...";
-                        }
                         let c_count = "";
                         if (post.c_count > 0) {
                             c_count = "[" + post.c_count + "]";
@@ -173,7 +161,7 @@ export default class Post extends Component {
                                         </Text>
                                     </View>
                                     <View style={styles.td2}>
-                                        <Text style={styles.bodyText}>
+                                        <Text numberOfLines={1} ellipsizeMode='middle' style={styles.bodyText}>
                                             {post.title} <Text style={styles.c_count}>{c_count}</Text>
                                         </Text>
                                     </View>
