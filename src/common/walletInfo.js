@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Text, View, StyleSheet} from "react-native";
+import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
 import QRCode from "react-native-qrcode";
 import Common from "./common";
 
@@ -34,6 +34,13 @@ export default class WalletInfo extends Component {
                     />
                 </View>
                 <Text style={styles.centerText}>{this.props.wallet_add}</Text>
+                <TouchableOpacity
+                    style={styles.searchBtn}
+                    underlayColor={'#000000'}
+                    onPress={() => this.goTo(this.state.rightBtnGoTo)}
+                >
+                    <Text style={styles.searchBtnText}>거래기록조회</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -87,5 +94,21 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 14 * dpi,
         textAlign: 'center',
+    },
+    searchBtn: {
+        width:0.35*wid,
+        borderWidth: 1 * dpi,
+        borderRadius: 20 * dpi,
+        borderColor: '#FFFFFF',
+        alignItems: 'center',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        opacity: 0.6,
+        paddingVertical:5*dpi,
+        marginTop:10*dpi,
+    },
+    searchBtnText: {
+        color: '#FFFFFF',
+        fontSize: 14 * dpi
     },
 });

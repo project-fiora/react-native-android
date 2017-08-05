@@ -13,6 +13,7 @@ import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
 import WalletInfo from "../common/walletInfo";
 import LoadingIcon from "../common/loadingIcon";
+import StateStore from "../common/stateStore";
 
 export default class MyWallet extends Component {
     constructor(props) {
@@ -56,6 +57,8 @@ export default class MyWallet extends Component {
                         if (responseJson.message == "SUCCESS") {
                             var list = responseJson.list;
                             this.setState({walletList: list, load: true}, () => {
+                                StateStore.setCurrentMyWalletId(this.state.walletList[0].wallet_Id);
+                                StateStore.setCurrentMyWalletList(this.state.walletList);
                                 AsyncStorage.setItem('WalletList', JSON.stringify(this.state.walletList))
                             });
                         } else {
@@ -67,7 +70,7 @@ export default class MyWallet extends Component {
                         console.error(error);
                     })
                     .done(() => {
-                        if (this.state.walletList.length != 0) { //내 지갑이 있을때만 지갑 조회를 해야한다
+                        if (this.state.walletList.length != 0) { //내 지갑이 있을때만 잔액 조회를 해야한다
                             Promise.resolve()
                                 .then(() => Common.getBalance(this.state.walletList[this.state.currentWallet].wallet_type,
                                     this.state.walletList[this.state.currentWallet].wallet_add))
@@ -91,11 +94,9 @@ export default class MyWallet extends Component {
 
     showWallet(i, type, addr) {
         this.setState({
-                load: false,
                 currentWallet: i,
                 balance: '조회 중..',
                 onClickBox: !this.state.onClickBox,
-                load: true
             }, () =>
                 Promise.resolve()
                     .then(() => Common.getBalance(type, addr))
@@ -122,7 +123,7 @@ export default class MyWallet extends Component {
                     <View>
                         <Text style={styles.titleText}>
                             아직 지갑이 한개도 없어요!{'\n'}
-                            오른쪽 상단의 지갑 관리 버튼을 통해서{'\n'}
+                            오른쪽 상단의 버튼을 통해서{'\n'}
                             지갑을 추가하세요!
                         </Text>
                     </View>

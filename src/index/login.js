@@ -22,7 +22,7 @@ export default class Login extends Component {
             currentPage: 'title',
             email: '',
             password: '',
-            autoLogin: false,
+            autoLogin: true,
             logining: false,
             enableTouch:null,
         };

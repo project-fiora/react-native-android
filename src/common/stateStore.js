@@ -15,7 +15,22 @@ const stateStore = observable({
     postContents:'',
     edit_postTitle:'',
     edit_postContents:'',
+    currentMyWalletList:'',
+    currentMyWalletId:'',
 });
+
+stateStore.setCurrentMyWalletList = (list)=>{
+    this.currentMyWalletList = list; //for tradeRecord
+};
+stateStore.currentMyWalletList = ()=>{
+    return this.currentMyWalletList;
+}
+stateStore.setCurrentMyWalletId = (id)=>{
+    this.currentMyWalletId = id; //for mywalletEdit
+};
+stateStore.currentMyWalletId = ()=>{
+    return this.currentMyWalletId;
+}
 
 ///Global loading control/////
 stateStore.setGlobalLoaded = (load)=>{

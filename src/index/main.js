@@ -14,7 +14,6 @@ import TabButton from '../common/tapButton';
 import Home from '../home/home';
 
 import MyWallet from '../myWallet/myWallet';
-import MyWalletMng from "../myWallet/myWalletMng";
 import MyWalletEdit from '../myWallet/myWalletEdit';
 import MyWalletAdd from '../myWallet/myWalletAdd';
 
@@ -33,8 +32,6 @@ import Convert from '../more/convert';
 import Post from "../more/post/post";
 import PostRead from '../more/post/postRead';
 import PostAdd from "../more/post/postAdd";
-import Option from '../more/option/option';
-import OptionDetail from "../more/option/optionDetail";
 
 import Notice from '../more/notice/notice';
 import NoticeDetail from "../more/notice/noticeDetail";
@@ -45,6 +42,7 @@ import Common from "../common/common";
 import PostAddEdit from "../more/post/postAddEdit";
 import StateStore from "../common/stateStore";
 import License from "../more/license";
+import TradeRecord from "../myWallet/TradeRecord";
 
 export default class Main extends Component {
     constructor(props) {
@@ -57,6 +55,7 @@ export default class Main extends Component {
             enableRightBtn: false,
             rightBtnGoTo: '',
             rightBtnText: '',
+            enableRightHambug: false,
         };
         StateStore.setGlobalLoaded('none');
         this.handleBack = (() => {
@@ -80,6 +79,7 @@ export default class Main extends Component {
             return true;
         }).bind(this);
     }
+
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBack);
     }
@@ -90,7 +90,6 @@ export default class Main extends Component {
 
     componentWillMount() { //title, backBtn handler
         var p = this.props.goTo;
-
         if (p == 'home') {
             this.setState({title: '요약'});
         } else if (p == 'price') {
@@ -106,25 +105,24 @@ export default class Main extends Component {
         } else if (p == 'myWallet') {
             this.setState({
                 title: '내지갑',
-                enableRightBtn: true, rightBtnText: '지갑 관리', rightBtnGoTo: 'myWalletMng'
-            });
-        } else if (p == 'myWalletMng') {
-            this.setState({
-                title: '지갑 관리',
-                enableBackBtn: true, backBtnGoTo: 'myWallet',
-                enableRightBtn: true, rightBtnText: '지갑 추가', rightBtnGoTo: 'myWalletAdd'
+                enableRightHambug: true,
             });
         } else if (p == 'myWalletEdit') {
             this.setState({
-                title: '지갑 수정',
-                enableBackBtn: true, backBtnGoTo: 'myWalletMng',
+                title: '지갑 관리',
+                enableBackBtn: true, backBtnGoTo: 'myWallet',
                 enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callEditWallet'
             });
         } else if (p == 'myWalletAdd') {
             this.setState({
                 title: '지갑 추가',
-                enableBackBtn: true, backBtnGoTo: 'myWalletMng',
+                enableBackBtn: true, backBtnGoTo: 'myWallet',
                 enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callAddWallet'
+            });
+        } else if (p == 'tradeRecord') {
+            this.setState({
+                title: '거래 기록 조회',
+                enableBackBtn: true, backBtnGoTo: 'myWallet',
             });
         } else if (p == 'friendWallet') {
             this.setState({
@@ -133,14 +131,14 @@ export default class Main extends Component {
             });
         } else if (p == 'friendWalletMng') {
             this.setState({
-                title: '친구 관리', enableBackBtn: true, backBtnGoTo: 'friendWallet',
+                title: '친구 관리',
+                enableBackBtn: true, backBtnGoTo: 'friendWallet',
             });
         } else if (p == 'exchange') {
             this.setState({
                 title: '자동 거래',
                 enableBackBtn: true, backBtnGoTo: 'more',
             });
-
         } else if (p == 'more') {
             this.setState({
                 title: '더보기'
@@ -216,15 +214,19 @@ export default class Main extends Component {
         }
     }
 
-    goTo(part) {
-        if(part == 'callAddWallet'){
-            Common.addWallet();
-        } else if(part=='callEditWallet'){
-            Common.editWallet();
-        } else if(part=='postWrite'){
-            PostAddEdit.writePost();
-        } else if(part=='postEdit'){
-            PostAddEdit.editPost();
+    onClickHambug() {
+        this.setState({onClickHambug: !this.state.onClickHambug});
+    }
+
+    async goTo(part) {
+        if (part == 'callAddWallet') {
+            await Common.addWallet();
+        } else if (part == 'callEditWallet') {
+            await Common.editWallet();
+        } else if (part == 'postWrite') {
+            await PostAddEdit.writePost();
+        } else if (part == 'postEdit') {
+            await PostAddEdit.editPost();
         } else {
             Actions.main({goTo: part});
         }
@@ -264,8 +266,14 @@ export default class Main extends Component {
                                 <Text style={styles.rightBtnText}>{this.state.rightBtnText}</Text>
                             </TouchableHighlight>
                             }
+                            {this.state.enableRightHambug &&
+                            <TouchableOpacity
+                                onPress={() => this.onClickHambug()}
+                            >
+                                <Image source={require('../common/img/hambug3.png')} style={styles.hambugBtn}/>
+                            </TouchableOpacity>
+                            }
                         </View>
-
                     </View>
                     <View style={styles.hr}/>
                     {this.props.goTo === 'home' && <Home/>}
@@ -273,11 +281,11 @@ export default class Main extends Component {
                     {this.props.goTo === 'coinmarketcap' && <Coinmarketcap/>}
 
                     {this.props.goTo === 'myWallet' && <MyWallet/>}
-                    {this.props.goTo === 'myWalletMng' && <MyWalletMng/>}
                     {this.props.goTo === 'myWalletEdit' &&
                     <MyWalletEdit id={this.props.id}/>
                     }
                     {this.props.goTo === 'myWalletAdd' && <MyWalletAdd/>}
+                    {this.props.goTo === 'tradeRecord' && <TradeRecord/>}
 
                     {this.props.goTo === 'friendWallet' && <FriendWallet/>}
                     {this.props.goTo === 'friendWalletMng' && <FriendWalletMng/>}
@@ -309,6 +317,46 @@ export default class Main extends Component {
                     {this.props.goTo === 'license' && <License/>}
                 </View>
                 <TabButton/>
+                {(() => {
+                    if (this.state.onClickHambug == true) {
+                        if (this.props.goTo == 'myWallet') {
+                            return (
+                                <View style={styles.hambugMenuWrapper}>
+                                    <View>
+                                        <TouchableOpacity
+                                            onPress={() => Actions.main({goTo: 'myWalletAdd'})}
+                                            style={styles.hambugMenu1}
+                                        >
+                                            <Text style={styles.hambugBtnText}>지갑 추가</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View>
+                                        <TouchableOpacity
+                                            onPress={() => Actions.main({
+                                                goTo: 'myWalletEdit',
+                                                id: StateStore.currentMyWalletId()
+                                            })}
+                                            style={styles.hambugMenu2}
+                                        >
+                                            <Text style={styles.hambugBtnText}>지갑 관리</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View>
+                                        <TouchableOpacity
+                                            onPress={() => Actions.main({
+                                                goTo: 'tradeRecord',
+                                                list:StateStore.currentMyWalletList()
+                                            })}
+                                            style={styles.hambugMenu3}
+                                        >
+                                            <Text style={styles.hambugBtnText}>거래 조회</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            );
+                        }
+                    }
+                })()}
             </ImageBackground>
         );
     }
@@ -339,10 +387,10 @@ var styles = StyleSheet.create({
         height: 70 * dpi,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal:15*dpi,
+        paddingHorizontal: 15 * dpi,
     },
-    navBtnWrapper:{
-        minWidth: 0.22*wid,
+    navBtnWrapper: {
+        minWidth: 0.22 * wid,
         justifyContent: 'center',
     },
     navBackBtn: {
@@ -368,15 +416,54 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6,
-        paddingVertical:5*dpi,
+        paddingVertical: 5 * dpi,
     },
     rightBtnText: {
         color: '#FFFFFF',
         fontSize: 14 * dpi
     },
+    hambugBtn: {
+        width: 0.08 * wid,
+        height: 0.08 * wid,
+        alignSelf: 'flex-end'
+    },
     hr: {
         borderBottomWidth: 1 * dpi,
         borderColor: '#FFFFFF',
         opacity: 0.8,
+    },
+    hambugMenuWrapper: {
+        position: 'absolute',
+        top: 15 * dpi + 0.1 * wid,
+        right: 15 * dpi,
+        opacity:0.7,
+    },
+    hambugMenu1: {
+        borderTopLeftRadius:15,
+        borderTopRightRadius:15,
+        borderWidth:1,
+        borderColor:'#FFFFFF',
+        backgroundColor: '#000000',
+        paddingHorizontal:17*dpi,
+        paddingVertical:8*dpi,
+    },
+    hambugMenu2: {
+        borderWidth:1,
+        borderColor:'#FFFFFF',
+        backgroundColor: '#000000',
+        paddingHorizontal:17*dpi,
+        paddingVertical:8*dpi,
+    },
+    hambugMenu3: {
+        borderBottomLeftRadius:15,
+        borderBottomRightRadius:15,
+        borderWidth:1,
+        borderColor:'#FFFFFF',
+        backgroundColor: '#000000',
+        paddingHorizontal:17*dpi,
+        paddingVertical:8*dpi,
+    },
+    hambugBtnText:{
+        color:'#FFFFFF',
     },
 });
