@@ -9,6 +9,14 @@ import {
     View, Alert, BackHandler
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import Menu, {
+  MenuContext,
+  MenuTrigger,
+  MenuOptions,
+  MenuOption,
+  renderers
+} from 'react-native-popup-menu';
+const { SlideInMenu } = renderers;
 
 import TabButton from '../common/tapButton';
 import Home from '../home/home';
@@ -90,65 +98,79 @@ export default class Main extends Component {
 
     componentWillMount() { //title, backBtn handler
         var p = this.props.goTo;
-        if (p == 'home') {
-            this.setState({title: '요약'});
-        } else if (p == 'price') {
-            this.setState({
-                title: '시세 정보',
-                enableRightBtn: true, rightBtnText: '다른 정보', rightBtnGoTo: 'coinmarketcap'
-            });
-        } else if (p == 'coinmarketcap') {
-            this.setState({
-                title: '시세 정보',
-                enableBackBtn: true, backBtnGoTo: 'price'
-            });
-        } else if (p == 'myWallet') {
-            this.setState({
-                title: '내지갑',
-                enableRightHambug: true,
-            });
-        } else if (p == 'myWalletEdit') {
-            this.setState({
-                title: '지갑 관리',
-                enableBackBtn: true, backBtnGoTo: 'myWallet',
-                enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callEditWallet'
-            });
-        } else if (p == 'myWalletAdd') {
-            this.setState({
-                title: '지갑 추가',
-                enableBackBtn: true, backBtnGoTo: 'myWallet',
-                enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callAddWallet'
-            });
-        } else if (p == 'tradeRecord') {
-            this.setState({
-                title: '거래 기록 조회',
-                enableBackBtn: true, backBtnGoTo: 'myWallet',
-            });
-        } else if (p == 'friendWallet') {
-            this.setState({
+        switch (p) {
+            case 'home':
+                this.setState({title: '요약'});
+                break;
+            case 'price':
+                this.setState({
+                    title: '시세 정보',
+                    enableRightBtn: true, rightBtnText: '다른 정보', rightBtnGoTo: 'coinmarketcap'
+                });
+                break;
+            case 'coinmarketcap':
+                this.setState({
+                    title: '시세 정보',
+                    enableBackBtn: true, backBtnGoTo: 'price'
+                });
+                break;
+            case 'myWallet':
+                this.setState({
+                    title: '내지갑',
+                    enableRightHambug: true,
+                });
+                break;
+            case 'myWalletEdit':
+                this.setState({
+                    title: '지갑 관리',
+                    enableBackBtn: true, backBtnGoTo: 'myWallet',
+                    enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callEditWallet'
+                });
+                break;
+            case 'myWalletAdd':
+                this.setState({
+                    title: '지갑 추가',
+                    enableBackBtn: true, backBtnGoTo: 'myWallet',
+                    enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callAddWallet'
+                });
+                break;
+            case 'tradeRecord':
+                this.setState({
+                    title: '거래 기록 조회',
+                    enableBackBtn: true, backBtnGoTo: 'myWallet',
+                });
+                break;
+            case 'friendWallet':
+                this.setState({
                 title: '친구 지갑',
                 enableRightBtn: true, rightBtnText: '친구 관리', rightBtnGoTo: 'friendWalletMng'
             });
-        } else if (p == 'friendWalletMng') {
+                break;
+                case 'friendWalletMng':
             this.setState({
                 title: '친구 관리',
                 enableBackBtn: true, backBtnGoTo: 'friendWallet',
             });
-        } else if (p == 'exchange') {
+                break;
+                case 'exchange':
             this.setState({
                 title: '자동 거래',
                 enableBackBtn: true, backBtnGoTo: 'more',
             });
-        } else if (p == 'more') {
+                break;
+                case 'more':
             this.setState({
                 title: '더보기'
             });
-        } else if (p == 'exchangeLink') {
-            this.setState({
+                break;
+                case 'exchangeLink':
+                this.setState({
                 title: '거래소 바로가기',
                 enableBackBtn: true, backBtnGoTo: 'more'
             });
-        } else if (p == 'exchangeSite') {
+                break;
+        }
+        if (p == 'exchangeSite') {
             this.setState({
                 title: this.props.siteName,
                 enableBackBtn: true, backBtnGoTo: 'exchangeLink'
@@ -214,8 +236,24 @@ export default class Main extends Component {
         }
     }
 
-    onClickHambug() {
-        this.setState({onClickHambug: !this.state.onClickHambug});
+    selectMenu(val){ //myWallet SideMenu
+        switch (val) {
+            case 1: //지갑추가
+                Actions.main({goTo: 'myWalletAdd'});
+                break;
+            case 2: //지갑관리
+                Actions.main({
+                    goTo: 'myWalletEdit',
+                    id: StateStore.currentMyWalletId()
+                });
+                break;
+            case 3: //거래 조회
+                Actions.main({
+                    goTo: 'tradeRecord',
+                    list:StateStore.currentMyWalletList()
+                });
+                break;
+        }
     }
 
     async goTo(part) {
@@ -239,6 +277,7 @@ export default class Main extends Component {
                 source={require('../common/img/background.png')}
                 style={styles.container}
             >
+            <MenuContext style={{flex: 1}}>
                 <View style={styles.wrapper}>
                     <View style={styles.summaryTitleWrapper}>
                         <View style={styles.navBtnWrapper}>
@@ -267,11 +306,18 @@ export default class Main extends Component {
                             </TouchableHighlight>
                             }
                             {this.state.enableRightHambug &&
-                            <TouchableOpacity
-                                onPress={() => this.onClickHambug()}
-                            >
-                                <Image source={require('../common/img/hambug3.png')} style={styles.hambugBtn}/>
-                            </TouchableOpacity>
+                            <Menu name="numbers" 
+                 renderer={SlideInMenu}
+                 onSelect={value => this.selectMenu(value)}>
+              <MenuTrigger style={styles.trigger}>
+                <Image source={require('../common/img/hambug3.png')} style={styles.hambugBtn}/>
+              </MenuTrigger>
+              <MenuOptions>
+                <MenuOption value={1} text='지갑 추가' />
+                <MenuOption value={2} text='지갑 관리' />
+                <MenuOption value={3} text='거래 조회' />
+              </MenuOptions>
+            </Menu>
                             }
                         </View>
                     </View>
@@ -317,46 +363,7 @@ export default class Main extends Component {
                     {this.props.goTo === 'license' && <License/>}
                 </View>
                 <TabButton/>
-                {(() => {
-                    if (this.state.onClickHambug == true) {
-                        if (this.props.goTo == 'myWallet') {
-                            return (
-                                <View style={styles.hambugMenuWrapper}>
-                                    <View>
-                                        <TouchableOpacity
-                                            onPress={() => Actions.main({goTo: 'myWalletAdd'})}
-                                            style={styles.hambugMenu1}
-                                        >
-                                            <Text style={styles.hambugBtnText}>지갑 추가</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <View>
-                                        <TouchableOpacity
-                                            onPress={() => Actions.main({
-                                                goTo: 'myWalletEdit',
-                                                id: StateStore.currentMyWalletId()
-                                            })}
-                                            style={styles.hambugMenu2}
-                                        >
-                                            <Text style={styles.hambugBtnText}>지갑 관리</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <View>
-                                        <TouchableOpacity
-                                            onPress={() => Actions.main({
-                                                goTo: 'tradeRecord',
-                                                list:StateStore.currentMyWalletList()
-                                            })}
-                                            style={styles.hambugMenu3}
-                                        >
-                                            <Text style={styles.hambugBtnText}>거래 조회</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            );
-                        }
-                    }
-                })()}
+                </MenuContext>
             </ImageBackground>
         );
     }
