@@ -2,13 +2,13 @@
  * Created by kusob on 2017. 6. 27..
  */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Image, ImageBackground,
     StyleSheet, Text, TouchableHighlight, TouchableOpacity,
     View, Alert, BackHandler
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import Menu, {
     MenuContext,
     MenuTrigger,
@@ -17,7 +17,7 @@ import Menu, {
     renderers
 } from 'react-native-popup-menu';
 
-const {SlideInMenu} = renderers;
+const { SlideInMenu } = renderers;
 
 import TabButton from '../common/tapButton';
 import Home from '../home/home';
@@ -74,14 +74,14 @@ export default class Main extends Component {
                 [
                     {
                         text: 'Cancel', onPress: () => {
-                        return true;
-                    }, style: 'cancel'
+                            return true;
+                        }, style: 'cancel'
                     },
                     {
                         text: 'OK', onPress: () => {
-                        BackHandler.exitApp();
-                        return false;
-                    }
+                            BackHandler.exitApp();
+                            return false;
+                        }
                     },
                 ],
             );
@@ -101,7 +101,7 @@ export default class Main extends Component {
         var p = this.props.goTo;
         switch (p) {
             case 'home':
-                this.setState({title: '요약'});
+                this.setState({ title: '요약' });
                 break;
             case 'price':
                 this.setState({
@@ -170,77 +170,88 @@ export default class Main extends Component {
                     enableBackBtn: true, backBtnGoTo: 'more'
                 });
                 break;
-        }
-        if (p == 'exchangeSite') {
-            this.setState({
-                title: this.props.siteName,
-                enableBackBtn: true, backBtnGoTo: 'exchangeLink'
-            });
-        } else if (p == 'convert') {
-            this.setState({
-                title: '모의환전',
-                enableBackBtn: true, backBtnGoTo: 'more'
-            });
-        } else if (p == 'optionDetail') {
-            this.setState({
-                title: this.props.title,
-                enableBackBtn: true, backBtnGoTo: 'option'
-            });
-        } else if (p == 'post') {
-            this.setState({
-                title: '커뮤니티',
-                enableBackBtn: true, backBtnGoTo: 'more',
-                enableRightBtn: true, rightBtnText: '글쓰기', rightBtnGoTo: 'postAdd'
-            });
-        } else if (p == 'postRead') {
-            this.setState({
-                title: '게시물 읽기',
-                enableBackBtn: true, backBtnGoTo: 'post',
-            });
-        } else if (p == 'postAdd') {
-            this.setState({
-                title: '게시물 작성',
-                enableBackBtn: true, backBtnGoTo: 'post',
-                enableRightBtn: true, rightBtnText: '등록', rightBtnGoTo: 'postWrite'
-            });
-        } else if (p == 'postEdit') {
-            this.setState({
-                title: '게시물 수정',
-                enableBackBtn: true, backBtnGoTo: 'post',
-                enableRightBtn: true, rightBtnText: '등록', rightBtnGoTo: 'postEdit'
-            });
-        } else if (p == 'notice') {
-            this.setState({
-                title: '공지사항',
-                enableBackBtn: true, backBtnGoTo: 'more'
-            });
-        } else if (p == 'noticeDetail') {
-            this.setState({
-                title: this.props.title,
-                enableBackBtn: true, backBtnGoTo: 'notice'
-            });
-        } else if (p == 'version') {
-            this.setState({
-                title: '버전정보',
-                enableBackBtn: true, backBtnGoTo: 'more'
-            });
-        } else if (p == 'inquire') {
-            this.setState({
-                title: '문의하기',
-                enableBackBtn: true, backBtnGoTo: 'more'
-            });
-        } else if (p == 'license') {
-            this.setState({
-                title: '오픈소스 라이센스',
-                enableBackBtn: true, backBtnGoTo: 'more'
-            });
+            case 'exchangeSite':
+                this.setState({
+                    title: this.props.siteName,
+                    enableBackBtn: true, backBtnGoTo: 'exchangeLink'
+                });
+                break;
+            case 'convert':
+                this.setState({
+                    title: '모의환전',
+                    enableBackBtn: true, backBtnGoTo: 'more'
+                });
+                break;
+            case 'optionDetail':
+                this.setState({
+                    title: this.props.title,
+                    enableBackBtn: true, backBtnGoTo: 'option'
+                });
+                break;
+            case 'post':
+                this.setState({
+                    title: '커뮤니티',
+                    enableBackBtn: true, backBtnGoTo: 'more',
+                    enableRightBtn: true, rightBtnText: '글쓰기', rightBtnGoTo: 'postAdd'
+                });
+                break;
+            case 'postRead':
+                this.setState({
+                    title: '게시물 읽기',
+                    enableBackBtn: true, backBtnGoTo: 'post',
+                });
+                break;
+            case 'postAdd':
+                this.setState({
+                    title: '게시물 작성',
+                    enableBackBtn: true, backBtnGoTo: 'post',
+                    enableRightBtn: true, rightBtnText: '등록', rightBtnGoTo: 'postWrite'
+                });
+                break;
+            case 'postEdit':
+                this.setState({
+                    title: '게시물 수정',
+                    enableBackBtn: true, backBtnGoTo: 'post',
+                    enableRightBtn: true, rightBtnText: '등록', rightBtnGoTo: 'postEdit'
+                });
+                break;
+            case 'notice':
+                this.setState({
+                    title: '공지사항',
+                    enableBackBtn: true, backBtnGoTo: 'more'
+                });
+                break;
+            case 'noticeDetail':
+                this.setState({
+                    title: this.props.title,
+                    enableBackBtn: true, backBtnGoTo: 'notice'
+                });
+                break;
+            case 'version':
+                this.setState({
+                    title: '버전정보',
+                    enableBackBtn: true, backBtnGoTo: 'more'
+                });
+                break;
+            case 'inquire':
+                this.setState({
+                    title: '문의하기',
+                    enableBackBtn: true, backBtnGoTo: 'more'
+                });
+                break;
+            case 'license':
+                this.setState({
+                    title: '오픈소스 라이센스',
+                    enableBackBtn: true, backBtnGoTo: 'more'
+                });
+                break;
         }
     }
 
     selectMenu(val) { //myWallet SideMenu
         switch (val) {
             case 1: //지갑추가
-                Actions.main({goTo: 'myWalletAdd'});
+                Actions.main({ goTo: 'myWalletAdd' });
                 break;
             case 2: //지갑관리
                 Actions.main({
@@ -258,16 +269,22 @@ export default class Main extends Component {
     }
 
     async goTo(part) {
-        if (part == 'callAddWallet') {
-            await Common.addWallet();
-        } else if (part == 'callEditWallet') {
-            await Common.editWallet();
-        } else if (part == 'postWrite') {
-            await PostAddEdit.writePost();
-        } else if (part == 'postEdit') {
-            await PostAddEdit.editPost();
-        } else {
-            Actions.main({goTo: part});
+        switch (part) {
+            case 'callAddWallet':
+                await Common.addWallet();
+                break;
+            case 'callEditWallet':
+                await Common.editWallet();
+                break;
+            case 'postWrite':
+                await PostAddEdit.writePost();
+                break;
+            case 'postEdit':
+                await PostAddEdit.editPost();
+                break;
+            default:
+                Actions.main({ goTo: part });
+                break;
         }
     }
 
@@ -278,19 +295,19 @@ export default class Main extends Component {
                 source={require('../common/img/background.png')}
                 style={styles.container}
             >
-                <MenuContext style={{flex: 1}}>
+                <MenuContext style={{ flex: 1 }}>
                     <View style={styles.wrapper}>
                         <View style={styles.summaryTitleWrapper}>
                             <View style={styles.navBtnWrapper}>
                                 {this.state.enableBackBtn &&
-                                <TouchableOpacity
-                                    style={styles.navBackBtn}
-                                    underlayColor={'#AAAAAA'}
-                                    onPress={() => this.goTo(this.state.backBtnGoTo)}
-                                >
-                                    <Image source={require('../common/img/navArrow.png')}
-                                           style={styles.navBackArrow}/>
-                                </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={styles.navBackBtn}
+                                        underlayColor={'#AAAAAA'}
+                                        onPress={() => this.goTo(this.state.backBtnGoTo)}
+                                    >
+                                        <Image source={require('../common/img/navArrow.png')}
+                                            style={styles.navBackArrow} />
+                                    </TouchableOpacity>
                                 }
                             </View>
                             <Text style={styles.summaryTitle}>
@@ -298,72 +315,72 @@ export default class Main extends Component {
                             </Text>
                             <View style={styles.navBtnWrapper}>
                                 {this.state.enableRightBtn &&
-                                <TouchableHighlight
-                                    style={styles.rightBtn}
-                                    underlayColor={'#000000'}
-                                    onPress={() => this.goTo(this.state.rightBtnGoTo)}
-                                >
-                                    <Text style={styles.rightBtnText}>{this.state.rightBtnText}</Text>
-                                </TouchableHighlight>
+                                    <TouchableHighlight
+                                        style={styles.rightBtn}
+                                        underlayColor={'#000000'}
+                                        onPress={() => this.goTo(this.state.rightBtnGoTo)}
+                                    >
+                                        <Text style={styles.rightBtnText}>{this.state.rightBtnText}</Text>
+                                    </TouchableHighlight>
                                 }
                                 {this.state.enableRightHambug &&
-                                <Menu name="numbers"
-                                      renderer={SlideInMenu}
-                                      onSelect={value => this.selectMenu(value)}>
-                                    <MenuTrigger style={styles.trigger}>
-                                        <Image source={require('../common/img/hambug3.png')} style={styles.hambugBtn}/>
-                                    </MenuTrigger>
-                                    <MenuOptions>
-                                        <MenuOption value={1} text='지갑 추가'/>
-                                        <MenuOption value={2} text='지갑 관리'/>
-                                        <MenuOption value={3} text='거래 조회'/>
-                                    </MenuOptions>
-                                </Menu>
+                                    <Menu name="numbers"
+                                        renderer={SlideInMenu}
+                                        onSelect={value => this.selectMenu(value)}>
+                                        <MenuTrigger style={styles.trigger}>
+                                            <Image source={require('../common/img/hambug3.png')} style={styles.hambugBtn} />
+                                        </MenuTrigger>
+                                        <MenuOptions>
+                                            <MenuOption value={1} text='지갑 추가' />
+                                            <MenuOption value={2} text='지갑 관리' />
+                                            <MenuOption value={3} text='거래 조회' />
+                                        </MenuOptions>
+                                    </Menu>
                                 }
                             </View>
                         </View>
-                        <View style={styles.hr}/>
-                        {this.props.goTo === 'home' && <Home/>}
-                        {this.props.goTo === 'price' && <Cryptocompare/>}
-                        {this.props.goTo === 'coinmarketcap' && <Coinmarketcap/>}
+                        <View style={styles.hr} />
+                        {this.props.goTo === 'home' && <Home />}
+                        {this.props.goTo === 'price' && <Cryptocompare />}
+                        {this.props.goTo === 'coinmarketcap' && <Coinmarketcap />}
 
-                        {this.props.goTo === 'myWallet' && <MyWallet/>}
+                        {this.props.goTo === 'myWallet' && <MyWallet />}
                         {this.props.goTo === 'myWalletEdit' &&
-                        <MyWalletEdit id={this.props.id}/>
+                            <MyWalletEdit id={this.props.id} />
                         }
-                        {this.props.goTo === 'myWalletAdd' && <MyWalletAdd/>}
-                        {this.props.goTo === 'tradeRecord' && <TradeRecord/>}
+                        {this.props.goTo === 'myWalletAdd' && <MyWalletAdd />}
+                        {this.props.goTo === 'tradeRecord' && <TradeRecord />}
 
-                        {this.props.goTo === 'friendWallet' && <FriendWallet/>}
-                        {this.props.goTo === 'friendWalletMng' && <FriendWalletMng/>}
+                        {this.props.goTo === 'friendWallet' && <FriendWallet />}
+                        {this.props.goTo === 'friendWalletMng' && <FriendWalletMng />}
 
 
-                        {this.props.goTo === 'more' && <More/>}
+                        {this.props.goTo === 'more' && <More />}
 
-                        {this.props.goTo === 'exchangeLink' && <ExchangeLink/>}
-                        {this.props.goTo === 'exchangeSite' && <ExchangeSite link={this.props.link}/>}
+                        {this.props.goTo === 'exchangeLink' && <ExchangeLink />}
+                        {this.props.goTo === 'exchangeSite' && <ExchangeSite link={this.props.link} />}
 
-                        {this.props.goTo === 'exchange' && <Exchange/>}
-                        {this.props.goTo === 'convert' && <Convert/>}
+                        {this.props.goTo === 'exchange' && <Exchange />}
+                        {this.props.goTo === 'convert' && <Convert />}
                         {/*{this.props.goTo === 'option' && <Option/>}*/}
                         {/*{this.props.goTo === 'optionDetail' && <OptionDetail/>}*/}
-                        {this.props.goTo === 'post' && <Post/>}
-                        {this.props.goTo === 'postRead' && <PostRead post_id={this.props.post_id}/>}
-                        {this.props.goTo === 'postAdd' && <PostAdd/>}
-                        {this.props.goTo === 'postEdit' && <PostAdd post_id={this.props.post_id}/>}
+                        {this.props.goTo === 'post' && <Post />}
+                        {this.props.goTo === 'postRead' && <PostRead post_id={this.props.post_id} />}
+                        {this.props.goTo === 'postAdd' && <PostAdd />}
+                        {this.props.goTo === 'postEdit' && <PostAdd post_id={this.props.post_id} />}
 
-                        {this.props.goTo === 'notice' && <Notice/>}
+                        {this.props.goTo === 'notice' && <Notice />}
                         {this.props.goTo === 'noticeDetail' &&
-                        <NoticeDetail id={this.props.id}
-                                      content={this.props.content}
-                                      date={this.props.date}
-                        />
+                            <NoticeDetail id={this.props.id}
+                                content={this.props.content}
+                                date={this.props.date}
+                            />
                         }
-                        {this.props.goTo === 'version' && <Version/>}
-                        {this.props.goTo === 'inquire' && <Inquire/>}
-                        {this.props.goTo === 'license' && <License/>}
+                        {this.props.goTo === 'version' && <Version />}
+                        {this.props.goTo === 'inquire' && <Inquire />}
+                        {this.props.goTo === 'license' && <License />}
                     </View>
-                    <TabButton/>
+                    <TabButton />
                 </MenuContext>
             </ImageBackground>
         );
