@@ -470,8 +470,8 @@ var styles = StyleSheet.create({
         fontSize: 14 * dpi
     },
     hambugBtn: {
-        width: 0.08 * wid,
-        height: 0.08 * wid,
+        width: 0.09 * wid,
+        height: 0.09 * wid,
         alignSelf: 'flex-end'
     },
     hr: {

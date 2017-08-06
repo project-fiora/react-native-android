@@ -136,6 +136,9 @@ class TradeRecord extends Component {
                             <Text style={styles.titleText}>
                                 {this.state.message}
                             </Text>
+                            <Text style={styles.titleText}>
+                                거래 기록들은 업데이트 될 예정입니다!
+                                </Text>
                             {this.state.success &&
                                 <Text style={styles.titleText}>
                                     총 입금 금액
@@ -143,9 +146,8 @@ class TradeRecord extends Component {
                                     총 출금 금액
                             : {parseInt(this.state.data.total_sent) / 100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}
                                     잔액
-                            : {parseInt(this.state.data.final_balance) / 100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}{'\n'}
-                                    거래 기록들은 업데이트 될 예정입니다!
-                        </Text>
+                            : {parseInt(this.state.data.final_balance) / 100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}
+                                </Text>
                             }
                         </View>
                     }
