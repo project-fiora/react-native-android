@@ -6,17 +6,15 @@ import React, {Component} from 'react';
 import {
     ScrollView,
     StyleSheet,
-    Text, TextInput, TouchableOpacity,
-    View, AsyncStorage
+    Text, TouchableOpacity,
+    View
 } from 'react-native';
 
-import {Actions} from 'react-native-router-flux';
 import Common from "../common/common";
 import StateStore from '../common/stateStore';
 import LoadingIcon from "../common/loadingIcon";
-import PrivateAddr from "../common/private/address";
 
-class TradeRecord extends Component{
+class TradeRecord extends Component {
     constructor(props) {
         super(props);
 
@@ -39,7 +37,7 @@ class TradeRecord extends Component{
         this.setState({
             loaded: false,
             success: false,
-            message:'',
+            message: '',
             currentWallet: i,
             onClickBox: !this.state.onClickBox,
         }, () => this.getData());
@@ -57,7 +55,7 @@ class TradeRecord extends Component{
                         return false;
                     }
                 }).then((responseJson) => {
-                if (responseJson instanceof Object) {;
+                if (responseJson instanceof Object) {
                     this.setState({data: responseJson, success: true});
                 } else {
                     this.setState({message: '조회할수없습니다'});
@@ -66,7 +64,7 @@ class TradeRecord extends Component{
                 console.error(error);
             }).done(() => this.setState({loaded: true}));
         } else {
-            this.setState({message: '현재 ' + type + '은 거래조회를 지원하지 않습니다', loaded:true});
+            this.setState({message: '현재 ' + type + '은 거래조회를 지원하지 않습니다', loaded: true});
         }
     }
 
@@ -135,9 +133,12 @@ class TradeRecord extends Component{
                         </Text>
                         {this.state.success &&
                         <Text style={styles.titleText}>
-                            총 입금 금액 : {parseInt(this.state.data.total_received)/100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}
-                            총 출금 금액 : {parseInt(this.state.data.total_sent)/100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}
-                            잔액 : {parseInt(this.state.data.final_balance)/100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}
+                            총 입금 금액
+                            : {parseInt(this.state.data.total_received) / 100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}
+                            총 출금 금액
+                            : {parseInt(this.state.data.total_sent) / 100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}
+                            잔액
+                            : {parseInt(this.state.data.final_balance) / 100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}
                         </Text>
                         }
                     </View>
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     content: {
-        padding:15*dpi,
+        padding: 15 * dpi,
         alignItems: 'center',
     },
     titleText: {
@@ -196,8 +197,8 @@ const styles = StyleSheet.create({
         fontSize: 17 * dpi,
         opacity: 0.9,
     },
-    blank:{
-        margin:5*dpi,
+    blank: {
+        margin: 5 * dpi,
     },
 });
 
