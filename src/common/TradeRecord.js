@@ -2,7 +2,7 @@
  * Created by kusob on 2017. 7. 7..
  */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     ScrollView,
     StyleSheet,
@@ -44,27 +44,32 @@ class TradeRecord extends Component {
     }
 
     getData() {
-        var type = this.state.list[this.state.currentWallet].wallet_type;
-        if (type == 'BTC') { //BTC 조회
-            fetch("https://blockchain.info/ko/rawaddr/" + this.state.list[this.state.currentWallet].wallet_add)
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        this.setState({message: '조회할수없습니다'});
-                        return false;
-                    }
-                }).then((responseJson) => {
-                if (responseJson instanceof Object) {
-                    this.setState({data: responseJson, success: true});
-                } else {
-                    this.setState({message: '조회할수없습니다'});
-                }
-            }).catch((error) => {
-                console.error(error);
-            }).done(() => this.setState({loaded: true}));
+        if (this.state.list.length != 0) {
+            var type = this.state.list[this.state.currentWallet].wallet_type;
+            if (type == 'BTC') { //BTC 조회
+                fetch("https://blockchain.info/ko/rawaddr/" + this.state.list[this.state.currentWallet].wallet_add)
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            this.setState({ message: '조회할수없습니다' });
+                            return false;
+                        }
+                    }).then((responseJson) => {
+                        if (responseJson instanceof Object) {
+                            this.setState({ data: responseJson, success: true });
+                        } else {
+                            this.setState({ message: '조회할수없습니다' });
+                        }
+                    }).catch((error) => {
+                        console.error(error);
+                    }).done(() => this.setState({ loaded: true }));
+            } else {
+                this.setState({ message: '현재 ' + type + '은 거래조회를 지원하지 않습니다', loaded: true });
+            }
         } else {
-            this.setState({message: '현재 ' + type + '은 거래조회를 지원하지 않습니다', loaded: true});
+            this.setState({ loaded: true });
+            return false;
         }
     }
 
@@ -72,77 +77,77 @@ class TradeRecord extends Component {
         return (
             <ScrollView contentContainerStyle={styles.frame}>
                 {!this.state.loaded &&
-                <LoadingIcon/>
+                    <LoadingIcon />
                 }
                 <ScrollView contentContainerStyle={styles.content}>
                     {(this.state.list.length == 0) &&
-                    <Text style={styles.titleText}>
-                        지갑이 한개도 없어요!
+                        <Text style={styles.titleText}>
+                            지갑이 한개도 없어요!
                     </Text>
                     }
                     {(this.state.list.length != 0) &&
-                    <View>
-                        <TouchableOpacity
-                            underlayColor={'#AAAAAA'}
-                            onPress={() => this.setState({onClickBox: !this.state.onClickBox})}
-                        >
-                            <View style={styles.selectBoxWrapper}>
-                                <View style={styles.selectBoxRow}>
-                                    <Text style={styles.selectBoxText}>
-                                        {this.state.list[this.state.currentWallet].wallet_name}
-                                    </Text>
-                                    <View style={styles.selectBoxIconWrapper}>
-                                        <Text style={styles.selectIcon}>
-                                            ▼
+                        <View>
+                            <TouchableOpacity
+                                underlayColor={'#AAAAAA'}
+                                onPress={() => this.setState({ onClickBox: !this.state.onClickBox })}
+                            >
+                                <View style={styles.selectBoxWrapper}>
+                                    <View style={styles.selectBoxRow}>
+                                        <Text style={styles.selectBoxText}>
+                                            {this.state.list[this.state.currentWallet].wallet_name}
                                         </Text>
+                                        <View style={styles.selectBoxIconWrapper}>
+                                            <Text style={styles.selectIcon}>
+                                                ▼
+                                        </Text>
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                        </TouchableOpacity>
-                        {(() => {
-                            if (this.state.onClickBox == true) {
-                                return this.state.list.map((wallet, i) => {
-                                    if (this.state.currentWallet != i)
-                                        return (
-                                            <TouchableOpacity
-                                                underlayColor={'#AAAAAA'}
-                                                onPress={() => this.showWallet(i)}
-                                                key={i}
-                                            >
-                                                <View style={styles.selectBoxWrapper}>
-                                                    <View style={styles.selectBoxRow}>
-                                                        <Text style={styles.selectBoxText}>
-                                                            {wallet.wallet_name}
-                                                        </Text>
+                            </TouchableOpacity>
+                            {(() => {
+                                if (this.state.onClickBox == true) {
+                                    return this.state.list.map((wallet, i) => {
+                                        if (this.state.currentWallet != i)
+                                            return (
+                                                <TouchableOpacity
+                                                    underlayColor={'#AAAAAA'}
+                                                    onPress={() => this.showWallet(i)}
+                                                    key={i}
+                                                >
+                                                    <View style={styles.selectBoxWrapper}>
+                                                        <View style={styles.selectBoxRow}>
+                                                            <Text style={styles.selectBoxText}>
+                                                                {wallet.wallet_name}
+                                                            </Text>
+                                                        </View>
                                                     </View>
-                                                </View>
-                                            </TouchableOpacity>
-                                        );
-                                })
-                            }
-                        })()}
-                        <View style={styles.blank}/>
-                        <Text style={styles.titleText}>
-                            선택한 지갑주소
+                                                </TouchableOpacity>
+                                            );
+                                    })
+                                }
+                            })()}
+                            <View style={styles.blank} />
+                            <Text style={styles.titleText}>
+                                선택한 지갑주소
                         </Text>
-                        <Text style={styles.titleText}>
-                            {this.state.list[this.state.currentWallet].wallet_add}
-                        </Text>
-                        <Text style={styles.titleText}>
-                            {this.state.message}
-                        </Text>
-                        {this.state.success &&
-                        <Text style={styles.titleText}>
-                            총 입금 금액
+                            <Text style={styles.titleText}>
+                                {this.state.list[this.state.currentWallet].wallet_add}
+                            </Text>
+                            <Text style={styles.titleText}>
+                                {this.state.message}
+                            </Text>
+                            {this.state.success &&
+                                <Text style={styles.titleText}>
+                                    총 입금 금액
                             : {parseInt(this.state.data.total_received) / 100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}
-                            총 출금 금액
+                                    총 출금 금액
                             : {parseInt(this.state.data.total_sent) / 100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}
-                            잔액
-                            : {parseInt(this.state.data.final_balance) / 100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}
-                            거래 기록들은 업데이트 될 예정입니다!
+                                    잔액
+                            : {parseInt(this.state.data.final_balance) / 100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}{'\n'}
+                                    거래 기록들은 업데이트 될 예정입니다!
                         </Text>
-                        }
-                    </View>
+                            }
+                        </View>
                     }
                 </ScrollView>
             </ScrollView>

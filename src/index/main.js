@@ -112,7 +112,7 @@ export default class Main extends Component {
             case 'coinmarketcap':
                 this.setState({
                     title: '시세 정보',
-                    enableBackBtn: true, backBtnGoTo: 'price'
+                    enableBackBtn: true,
                 });
                 break;
             case 'myWallet':
@@ -124,21 +124,21 @@ export default class Main extends Component {
             case 'myWalletEdit':
                 this.setState({
                     title: '지갑 관리',
-                    enableBackBtn: true, backBtnGoTo: 'myWallet',
+                    enableBackBtn: true,
                     enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callEditWallet'
                 });
                 break;
             case 'myWalletAdd':
                 this.setState({
                     title: '지갑 추가',
-                    enableBackBtn: true, backBtnGoTo: 'myWallet',
+                    enableBackBtn: true,
                     enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callAddWallet'
                 });
                 break;
             case 'tradeRecord':
                 this.setState({
                     title: '거래 기록 조회',
-                    enableBackBtn: true, backBtnGoTo: 'myWallet',
+                    enableBackBtn: true,
                 });
                 break;
             case 'friendWallet':
@@ -150,13 +150,13 @@ export default class Main extends Component {
             case 'friendWalletMng':
                 this.setState({
                     title: '친구 관리',
-                    enableBackBtn: true, backBtnGoTo: 'friendWallet',
+                    enableBackBtn: true,
                 });
                 break;
             case 'exchange':
                 this.setState({
                     title: '자동 거래',
-                    enableBackBtn: true, backBtnGoTo: 'more',
+                    enableBackBtn: true,
                 });
                 break;
             case 'more':
@@ -167,82 +167,82 @@ export default class Main extends Component {
             case 'exchangeLink':
                 this.setState({
                     title: '거래소 바로가기',
-                    enableBackBtn: true, backBtnGoTo: 'more'
+                    enableBackBtn: true,
                 });
                 break;
             case 'exchangeSite':
                 this.setState({
                     title: this.props.siteName,
-                    enableBackBtn: true, backBtnGoTo: 'exchangeLink'
+                    enableBackBtn: true,
                 });
                 break;
             case 'convert':
                 this.setState({
                     title: '모의환전',
-                    enableBackBtn: true, backBtnGoTo: 'more'
+                    enableBackBtn: true,
                 });
                 break;
             case 'optionDetail':
                 this.setState({
                     title: this.props.title,
-                    enableBackBtn: true, backBtnGoTo: 'option'
+                    enableBackBtn: true,
                 });
                 break;
             case 'post':
                 this.setState({
                     title: '커뮤니티',
-                    enableBackBtn: true, backBtnGoTo: 'more',
+                    enableBackBtn: true,
                     enableRightBtn: true, rightBtnText: '글쓰기', rightBtnGoTo: 'postAdd'
                 });
                 break;
             case 'postRead':
                 this.setState({
                     title: '게시물 읽기',
-                    enableBackBtn: true, backBtnGoTo: 'post',
+                    enableBackBtn: true,
                 });
                 break;
             case 'postAdd':
                 this.setState({
                     title: '게시물 작성',
-                    enableBackBtn: true, backBtnGoTo: 'post',
+                    enableBackBtn: true,
                     enableRightBtn: true, rightBtnText: '등록', rightBtnGoTo: 'postWrite'
                 });
                 break;
             case 'postEdit':
                 this.setState({
                     title: '게시물 수정',
-                    enableBackBtn: true, backBtnGoTo: 'post',
+                    enableBackBtn: true,
                     enableRightBtn: true, rightBtnText: '등록', rightBtnGoTo: 'postEdit'
                 });
                 break;
             case 'notice':
                 this.setState({
                     title: '공지사항',
-                    enableBackBtn: true, backBtnGoTo: 'more'
+                    enableBackBtn: true,
                 });
                 break;
             case 'noticeDetail':
                 this.setState({
                     title: this.props.title,
-                    enableBackBtn: true, backBtnGoTo: 'notice'
+                    enableBackBtn: true,
                 });
                 break;
             case 'version':
                 this.setState({
                     title: '버전정보',
-                    enableBackBtn: true, backBtnGoTo: 'more'
+                    enableBackBtn: true,
                 });
                 break;
             case 'inquire':
                 this.setState({
                     title: '문의하기',
-                    enableBackBtn: true, backBtnGoTo: 'more'
+                    enableBackBtn: true,
                 });
                 break;
             case 'license':
                 this.setState({
                     title: '오픈소스 라이센스',
-                    enableBackBtn: true, backBtnGoTo: 'more'
+                    enableBackBtn: true,
                 });
                 break;
         }
@@ -310,8 +310,8 @@ export default class Main extends Component {
                                         style={styles.navBackBtn}
                                         underlayColor={'#AAAAAA'}
                                         onPress={() => Actions.pop()
-                                         //this.goTo(this.state.backBtnGoTo)
-                                         }
+                                            //this.goTo(this.state.backBtnGoTo)
+                                        }
                                     >
                                         <Image source={require('../common/img/navArrow.png')}
                                             style={styles.navBackArrow} />
@@ -334,7 +334,7 @@ export default class Main extends Component {
                                 {this.state.enableRightHambug &&
                                     <Menu renderer={SlideInMenu}
                                         onSelect={value => this.selectMenu(value)}>
-                                        <MenuTrigger>
+                                        <MenuTrigger customStyles={MenuTriggerStyles}>
                                             <Image source={require('../common/img/hambug3.png')} style={styles.hambugBtn} />
                                         </MenuTrigger>
                                         {this.props.goTo === 'myWallet' &&
@@ -481,19 +481,23 @@ var styles = StyleSheet.create({
     },
     menuHr: {
         borderBottomWidth: 1,
-        borderColor: '#5D5D5D',
+        borderColor: '#A2A2A2',
         opacity: 0.8,
     },
 });
+
+const MenuTriggerStyles = {
+    TriggerTouchableComponent: TouchableOpacity,
+};
 
 const optionsStyles = {
     optionsContainer: {
         width: 0.95 * wid,
         marginHorizontal: 0.025 * wid,
-        marginBottom: - (0.025 * wid),
+        marginTop: - (0.025 * wid),
         borderRadius: 15,
-        borderWidth: 1,
-        borderColor: 'transparent'
+        borderColor: 'transparent',
+        opacity: 0.95,
     },
     optionsWrapper: {
 
@@ -506,7 +510,7 @@ const optionsStyles = {
         activeOpacity: 50,
     },
     optionText: {
-        color: '#8EBDFF',
+        color: '#858EFF',
         fontSize: 20 * dpi,
         textAlign: 'center'
     },
@@ -515,6 +519,32 @@ const optionsStyles = {
 const optionStyles = {
     optionWrapper: {
         marginVertical: 12,
+    },
+    optionText: {
+        color: '#FF7B8C',
+        fontSize: 20 * dpi,
+        textAlign: 'center'
+    },
+};
+
+const cancelOptionsStyles = {
+    optionsContainer: {
+        width: 0.95 * wid,
+        marginHorizontal: 0.025 * wid,
+        marginTop: 10,
+        borderRadius: 15,
+        borderColor: 'transparent',
+        opacity: 0.95,
+    },
+    optionsWrapper: {
+
+    },
+    optionWrapper: {
+        marginVertical: 12,
+    },
+    optionTouchable: {
+        underlayColor: '#FFFFFF',
+        activeOpacity: 50,
     },
     optionText: {
         color: '#FF7B8C',
