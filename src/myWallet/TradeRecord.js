@@ -16,7 +16,7 @@ import StateStore from '../common/stateStore';
 import LoadingIcon from "../common/loadingIcon";
 import PrivateAddr from "../common/private/address";
 
-class TradeRecord extends Component {
+class TradeRecord extends Component{
     constructor(props) {
         super(props);
 
@@ -57,8 +57,7 @@ class TradeRecord extends Component {
                         return false;
                     }
                 }).then((responseJson) => {
-                if (responseJson instanceof Object) {
-                    console.log(responseJson);
+                if (responseJson instanceof Object) {;
                     this.setState({data: responseJson, success: true});
                 } else {
                     this.setState({message: '조회할수없습니다'});
