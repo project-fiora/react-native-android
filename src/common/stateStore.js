@@ -16,6 +16,7 @@ const stateStore = observable({
     edit_postTitle:'',
     edit_postContents:'',
     currentMyWalletList:'',
+    currentWallet:0,
     currentMyWalletId:'',
 });
 //////////////////////for tradeRecord
@@ -24,6 +25,12 @@ stateStore.setCurrentMyWalletList = (list)=>{
 };
 stateStore.currentMyWalletList = ()=>{
     return this.currentMyWalletList;
+}
+stateStore.setCurrentWallet = (i)=>{
+    this.currentWallet = i;
+}
+stateStore.currentWallet = ()=>{
+    return this.currentWallet;
 }
 /////////////////////////////////
 stateStore.setCurrentMyWalletId = (id)=>{

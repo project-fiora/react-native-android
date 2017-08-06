@@ -23,7 +23,7 @@ class TradeRecord extends Component {
             success: false,
             onClickBox: false,
             list: StateStore.currentMyWalletList(),
-            currentWallet: 0,
+            currentWallet: StateStore.currentWallet(),
             message: '',
             data: {},
         };

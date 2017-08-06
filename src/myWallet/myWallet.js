@@ -32,6 +32,7 @@ export default class MyWallet extends Component {
 
     async componentDidMount() {
         await this.getMyWallet();
+        StateStore.setCurrentWallet(this.state.currentWallet);
     }
 
     goTo(part) {
@@ -99,6 +100,7 @@ export default class MyWallet extends Component {
             balance: '조회 중..',
             onClickBox: !this.state.onClickBox,
         }, () => {
+            StateStore.setCurrentWallet(i);
             StateStore.setCurrentMyWalletId(this.state.walletList[i].wallet_Id);
             Promise.resolve()
                 .then(() => Common.getBalance(type, addr))
@@ -173,15 +175,13 @@ export default class MyWallet extends Component {
                                     })
                                 }
                             })()}
-                            {this.state.walletList.length != 0 &&
-                                <WalletInfo
-                                    wallet_name={this.state.walletList[this.state.currentWallet].wallet_name}
-                                    wallet_type={this.state.walletList[this.state.currentWallet].wallet_type}
-                                    balance={this.state.balance}
-                                    wallet_add={this.state.walletList[this.state.currentWallet].wallet_add}
-                                    qrcode={this.state.qrcode}
-                                />
-                            }
+                            <WalletInfo
+                                wallet_name={this.state.walletList[this.state.currentWallet].wallet_name}
+                                wallet_type={this.state.walletList[this.state.currentWallet].wallet_type}
+                                balance={this.state.balance}
+                                wallet_add={this.state.walletList[this.state.currentWallet].wallet_add}
+                                qrcode={this.state.qrcode}
+                            />
                         </View>
                     }
                 </ScrollView>

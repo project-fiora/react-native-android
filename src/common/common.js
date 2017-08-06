@@ -206,6 +206,7 @@ class Common extends Component {
     }
 
     static editWallet() {
+        var list = StateStore.currentMyWalletList();
         if (StateStore.edit_walletName() == "") {
             alert('지갑 이름을 입력하세요!');
             return false;

@@ -265,7 +265,8 @@ export default class Main extends Component {
             case 3: //거래 조회
                 Actions.main({
                     goTo: 'tradeRecord',
-                    list: StateStore.currentMyWalletList()
+                    list: StateStore.currentMyWalletList(),
+                    i: StateStore.currentWallet()
                 });
                 break;
             case 4: //친구 관리 
