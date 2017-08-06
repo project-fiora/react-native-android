@@ -10,13 +10,14 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import Menu, {
-  MenuContext,
-  MenuTrigger,
-  MenuOptions,
-  MenuOption,
-  renderers
+    MenuContext,
+    MenuTrigger,
+    MenuOptions,
+    MenuOption,
+    renderers
 } from 'react-native-popup-menu';
-const { SlideInMenu } = renderers;
+
+const {SlideInMenu} = renderers;
 
 import TabButton from '../common/tapButton';
 import Home from '../home/home';
@@ -142,32 +143,32 @@ export default class Main extends Component {
                 break;
             case 'friendWallet':
                 this.setState({
-                title: '친구 지갑',
-                enableRightBtn: true, rightBtnText: '친구 관리', rightBtnGoTo: 'friendWalletMng'
-            });
+                    title: '친구 지갑',
+                    enableRightBtn: true, rightBtnText: '친구 관리', rightBtnGoTo: 'friendWalletMng'
+                });
                 break;
-                case 'friendWalletMng':
-            this.setState({
-                title: '친구 관리',
-                enableBackBtn: true, backBtnGoTo: 'friendWallet',
-            });
-                break;
-                case 'exchange':
-            this.setState({
-                title: '자동 거래',
-                enableBackBtn: true, backBtnGoTo: 'more',
-            });
-                break;
-                case 'more':
-            this.setState({
-                title: '더보기'
-            });
-                break;
-                case 'exchangeLink':
+            case 'friendWalletMng':
                 this.setState({
-                title: '거래소 바로가기',
-                enableBackBtn: true, backBtnGoTo: 'more'
-            });
+                    title: '친구 관리',
+                    enableBackBtn: true, backBtnGoTo: 'friendWallet',
+                });
+                break;
+            case 'exchange':
+                this.setState({
+                    title: '자동 거래',
+                    enableBackBtn: true, backBtnGoTo: 'more',
+                });
+                break;
+            case 'more':
+                this.setState({
+                    title: '더보기'
+                });
+                break;
+            case 'exchangeLink':
+                this.setState({
+                    title: '거래소 바로가기',
+                    enableBackBtn: true, backBtnGoTo: 'more'
+                });
                 break;
         }
         if (p == 'exchangeSite') {
@@ -236,7 +237,7 @@ export default class Main extends Component {
         }
     }
 
-    selectMenu(val){ //myWallet SideMenu
+    selectMenu(val) { //myWallet SideMenu
         switch (val) {
             case 1: //지갑추가
                 Actions.main({goTo: 'myWalletAdd'});
@@ -250,7 +251,7 @@ export default class Main extends Component {
             case 3: //거래 조회
                 Actions.main({
                     goTo: 'tradeRecord',
-                    list:StateStore.currentMyWalletList()
+                    list: StateStore.currentMyWalletList()
                 });
                 break;
         }
@@ -277,92 +278,92 @@ export default class Main extends Component {
                 source={require('../common/img/background.png')}
                 style={styles.container}
             >
-            <MenuContext style={{flex: 1}}>
-                <View style={styles.wrapper}>
-                    <View style={styles.summaryTitleWrapper}>
-                        <View style={styles.navBtnWrapper}>
-                            {this.state.enableBackBtn &&
-                            <TouchableOpacity
-                                style={styles.navBackBtn}
-                                underlayColor={'#AAAAAA'}
-                                onPress={() => this.goTo(this.state.backBtnGoTo)}
-                            >
-                                <Image source={require('../common/img/navArrow.png')}
-                                       style={styles.navBackArrow}/>
-                            </TouchableOpacity>
-                            }
+                <MenuContext style={{flex: 1}}>
+                    <View style={styles.wrapper}>
+                        <View style={styles.summaryTitleWrapper}>
+                            <View style={styles.navBtnWrapper}>
+                                {this.state.enableBackBtn &&
+                                <TouchableOpacity
+                                    style={styles.navBackBtn}
+                                    underlayColor={'#AAAAAA'}
+                                    onPress={() => this.goTo(this.state.backBtnGoTo)}
+                                >
+                                    <Image source={require('../common/img/navArrow.png')}
+                                           style={styles.navBackArrow}/>
+                                </TouchableOpacity>
+                                }
+                            </View>
+                            <Text style={styles.summaryTitle}>
+                                {this.state.title}
+                            </Text>
+                            <View style={styles.navBtnWrapper}>
+                                {this.state.enableRightBtn &&
+                                <TouchableHighlight
+                                    style={styles.rightBtn}
+                                    underlayColor={'#000000'}
+                                    onPress={() => this.goTo(this.state.rightBtnGoTo)}
+                                >
+                                    <Text style={styles.rightBtnText}>{this.state.rightBtnText}</Text>
+                                </TouchableHighlight>
+                                }
+                                {this.state.enableRightHambug &&
+                                <Menu name="numbers"
+                                      renderer={SlideInMenu}
+                                      onSelect={value => this.selectMenu(value)}>
+                                    <MenuTrigger style={styles.trigger}>
+                                        <Image source={require('../common/img/hambug3.png')} style={styles.hambugBtn}/>
+                                    </MenuTrigger>
+                                    <MenuOptions>
+                                        <MenuOption value={1} text='지갑 추가'/>
+                                        <MenuOption value={2} text='지갑 관리'/>
+                                        <MenuOption value={3} text='거래 조회'/>
+                                    </MenuOptions>
+                                </Menu>
+                                }
+                            </View>
                         </View>
-                        <Text style={styles.summaryTitle}>
-                            {this.state.title}
-                        </Text>
-                        <View style={styles.navBtnWrapper}>
-                            {this.state.enableRightBtn &&
-                            <TouchableHighlight
-                                style={styles.rightBtn}
-                                underlayColor={'#000000'}
-                                onPress={() => this.goTo(this.state.rightBtnGoTo)}
-                            >
-                                <Text style={styles.rightBtnText}>{this.state.rightBtnText}</Text>
-                            </TouchableHighlight>
-                            }
-                            {this.state.enableRightHambug &&
-                            <Menu name="numbers" 
-                 renderer={SlideInMenu}
-                 onSelect={value => this.selectMenu(value)}>
-              <MenuTrigger style={styles.trigger}>
-                <Image source={require('../common/img/hambug3.png')} style={styles.hambugBtn}/>
-              </MenuTrigger>
-              <MenuOptions>
-                <MenuOption value={1} text='지갑 추가' />
-                <MenuOption value={2} text='지갑 관리' />
-                <MenuOption value={3} text='거래 조회' />
-              </MenuOptions>
-            </Menu>
-                            }
-                        </View>
+                        <View style={styles.hr}/>
+                        {this.props.goTo === 'home' && <Home/>}
+                        {this.props.goTo === 'price' && <Cryptocompare/>}
+                        {this.props.goTo === 'coinmarketcap' && <Coinmarketcap/>}
+
+                        {this.props.goTo === 'myWallet' && <MyWallet/>}
+                        {this.props.goTo === 'myWalletEdit' &&
+                        <MyWalletEdit id={this.props.id}/>
+                        }
+                        {this.props.goTo === 'myWalletAdd' && <MyWalletAdd/>}
+                        {this.props.goTo === 'tradeRecord' && <TradeRecord/>}
+
+                        {this.props.goTo === 'friendWallet' && <FriendWallet/>}
+                        {this.props.goTo === 'friendWalletMng' && <FriendWalletMng/>}
+
+
+                        {this.props.goTo === 'more' && <More/>}
+
+                        {this.props.goTo === 'exchangeLink' && <ExchangeLink/>}
+                        {this.props.goTo === 'exchangeSite' && <ExchangeSite link={this.props.link}/>}
+
+                        {this.props.goTo === 'exchange' && <Exchange/>}
+                        {this.props.goTo === 'convert' && <Convert/>}
+                        {/*{this.props.goTo === 'option' && <Option/>}*/}
+                        {/*{this.props.goTo === 'optionDetail' && <OptionDetail/>}*/}
+                        {this.props.goTo === 'post' && <Post/>}
+                        {this.props.goTo === 'postRead' && <PostRead post_id={this.props.post_id}/>}
+                        {this.props.goTo === 'postAdd' && <PostAdd/>}
+                        {this.props.goTo === 'postEdit' && <PostAdd post_id={this.props.post_id}/>}
+
+                        {this.props.goTo === 'notice' && <Notice/>}
+                        {this.props.goTo === 'noticeDetail' &&
+                        <NoticeDetail id={this.props.id}
+                                      content={this.props.content}
+                                      date={this.props.date}
+                        />
+                        }
+                        {this.props.goTo === 'version' && <Version/>}
+                        {this.props.goTo === 'inquire' && <Inquire/>}
+                        {this.props.goTo === 'license' && <License/>}
                     </View>
-                    <View style={styles.hr}/>
-                    {this.props.goTo === 'home' && <Home/>}
-                    {this.props.goTo === 'price' && <Cryptocompare/>}
-                    {this.props.goTo === 'coinmarketcap' && <Coinmarketcap/>}
-
-                    {this.props.goTo === 'myWallet' && <MyWallet/>}
-                    {this.props.goTo === 'myWalletEdit' &&
-                    <MyWalletEdit id={this.props.id}/>
-                    }
-                    {this.props.goTo === 'myWalletAdd' && <MyWalletAdd/>}
-                    {this.props.goTo === 'tradeRecord' && <TradeRecord/>}
-
-                    {this.props.goTo === 'friendWallet' && <FriendWallet/>}
-                    {this.props.goTo === 'friendWalletMng' && <FriendWalletMng/>}
-
-
-                    {this.props.goTo === 'more' && <More/>}
-
-                    {this.props.goTo === 'exchangeLink' && <ExchangeLink/>}
-                    {this.props.goTo === 'exchangeSite' && <ExchangeSite link={this.props.link}/>}
-
-                    {this.props.goTo === 'exchange' && <Exchange/>}
-                    {this.props.goTo === 'convert' && <Convert/>}
-                    {/*{this.props.goTo === 'option' && <Option/>}*/}
-                    {/*{this.props.goTo === 'optionDetail' && <OptionDetail/>}*/}
-                    {this.props.goTo === 'post' && <Post/>}
-                    {this.props.goTo === 'postRead' && <PostRead post_id={this.props.post_id}/>}
-                    {this.props.goTo === 'postAdd' && <PostAdd/>}
-                    {this.props.goTo === 'postEdit' && <PostAdd post_id={this.props.post_id}/>}
-
-                    {this.props.goTo === 'notice' && <Notice/>}
-                    {this.props.goTo === 'noticeDetail' &&
-                    <NoticeDetail id={this.props.id}
-                                  content={this.props.content}
-                                  date={this.props.date}
-                    />
-                    }
-                    {this.props.goTo === 'version' && <Version/>}
-                    {this.props.goTo === 'inquire' && <Inquire/>}
-                    {this.props.goTo === 'license' && <License/>}
-                </View>
-                <TabButton/>
+                    <TabButton/>
                 </MenuContext>
             </ImageBackground>
         );
@@ -443,34 +444,34 @@ var styles = StyleSheet.create({
         position: 'absolute',
         top: 15 * dpi + 0.1 * wid,
         right: 15 * dpi,
-        opacity:0.7,
+        opacity: 0.7,
     },
     hambugMenu1: {
-        borderTopLeftRadius:15,
-        borderTopRightRadius:15,
-        borderWidth:1,
-        borderColor:'#FFFFFF',
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        borderWidth: 1,
+        borderColor: '#FFFFFF',
         backgroundColor: '#000000',
-        paddingHorizontal:17*dpi,
-        paddingVertical:8*dpi,
+        paddingHorizontal: 17 * dpi,
+        paddingVertical: 8 * dpi,
     },
     hambugMenu2: {
-        borderWidth:1,
-        borderColor:'#FFFFFF',
+        borderWidth: 1,
+        borderColor: '#FFFFFF',
         backgroundColor: '#000000',
-        paddingHorizontal:17*dpi,
-        paddingVertical:8*dpi,
+        paddingHorizontal: 17 * dpi,
+        paddingVertical: 8 * dpi,
     },
     hambugMenu3: {
-        borderBottomLeftRadius:15,
-        borderBottomRightRadius:15,
-        borderWidth:1,
-        borderColor:'#FFFFFF',
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+        borderWidth: 1,
+        borderColor: '#FFFFFF',
         backgroundColor: '#000000',
-        paddingHorizontal:17*dpi,
-        paddingVertical:8*dpi,
+        paddingHorizontal: 17 * dpi,
+        paddingVertical: 8 * dpi,
     },
-    hambugBtnText:{
-        color:'#FFFFFF',
+    hambugBtnText: {
+        color: '#FFFFFF',
     },
 });
