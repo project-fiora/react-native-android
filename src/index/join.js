@@ -26,7 +26,7 @@ export default class Join extends Component {
             toggleAuth: false,
             userInputAuthCode: '',
             serverAuthCode: '',
-            authTimer: 300,
+            authTimer: 600,
             confirmAuth: false,
             passwd: '',
             passwd2: '',
