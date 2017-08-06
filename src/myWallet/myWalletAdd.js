@@ -41,6 +41,8 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
             const type = StateStorage.walletType();
             if (type != undefined) {
                 await this.setState({currentTYPE: type});
+            } else {
+                StateStorage.setType(this.state.currentTYPE);
             }
             const name = StateStorage.walletName();
             if (name !== null) {
@@ -64,7 +66,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
 
     setType(i) {
         this.setState({currentTYPE: i, onClickBox: !this.state.onClickBox},()=>{
-            StateStorage.setType(this.state.TYPE[this.state.currentTYPE]);
+            StateStorage.setType(this.state.currentTYPE);
         });
     }
 

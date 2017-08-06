@@ -196,7 +196,7 @@ class Common extends Component {
                         console.error(error);
                     }).done();
                     StateStore.setName('');
-                    StateStore.setType('BTC');
+                    StateStore.setType(0);
                     StateStore.setAddr('');
                 } catch (err) {
                     alert('지갑추가실패 : ' + err);
