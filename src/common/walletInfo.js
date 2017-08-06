@@ -34,13 +34,6 @@ export default class WalletInfo extends Component {
                     />
                 </View>
                 <Text style={styles.centerText}>{this.props.wallet_add}</Text>
-                <TouchableOpacity
-                    style={styles.searchBtn}
-                    underlayColor={'#000000'}
-                    onPress={() => this.goTo(this.state.rightBtnGoTo)}
-                >
-                    <Text style={styles.searchBtnText}>거래기록조회</Text>
-                </TouchableOpacity>
             </View>
         );
     }

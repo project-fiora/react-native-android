@@ -139,6 +139,7 @@ class TradeRecord extends Component {
                             : {parseInt(this.state.data.total_sent) / 100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}
                             잔액
                             : {parseInt(this.state.data.final_balance) / 100000000} {this.state.list[this.state.currentWallet].wallet_type}{'\n'}
+                            거래 기록들은 업데이트 될 예정입니다!
                         </Text>
                         }
                     </View>

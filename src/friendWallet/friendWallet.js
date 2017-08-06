@@ -13,6 +13,7 @@ import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
 import WalletInfo from "../common/walletInfo";
 import LoadingIcon from "../common/loadingIcon";
+import StateStore from "../common/stateStore";
 
 export default class FriendWallet extends Component {
     constructor(props) {
@@ -88,6 +89,7 @@ export default class FriendWallet extends Component {
             }).then((response) => response.json()).then((responseJson) => {
                 if (responseJson.message == "SUCCESS") {
                     var list = responseJson.list;
+                    StateStore.setCurrentMyWalletList(list);
                     this.setState({walletList: list, load: true, enable: null, secondLoad: true});
                 } else {
                     alert("친구지갑정보를 가져올 수 없습니다");

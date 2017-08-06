@@ -51,7 +51,7 @@ import Common from "../common/common";
 import PostAddEdit from "../more/post/postAddEdit";
 import StateStore from "../common/stateStore";
 import License from "../more/license";
-import TradeRecord from "../myWallet/TradeRecord";
+import TradeRecord from "../common/TradeRecord";
 
 export default class Main extends Component {
     constructor(props) {
@@ -144,7 +144,7 @@ export default class Main extends Component {
             case 'friendWallet':
                 this.setState({
                     title: '친구 지갑',
-                    enableRightBtn: true, rightBtnText: '친구 관리', rightBtnGoTo: 'friendWalletMng'
+                    enableRightHambug: true,
                 });
                 break;
             case 'friendWalletMng':
@@ -250,6 +250,9 @@ export default class Main extends Component {
 
     selectMenu(val) { //myWallet SideMenu
         switch (val) {
+            case 0:
+                this.close;
+                break;
             case 1: //지갑추가
                 Actions.main({ goTo: 'myWalletAdd' });
                 break;
@@ -264,6 +267,9 @@ export default class Main extends Component {
                     goTo: 'tradeRecord',
                     list: StateStore.currentMyWalletList()
                 });
+                break;
+            case 4: //친구 관리 
+                Actions.main({ goTo: 'friendWalletMng' });
                 break;
         }
     }
@@ -303,7 +309,9 @@ export default class Main extends Component {
                                     <TouchableOpacity
                                         style={styles.navBackBtn}
                                         underlayColor={'#AAAAAA'}
-                                        onPress={() => this.goTo(this.state.backBtnGoTo)}
+                                        onPress={() => Actions.pop()
+                                         //this.goTo(this.state.backBtnGoTo)
+                                         }
                                     >
                                         <Image source={require('../common/img/navArrow.png')}
                                             style={styles.navBackArrow} />
@@ -324,17 +332,31 @@ export default class Main extends Component {
                                     </TouchableHighlight>
                                 }
                                 {this.state.enableRightHambug &&
-                                    <Menu name="numbers"
-                                        renderer={SlideInMenu}
+                                    <Menu renderer={SlideInMenu}
                                         onSelect={value => this.selectMenu(value)}>
-                                        <MenuTrigger style={styles.trigger}>
+                                        <MenuTrigger>
                                             <Image source={require('../common/img/hambug3.png')} style={styles.hambugBtn} />
                                         </MenuTrigger>
-                                        <MenuOptions>
-                                            <MenuOption value={1} text='지갑 추가' />
-                                            <MenuOption value={2} text='지갑 관리' />
-                                            <MenuOption value={3} text='거래 조회' />
-                                        </MenuOptions>
+                                        {this.props.goTo === 'myWallet' &&
+                                            <MenuOptions customStyles={optionsStyles}>
+                                                <MenuOption value={1} text='지갑 추가' />
+                                                <View style={styles.menuHr} />
+                                                <MenuOption value={2} text='지갑 관리' />
+                                                <View style={styles.menuHr} />
+                                                <MenuOption value={3} text='거래 조회' />
+                                                <View style={styles.menuHr} />
+                                                <MenuOption value={0} text='취소' customStyles={optionStyles} />
+                                            </MenuOptions>
+                                        }
+                                        {this.props.goTo === 'friendWallet' &&
+                                            <MenuOptions customStyles={optionsStyles}>
+                                                <MenuOption value={4} text='친구 관리' />
+                                                <View style={styles.menuHr} />
+                                                <MenuOption value={3} text='거래 조회' />
+                                                <View style={styles.menuHr} />
+                                                <MenuOption value={0} text='취소' customStyles={optionStyles} />
+                                            </MenuOptions>
+                                        }
                                     </Menu>
                                 }
                             </View>
@@ -453,42 +475,50 @@ var styles = StyleSheet.create({
         alignSelf: 'flex-end'
     },
     hr: {
-        borderBottomWidth: 1 * dpi,
+        borderBottomWidth: 1,
         borderColor: '#FFFFFF',
         opacity: 0.8,
     },
-    hambugMenuWrapper: {
-        position: 'absolute',
-        top: 15 * dpi + 0.1 * wid,
-        right: 15 * dpi,
-        opacity: 0.7,
-    },
-    hambugMenu1: {
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
-        borderWidth: 1,
-        borderColor: '#FFFFFF',
-        backgroundColor: '#000000',
-        paddingHorizontal: 17 * dpi,
-        paddingVertical: 8 * dpi,
-    },
-    hambugMenu2: {
-        borderWidth: 1,
-        borderColor: '#FFFFFF',
-        backgroundColor: '#000000',
-        paddingHorizontal: 17 * dpi,
-        paddingVertical: 8 * dpi,
-    },
-    hambugMenu3: {
-        borderBottomLeftRadius: 15,
-        borderBottomRightRadius: 15,
-        borderWidth: 1,
-        borderColor: '#FFFFFF',
-        backgroundColor: '#000000',
-        paddingHorizontal: 17 * dpi,
-        paddingVertical: 8 * dpi,
-    },
-    hambugBtnText: {
-        color: '#FFFFFF',
+    menuHr: {
+        borderBottomWidth: 1,
+        borderColor: '#5D5D5D',
+        opacity: 0.8,
     },
 });
+
+const optionsStyles = {
+    optionsContainer: {
+        width: 0.95 * wid,
+        marginHorizontal: 0.025 * wid,
+        marginBottom: - (0.025 * wid),
+        borderRadius: 15,
+        borderWidth: 1,
+        borderColor: 'transparent'
+    },
+    optionsWrapper: {
+
+    },
+    optionWrapper: {
+        marginVertical: 12,
+    },
+    optionTouchable: {
+        underlayColor: '#FFFFFF',
+        activeOpacity: 50,
+    },
+    optionText: {
+        color: '#8EBDFF',
+        fontSize: 20 * dpi,
+        textAlign: 'center'
+    },
+};
+
+const optionStyles = {
+    optionWrapper: {
+        marginVertical: 12,
+    },
+    optionText: {
+        color: '#FF7B8C',
+        fontSize: 20 * dpi,
+        textAlign: 'center'
+    },
+};

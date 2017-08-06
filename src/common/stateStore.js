@@ -18,13 +18,14 @@ const stateStore = observable({
     currentMyWalletList:'',
     currentMyWalletId:'',
 });
-
+//////////////////////for tradeRecord
 stateStore.setCurrentMyWalletList = (list)=>{
-    this.currentMyWalletList = list; //for tradeRecord
+    this.currentMyWalletList = list; 
 };
 stateStore.currentMyWalletList = ()=>{
     return this.currentMyWalletList;
 }
+/////////////////////////////////
 stateStore.setCurrentMyWalletId = (id)=>{
     this.currentMyWalletId = id; //for mywalletEdit
 };
