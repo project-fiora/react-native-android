@@ -97,6 +97,7 @@ export default class Main extends Component {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBack);
     }
 
+    //////////////////////////////////////////////////////////////네비게이션 버튼과 타이틀 설정////////////////////////////////////////////////////////////////////////////
     componentWillMount() { //title, backBtn handler
         var p = this.props.goTo;
         switch (p) {
