@@ -189,7 +189,7 @@ class Home extends Component {
                     <LoadingIcon />
                 }
                 <ScrollView contentContainerStyle={styles.homeWrapper}>
-                    <Text style={styles.txt}>
+                    <Text style={styles.welcome}>
                         '{this.state.nickname != undefined && this.state.nickname}'님 환영합니다!{'\n'}
                     </Text>
                     <View style={styles.hr} />
@@ -272,6 +272,14 @@ const dpi = Common.getRatio();
 const styles = StyleSheet.create({
     homeWrapper: {
         padding: 30 * dpi,
+    },
+    welcome: {
+        color: '#FFFFFF',
+        opacity: 0.8,
+        padding: 1 * dpi,
+        fontSize: 17 * dpi,
+        textAlign: 'center',
+        marginBottom: 10 * dpi,
     },
     txt: {
         color: '#FFFFFF',

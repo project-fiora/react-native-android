@@ -300,7 +300,7 @@ export default class Main extends Component {
         return (
             <ImageBackground
                 imageStyle={styles.backgroundImg}
-                source={require('../common/img/background.png')}
+                source={require('../common/img/bg-03.png')}
                 style={styles.container}
             >
                 <MenuContext style={{ flex: 1 }}>

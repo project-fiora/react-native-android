@@ -151,7 +151,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                         multiline={false}
                     />
 
-                    <Text style={styles.explainQRcode}>
+                    {/* <Text style={styles.explainQRcode}>
                         QR코드 스캐너{'\n'}
                         스캐너 사용시 자잘한 버그는..{'\n'}
                         다음 업데이트에서 ㅎ_ㅎ
@@ -164,7 +164,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                         <Text style={styles.qrBtnText}>
                             QR코드 스캐너
                         </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </ScrollView>
             </ScrollView>
         );

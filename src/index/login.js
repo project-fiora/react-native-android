@@ -1,13 +1,13 @@
 /**
  * Created by kusob on 2017. 7. 4..
  */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Image,
     Text, TextInput, TouchableHighlight,
     View, AsyncStorage
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import CheckBox from 'react-native-checkbox';
 import styles from './index_style';
 
@@ -24,22 +24,22 @@ export default class Login extends Component {
             password: '',
             autoLogin: true,
             logining: false,
-            enableTouch:null,
+            enableTouch: null,
         };
     }
 
-    async componentWillMount(){
+    async componentWillMount() {
         let token = await AsyncStorage.getItem('Token');
-        if(token!==null){
+        if (token !== null) {
             let tokens = JSON.parse(token);
-            if(tokens.autoLogin){
+            if (tokens.autoLogin) {
                 this.login(tokens.email, tokens.password);
             }
         }
     }
 
     login(email, password) {
-        this.setState({logining:true, enableTouch:'none'});
+        this.setState({ logining: true, enableTouch: 'none' });
         fetch(PrivateAddr.getAddr() + 'member/login', {
             method: 'POST',
             headers: {
@@ -50,7 +50,7 @@ export default class Login extends Component {
                 email: email,
                 password: password
             })
-        }).then((response) =>{
+        }).then((response) => {
             return response.json();
         }).then((responseJson) => {
             if (responseJson.message == "SUCCESS") {
@@ -58,9 +58,9 @@ export default class Login extends Component {
                     AsyncStorage.setItem('Token', JSON.stringify({
                         email: email,
                         password: password,
-                        token:responseJson.jwtToken,
-                        autoLogin:this.state.autoLogin
-                    }),()=>Actions.main({goTo: 'home'}));
+                        token: responseJson.jwtToken,
+                        autoLogin: this.state.autoLogin
+                    }), () => Actions.main({ goTo: 'home' }));
                 } catch (e) {
                     alert("storage save fail : " + e);
                 }
@@ -70,23 +70,31 @@ export default class Login extends Component {
         }).catch((error) => {
             alert('Network Connection Failed');
             console.error(error);
-        }).done(()=>this.setState({logining:false, enableTouch:null}));
+        }).done(() => this.setState({ logining: false, enableTouch: null }));
     }
 
     render() {
         return (
             <View style={styles.loginContainer} pointerEvents={this.state.enableTouch}>
                 {this.state.logining == true &&
-                <LoadingIcon/>
+                    <LoadingIcon />
                 }
-                <Image source={require('../common/img/mainIcon.png')} style={styles.mainIcon}/>
+                <Image source={require('../common/img/logo.png')} style={styles.logo} />
+                <View style={styles.logoTextWrapper}>
+                    <Text style={styles.logoText}>
+                        당신의 소중한 거래를 위한{'\n'}
+                        <Text style={styles.logoTextHighlight}>
+                            보석주머니
+                        </Text>
+                        와 함께하세요 !
+                    </Text>
+                </View>
                 <View style={styles.inputWrapper}>
-                    <Image source={require('../common/img/user.png')} style={styles.inputTextIcon}/>
-
+                    <Image source={require('../common/img/user.png')} style={styles.inputTextIcon} />
                     <TextInput
                         style={styles.input}
                         value={this.state.email}
-                        onChangeText={(email) => this.setState({email: email})}
+                        onChangeText={(email) => this.setState({ email: email })}
                         keyboardType='email-address'
                         placeholder={'이메일 주소'}
                         placeholderTextColor="#FFFFFF"
@@ -98,11 +106,11 @@ export default class Login extends Component {
                 </View>
 
                 <View style={styles.inputWrapper}>
-                    <Image source={require('../common/img/passwd.png')} style={styles.inputTextIcon}/>
+                    <Image source={require('../common/img/passwd.png')} style={styles.inputTextIcon} />
                     <TextInput
                         style={styles.input}
                         value={this.state.password}
-                        onChangeText={(pw) => this.setState({password: pw})}
+                        onChangeText={(pw) => this.setState({ password: pw })}
                         placeholder={'비밀번호'}
                         placeholderTextColor="#FFFFFF"
                         secureTextEntry={true}
@@ -120,24 +128,27 @@ export default class Login extends Component {
                     uncheckedImage={require('../common/img/un.png')}
                     underlayColor="transparent"
                     checked={this.state.autoLogin}
-                    onChange={() => this.setState({autoLogin: !this.state.autoLogin})}
+                    onChange={() => this.setState({ autoLogin: !this.state.autoLogin })}
                 />
 
-                <TouchableHighlight
-                    style={styles.button}
-                    underlayColor={'#FFFFFF'}
-                    onPress={() => this.login(this.state.email, this.state.password)}
-                >
-                    <Text style={styles.label}>LOGIN</Text>
-                </TouchableHighlight>
+                <View style={styles.row}>
+                    <TouchableHighlight
+                        style={styles.button}
+                        underlayColor={'#FFFFFF'}
+                        onPress={this.props.goJoinPage}
+                    >
+                        <Text style={styles.label}>JOIN</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={styles.button}
+                        underlayColor={'#FFFFFF'}
+                        onPress={() => this.login(this.state.email, this.state.password)}
+                    >
+                        <Text style={styles.label}>LOGIN</Text>
+                    </TouchableHighlight>
+                </View>
 
-                <TouchableHighlight
-                    style={styles.button}
-                    underlayColor={'#FFFFFF'}
-                    onPress={this.props.goJoinPage}
-                >
-                    <Text style={styles.label}>JOIN</Text>
-                </TouchableHighlight>
+
             </View>
         );
     }

@@ -1,8 +1,8 @@
 /**
  * Created by kusob on 2017. 6. 26..
  */
-import React, {Component} from 'react';
-import {ImageBackground} from 'react-native';
+import React, { Component } from 'react';
+import { ImageBackground } from 'react-native';
 import styles from './index_style';
 import Join from './join';
 import Login from './login';
@@ -21,11 +21,11 @@ export default class Title extends Component {
     }
 
     titlePage() {
-        this.setState({currentPage: 'title'});
+        this.setState({ currentPage: 'title' });
     }
 
     joinPage() {
-        this.setState({currentPage: 'join'});
+        this.setState({ currentPage: 'join' });
     }
 
     componentWillUnmount() {
@@ -35,17 +35,17 @@ export default class Title extends Component {
     render() {
         return (
             <ImageBackground imageStyle={styles.backgroundImg}
-                             source={require('../common/img/background2.png')}
-                             style={styles.container}>
+                source={require('../common/img/bg-02.png')}
+                style={styles.container}>
                 {this.state.currentPage === 'title' &&
-                <Login goJoinPage={this.joinPage.bind(this)}/>
+                    <Login goJoinPage={this.joinPage.bind(this)} />
                 }
 
                 {this.state.currentPage === 'join' &&
-                <Join
-                    goTitlePage={this.titlePage.bind(this)}
-                    getCurrentPage={this.getCurrentPage.bind(this)}
-                />
+                    <Join
+                        goTitlePage={this.titlePage.bind(this)}
+                        getCurrentPage={this.getCurrentPage.bind(this)}
+                    />
                 }
             </ImageBackground>
         );

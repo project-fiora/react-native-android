@@ -2,17 +2,17 @@
  * Created by kusob on 2017. 7. 15..
  */
 
-import React, {Component} from 'react';
-import {PixelRatio, Dimensions, AsyncStorage} from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import React, { Component } from 'react';
+import { PixelRatio, Dimensions, AsyncStorage } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import PrivateAddr from "./private/address";
 import StateStore from '../common/stateStore';
 
-var {height, width} = Dimensions.get('window');
+var { height, width } = Dimensions.get('window');
 
 class Common extends Component {
     static clone(obj) {
-        if (obj === null || typeof(obj) !== 'object')
+        if (obj === null || typeof (obj) !== 'object')
             return obj;
         var copy = obj.constructor();
         for (var attr in obj) {
@@ -61,8 +61,8 @@ class Common extends Component {
         if (yearMonthDay[0] != today.getFullYear()) { //년도가 다른경우 년도 추가
             tmp += yearMonthDay[0] + "년 "; //
         } else if ((today.getFullYear().toString() == yearMonthDay[0]
-                && "0" + (today.getMonth() + 1) == yearMonthDay[1]
-                && today.getDate().toString() == yearMonthDay[2]) == false) { //오늘이 아니면
+            && "0" + (today.getMonth() + 1) == yearMonthDay[1]
+            && today.getDate().toString() == yearMonthDay[2]) == false) { //오늘이 아니면
             tmp += yearMonthDay[1] + "월 " + yearMonthDay[2] + "일 "; //월 일 추가
         }
         tmp += time[0] + ":" + time[1];
@@ -88,7 +88,7 @@ class Common extends Component {
                 fetch("https://api.etherscan.io/api?module=account&action=balance&address=" + addr)
                     .then((response) => response.json())
                     .then((responseJson) => {
-                        resolve(responseJson.result);
+                        resolve((parseInt(responseJson.result) / 1000000000000000000).toFixed(15));
                     })
                     .catch((error) => {
                         console.error(error);
@@ -187,7 +187,7 @@ class Common extends Component {
                     }).then((responseJson) => {
                         if (responseJson.message == "SUCCESS") {
                             alert('지갑을 추가했습니다!');
-                            Actions.main({goTo: 'myWallet'});
+                            Actions.main({ goTo: 'myWallet' });
                         } else {
                             alert('오류가 발생했습니다.\n다시 시도해주세요!');
                         }
@@ -238,7 +238,7 @@ class Common extends Component {
                     }).then((responseJson) => {
                         if (responseJson.message == "SUCCESS") {
                             alert('지갑 수정 성공!');
-                            Actions.main({goTo: 'myWallet'});
+                            Actions.main({ goTo: 'myWallet' });
                         } else {
                             alert('오류가 발생했습니다.\n다시 시도해주세요!');
                         }
