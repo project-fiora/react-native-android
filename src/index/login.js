@@ -41,7 +41,6 @@ export default class Login extends Component {
 
     login(email, password) {
         this.setState({ logining: true, enableTouch: 'none' });
-        password = Encrypt.encryptPasswd(password);
         fetch(PrivateAddr.getAddr() + 'member/login', {
             method: 'POST',
             headers: {
@@ -144,7 +143,7 @@ export default class Login extends Component {
                     <TouchableHighlight
                         style={styles.button}
                         underlayColor={'#FFFFFF'}
-                        onPress={() => this.login(this.state.email, this.state.password)}
+                        onPress={() => this.login(this.state.email, Encrypt.encryptPasswd(this.state.password))}
                     >
                         <Text style={styles.label}>LOGIN</Text>
                     </TouchableHighlight>

@@ -2,7 +2,7 @@
  * Created by kusob on 2017. 7. 7..
  */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     ScrollView,
     StyleSheet,
@@ -10,8 +10,8 @@ import {
     View, AsyncStorage
 } from 'react-native';
 
-import {Actions} from 'react-native-router-flux';
-import {observer} from 'mobx-react/native';
+import { Actions } from 'react-native-router-flux';
+import { observer } from 'mobx-react/native';
 import Common from "../common/common";
 import StateStorage from '../common/stateStore';
 
@@ -28,7 +28,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
         };
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         await this.getWalletInfo();
     }
 
@@ -36,27 +36,27 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
         try {
             const code = StateStorage.walletAddr();
             if (code !== null) {
-                await this.setState({addr: code});
+                await this.setState({ addr: code });
             }
             const type = StateStorage.walletType();
             if (type != undefined) {
-                await this.setState({currentTYPE: type});
+                await this.setState({ currentTYPE: type });
             } else {
                 StateStorage.setType(this.state.currentTYPE);
             }
             const name = StateStorage.walletName();
             if (name !== null) {
-                await this.setState({name: name});
+                await this.setState({ name: name });
             }
         } catch (error) {
             alert('지갑 정보 가져오기 실패! : ' + error);
         }
     }
 
-    qrScanner() {
+    async qrScanner() {
         try {
-            StateStorage.setName(this.state.name);
-            StateStorage.setType(this.state.currentTYPE);
+            await StateStorage.setName(this.state.name);
+            await StateStorage.setType(this.state.currentTYPE);
             Actions.scanner();
         } catch (error) {
             alert("지갑 이름 저장 오류 : " + error);
@@ -65,7 +65,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
     }
 
     setType(i) {
-        this.setState({currentTYPE: i, onClickBox: !this.state.onClickBox},()=>{
+        this.setState({ currentTYPE: i, onClickBox: !this.state.onClickBox }, () => {
             StateStorage.setType(this.state.currentTYPE);
         });
     }
@@ -81,7 +81,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                         style={styles.inputName}
                         value={this.state.name}
                         onChangeText={(name) => {
-                            this.setState({name: name});
+                            this.setState({ name: name });
                             StateStorage.setName(name);
                         }}
                         placeholder={'지갑 이름'}
@@ -95,7 +95,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                     <Text style={styles.explain2}>아래 버튼을 눌러서 지갑 유형을 선택하세요!</Text>
                     <TouchableOpacity
                         underlayColor={'#AAAAAA'}
-                        onPress={() => this.setState({onClickBox: !this.state.onClickBox})}
+                        onPress={() => this.setState({ onClickBox: !this.state.onClickBox })}
                     >
                         <View style={styles.selectBoxWrapper}>
                             <View style={styles.selectBoxRow}>
@@ -140,7 +140,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                         style={styles.inputWalletAddr}
                         value={this.state.addr}
                         onChangeText={(addr) => {
-                            this.setState({addr: addr});
+                            this.setState({ addr: addr });
                             StateStorage.setAddr(addr);
                         }}
                         placeholder={'지갑 주소'}
@@ -151,7 +151,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                         multiline={false}
                     />
 
-                    {/* <Text style={styles.explainQRcode}>
+                    <Text style={styles.explainQRcode}>
                         QR코드 스캐너{'\n'}
                         스캐너 사용시 자잘한 버그는..{'\n'}
                         다음 업데이트에서 ㅎ_ㅎ
@@ -164,7 +164,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                         <Text style={styles.qrBtnText}>
                             QR코드 스캐너
                         </Text>
-                    </TouchableOpacity> */}
+                    </TouchableOpacity>
                 </ScrollView>
             </ScrollView>
         );
@@ -173,10 +173,10 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
 
 const dpi = Common.getRatio();
 const wid = Common.winWidth();
-const hei= Common.winHeight();
+const hei = Common.winHeight();
 const styles = StyleSheet.create({
-    frame:{
-        flex:1,
+    frame: {
+        flex: 1,
     },
     content: {
         alignItems: 'center',
@@ -184,41 +184,41 @@ const styles = StyleSheet.create({
     explain: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 20*dpi,
-        margin: 15*dpi,
+        fontSize: 20 * dpi,
+        margin: 15 * dpi,
     },
     inputName: {
-        width: 0.6*wid,
-        height: 0.075*hei,
-        fontSize: 15*dpi,
+        width: 0.6 * wid,
+        height: 0.075 * hei,
+        fontSize: 15 * dpi,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
-        borderWidth: 1*dpi,
-        borderRadius: 15*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 15 * dpi,
         alignSelf: 'center',
         backgroundColor: '#000000',
         opacity: 0.3,
-        marginBottom: 10*dpi,
-        paddingLeft: 15*dpi,
+        marginBottom: 10 * dpi,
+        paddingLeft: 15 * dpi,
     },
     explain2: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 15*dpi,
-        margin: 15*dpi,
+        fontSize: 15 * dpi,
+        margin: 15 * dpi,
     },
     selectBoxWrapper: {
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: '#000000',
-        width: 0.6*wid,
-        height: 0.065*hei,
+        width: 0.6 * wid,
+        height: 0.065 * hei,
         opacity: 0.4,
         borderColor: '#FFFFFF',
-        borderWidth: 1*dpi,
-        borderRadius: 10*dpi,
-        paddingLeft: 17*dpi,
-        paddingRight: 15*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 10 * dpi,
+        paddingLeft: 17 * dpi,
+        paddingRight: 15 * dpi,
     },
     selectBoxRow: {
         flexDirection: 'row',
@@ -227,53 +227,53 @@ const styles = StyleSheet.create({
     selectBoxText: {
         alignSelf: 'flex-start',
         color: '#FFFFFF',
-        fontSize: 17*dpi,
+        fontSize: 17 * dpi,
     },
     selectBoxIconWrapper: {
         alignItems: 'flex-end',
     },
     selectIcon: {
         color: '#FFFFFF',
-        fontSize: 17*dpi,
+        fontSize: 17 * dpi,
         opacity: 0.9,
     },
     inputWalletAddr: {
-        width: 0.6*wid,
-        height: 0.07*hei,
-        fontSize: 13*dpi,
+        width: 0.6 * wid,
+        height: 0.07 * hei,
+        fontSize: 13 * dpi,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
-        borderWidth: 1*dpi,
-        borderRadius: 15*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 15 * dpi,
         alignSelf: 'center',
         backgroundColor: '#000000',
         opacity: 0.3,
-        marginTop: 10*dpi,
-        marginBottom: 10*dpi,
-        paddingLeft: 15*dpi,
+        marginTop: 10 * dpi,
+        marginBottom: 10 * dpi,
+        paddingLeft: 15 * dpi,
     },
     explainQRcode: {
-        textAlign:'center',
+        textAlign: 'center',
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 15*dpi,
-        margin: 10*dpi,
+        fontSize: 15 * dpi,
+        margin: 10 * dpi,
     },
     scannerBtn: {
-        width: 0.4*wid,
-        height: 0.06*hei,
-        borderWidth: 1*dpi,
-        borderRadius: 20*dpi,
+        width: 0.4 * wid,
+        height: 0.06 * hei,
+        borderWidth: 1 * dpi,
+        borderRadius: 20 * dpi,
         borderColor: '#FFFFFF',
-        padding: 5*dpi,
+        padding: 5 * dpi,
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6,
-        marginBottom: 10*dpi,
+        marginBottom: 10 * dpi,
     },
-    qrBtnText:{
-        color:'#FFFFFF',
-        fontSize:17*dpi,
+    qrBtnText: {
+        color: '#FFFFFF',
+        fontSize: 17 * dpi,
     },
 });
 
