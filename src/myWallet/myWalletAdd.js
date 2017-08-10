@@ -13,7 +13,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { observer } from 'mobx-react/native';
 import Common from "../common/common";
-import StateStorage from '../common/stateStore';
+import StateStore from '../common/stateStore';
 
 const MyWalletAdd = observer(class MyWalletAdd extends Component {
     constructor(props) {
@@ -34,17 +34,17 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
 
     async getWalletInfo() {
         try {
-            const code = StateStorage.walletAddr();
+            const code = StateStore.walletAddr();
             if (code !== null) {
                 await this.setState({ addr: code });
             }
-            const type = StateStorage.walletType();
+            const type = StateStore.walletType();
             if (type != undefined) {
                 await this.setState({ currentTYPE: type });
             } else {
-                StateStorage.setType(this.state.currentTYPE);
+                StateStore.setType(this.state.currentTYPE);
             }
-            const name = StateStorage.walletName();
+            const name = StateStore.walletName();
             if (name !== null) {
                 await this.setState({ name: name });
             }
@@ -55,18 +55,19 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
 
     async qrScanner() {
         try {
-            await StateStorage.setName(this.state.name);
-            await StateStorage.setType(this.state.currentTYPE);
+            await StateStore.setName(this.state.name);
+            await StateStore.setType(this.state.currentTYPE);
             Actions.scanner();
         } catch (error) {
-            alert("지갑 이름 저장 오류 : " + error);
+            console.log(error);
+            // alert("지갑 임시저장 오류 : " + error);
         }
 
     }
 
     setType(i) {
         this.setState({ currentTYPE: i, onClickBox: !this.state.onClickBox }, () => {
-            StateStorage.setType(this.state.currentTYPE);
+            StateStore.setType(this.state.currentTYPE);
         });
     }
 
@@ -82,7 +83,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                         value={this.state.name}
                         onChangeText={(name) => {
                             this.setState({ name: name });
-                            StateStorage.setName(name);
+                            StateStore.setName(name);
                         }}
                         placeholder={'지갑 이름'}
                         placeholderTextColor="#FFFFFF"
@@ -141,7 +142,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                         value={this.state.addr}
                         onChangeText={(addr) => {
                             this.setState({ addr: addr });
-                            StateStorage.setAddr(addr);
+                            StateStore.setAddr(addr);
                         }}
                         placeholder={'지갑 주소'}
                         placeholderTextColor="#FFFFFF"

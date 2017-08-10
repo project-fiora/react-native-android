@@ -34,13 +34,14 @@ export default class Login extends Component {
         if (token !== null) {
             let tokens = JSON.parse(token);
             if (tokens.autoLogin) {
-                this.login(tokens.email, tokens.password);
+                this.setState({ logining: true, enableTouch: 'none' },()=>{
+                    this.login(tokens.email, tokens.password);
+                });
             }
         }
     }
 
     login(email, password) {
-        this.setState({ logining: true, enableTouch: 'none' });
         fetch(PrivateAddr.getAddr() + 'member/login', {
             method: 'POST',
             headers: {
@@ -143,7 +144,11 @@ export default class Login extends Component {
                     <TouchableHighlight
                         style={styles.button}
                         underlayColor={'#FFFFFF'}
-                        onPress={() => this.login(this.state.email, Encrypt.encryptPasswd(this.state.password))}
+                        onPress={() => {
+                            this.setState({ logining: true, enableTouch: 'none' },()=>{
+                                this.login(this.state.email, Encrypt.encryptPasswd(this.state.password))
+                            });
+                        }}
                     >
                         <Text style={styles.label}>LOGIN</Text>
                     </TouchableHighlight>
