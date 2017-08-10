@@ -21,6 +21,7 @@ export default class Convert extends Component {
             coinValue: '',
             result: '',
             loading:false,
+            load:false,
             TYPE: ['BTC', 'ETH', 'ETC', 'XRP', 'LTC', 'DASH'],
             currentTYPE: 0,
         };
@@ -41,7 +42,7 @@ export default class Convert extends Component {
                 arr.push(responseJson.RAW.XRP.KRW.PRICE);
                 arr.push(responseJson.RAW.LTC.KRW.PRICE);
                 arr.push(responseJson.RAW.DASH.KRW.PRICE);
-                this.setState({cryptoList: arr});
+                this.setState({cryptoList: arr, load:true});
             })
             .catch((error) => {
                 console.error(error);
@@ -64,6 +65,12 @@ export default class Convert extends Component {
     render() {
         return (
             <View style={styles.frame}>
+                {!this.state.load&&
+                <Text style={styles.centerTxt}>
+                    초기데이터를 불러오는중...
+                </Text>
+                }
+                
                 <Text style={styles.centerTxt}>
                     임의의 가상화폐를 한화로 변환해보세요!
                 </Text>

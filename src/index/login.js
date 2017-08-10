@@ -12,6 +12,7 @@ import CheckBox from 'react-native-checkbox';
 import styles from './index_style';
 
 import PrivateAddr from "../common/private/address";
+import Encrypt from '../common/private/encrypt';
 import LoadingIcon from "../common/loadingIcon";
 
 export default class Login extends Component {
@@ -40,6 +41,7 @@ export default class Login extends Component {
 
     login(email, password) {
         this.setState({ logining: true, enableTouch: 'none' });
+        password = Encrypt.encryptPasswd(password);
         fetch(PrivateAddr.getAddr() + 'member/login', {
             method: 'POST',
             headers: {
