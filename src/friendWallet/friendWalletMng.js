@@ -2,14 +2,14 @@
  * Created by kusob on 2017. 7. 16..
  */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     ScrollView,
     StyleSheet, Alert,
     Text, TextInput,
     View, AsyncStorage, TouchableOpacity, Image
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import PrivateAddr from "../common/private/address";
 import LoadingIcon from "../common/loadingIcon";
 import Common from "../common/common";
@@ -44,7 +44,7 @@ export default class FriendWalletMng extends Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson.message == "SUCCESS") {
-                    this.setState({myFriendList: responseJson.list, token: token, load: true});
+                    this.setState({ myFriendList: responseJson.list, token: token, load: true });
                 } else {
                     alert("친구정보를 가져올 수 없습니다");
                     return false;
@@ -57,7 +57,7 @@ export default class FriendWalletMng extends Component {
     }
 
     searchNickname() {
-        this.setState({searching: true, searched: false}, () => {
+        this.setState({ searching: true, searched: false }, () => {
             if (this.state.nickname.length == 0) {
                 alert("닉네임을 입력해주세요!");
                 return false;
@@ -71,8 +71,7 @@ export default class FriendWalletMng extends Component {
                 .then((response) => response.json())
                 .then((responseJson) => {
                     if (responseJson.message == "SUCCESS") {
-                        console.log(responseJson.list);
-                        this.setState({searchList: responseJson.list, searching: false, searched: true});
+                        this.setState({ searchList: responseJson.list, searching: false, searched: true });
                     } else {
                         alert("정보를 가져올 수 없습니다");
                         return false;
@@ -96,10 +95,9 @@ export default class FriendWalletMng extends Component {
         }).then((response) => {
             return response.json()
         }).then((responseJson) => {
-            console.log(responseJson);
             if (responseJson.message == "SUCCESS") {
                 alert('친구 신청 완료!');
-                Actions.main({goTo: 'friendWallet'});
+                Actions.main({ goTo: 'friendWallet' });
             } else if (responseJson.message == "EXIST") {
                 alert('이미 요청된 친구입니다!');
                 return false;
@@ -121,39 +119,39 @@ export default class FriendWalletMng extends Component {
             [
                 {
                     text: 'Cancel', onPress: () => {
-                    return false
-                }, style: 'cancel'
+                        return false
+                    }, style: 'cancel'
                 },
                 {
                     text: 'OK', onPress: () => {
-                    try {
-                        fetch(PrivateAddr.getAddr() + "friend/deletefriend?friendId=" + friendId, {
-                            method: 'DELETE', headers: {
-                                "Authorization": this.state.token,
-                                "Accept": "*/*",
-                            }
-                        })
-                            .then((response) => response.json())
-                            .then((responseJson) => {
-                                if (responseJson.message == "SUCCESS") {
-                                    alert("친구를 삭제했습니다");
-                                    Actions.main({goTo: 'friendWallet'});
-                                } else {
-                                    alert("친구 삭제 실패\n서버관리자에게 문의하세요");
-                                    return false;
+                        try {
+                            fetch(PrivateAddr.getAddr() + "friend/deletefriend?friendId=" + friendId, {
+                                method: 'DELETE', headers: {
+                                    "Authorization": this.state.token,
+                                    "Accept": "*/*",
                                 }
                             })
-                            .catch((error) => {
-                                console.error(error);
-                            });
-                    } catch (err) {
-                        alert('삭제실패 ' + err);
-                        return false;
+                                .then((response) => response.json())
+                                .then((responseJson) => {
+                                    if (responseJson.message == "SUCCESS") {
+                                        alert("친구를 삭제했습니다");
+                                        Actions.main({ goTo: 'friendWallet' });
+                                    } else {
+                                        alert("친구 삭제 실패\n서버관리자에게 문의하세요");
+                                        return false;
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error(error);
+                                });
+                        } catch (err) {
+                            alert('삭제실패 ' + err);
+                            return false;
+                        }
                     }
-                }
                 },
             ],
-            {cancelable: false}
+            { cancelable: false }
         )
     }
 
@@ -161,44 +159,72 @@ export default class FriendWalletMng extends Component {
         return (
             <View>
                 {!this.state.load &&
-                <LoadingIcon/>
+                    <LoadingIcon />
                 }
                 {this.state.searching &&
-                <LoadingIcon/>
+                    <LoadingIcon />
                 }
                 <ScrollView contentContainerStyle={styles.frame}>
-
                     {this.state.load &&
-                    <View>
-                        <Text style={styles.explain}>
-                            여기서 친구를 검색하고, 추가해보세요!{'\n'}
-                            친구가 요청을 수락하면, 친구의 지갑을 볼 수 있습니다!{'\n'}
-                            이미 추가된 친구라면, 삭제할수도 있습니다!
+                        <View>
+                            <Text style={styles.explain}>
+                                여기서 친구를 검색하고, 추가해보세요!{'\n'}
+                                친구가 요청을 수락하면, 친구의 지갑을 볼 수 있습니다!{'\n'}
+                                이미 추가된 친구라면, 삭제할수도 있습니다!
                         </Text>
-                        <View style={styles.row}>
-                            <TextInput
-                                style={styles.input}
-                                value={this.state.nickname}
-                                onChangeText={(nick) => this.setState({nickname: nick})}
-                                placeholder={'친구 닉네임'}
-                                placeholderTextColor="#FFFFFF"
-                                autoCapitalize='none'
-                                maxLength={50}
-                                multiline={false}
-                            />
-                            <TouchableOpacity
-                                style={styles.searchBtn}
-                                underlayColor={'#000000'}
-                                onPress={() => this.searchNickname()}
-                            >
-                                <Text style={styles.btnText}>검색</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.searchedFriendListWrapper}>
+                            <View style={styles.searchListRow}>
+                                <TextInput
+                                    style={styles.input}
+                                    value={this.state.nickname}
+                                    onChangeText={(nick) => this.setState({ nickname: nick })}
+                                    placeholder={'친구 닉네임'}
+                                    placeholderTextColor="#FFFFFF"
+                                    autoCapitalize='none'
+                                    maxLength={50}
+                                    multiline={false}
+                                />
+                                <TouchableOpacity
+                                    style={styles.searchBtn}
+                                    underlayColor={'#000000'}
+                                    onPress={() => this.searchNickname()}
+                                >
+                                    <Text style={styles.btnText}>검색</Text>
+                                </TouchableOpacity>
+                            </View>
+
                             {this.state.searched &&
-                            this.state.searchList.map((friend, i) => {
-                                for (var j = 0; j < this.state.myFriendList.length; j++) {
-                                    if (this.state.myFriendList[j].id == friend.id) {
+                                <View style={styles.searchedFriendListWrapper}>
+                                    {this.state.searchList.filter((item) => {
+                                        for (var i = 0; i < this.state.myFriendList.length; i++) {
+                                            if (item.id == this.state.myFriendList[i].id) {  //친구면 리스트에 포함 x
+                                                return false;
+                                            } else { //for문의 if에 필터링되지않은것은 리스트에 추가
+                                                return true;
+                                            }
+                                        }
+                                        return true;
+                                    }).map((user, i) => { //필터링 된것들의 리스트를 보여준다
+                                        return (
+                                            <View style={styles.searchListRow} key={i}>
+                                                <Text style={styles.nicknameText}>{user.nickname}</Text>
+                                                <TouchableOpacity
+                                                    style={styles.requestBtn}
+                                                    underlayColor={'#000000'}
+                                                    onPress={() => this.requestFriend(user.id)}
+                                                >
+                                                    <Text style={styles.btnText}>친구 신청</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        );
+                                    })}
+                                </View>
+                            }
+
+                            {this.state.myFriendList.length != 0 &&
+                                <View style={styles.myFriendListWrapper}>
+                                    <View style={styles.hr} />
+                                    <Text style={styles.myFriendListText}>친구목록</Text>
+                                    {this.state.myFriendList.map((friend, i) => {
                                         return (
                                             <View style={styles.searchListRow} key={i}>
                                                 <Text style={styles.nicknameText}>{friend.nickname}</Text>
@@ -211,24 +237,10 @@ export default class FriendWalletMng extends Component {
                                                 </TouchableOpacity>
                                             </View>
                                         );
-                                    }
-                                }
-                                return (
-                                    <View style={styles.searchListRow} key={i}>
-                                        <Text style={styles.nicknameText}>{friend.nickname}</Text>
-                                        <TouchableOpacity
-                                            style={styles.requestBtn}
-                                            underlayColor={'#000000'}
-                                            onPress={() => this.requestFriend(friend.id)}
-                                        >
-                                            <Text style={styles.btnText}>친구 신청</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                );
-                            })
+                                    })}
+                                </View>
                             }
                         </View>
-                    </View>
                     }
                 </ScrollView>
             </View>
@@ -249,14 +261,9 @@ const styles = StyleSheet.create({
         fontSize: 16 * dpi,
         margin: 15 * dpi,
     },
-    row: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginBottom: 8.5 * dpi,
-    },
     input: {
         width: 0.45 * wid,
-        height: 0.075 * hei,
+        height: 0.06 * hei,
         fontSize: 15 * dpi,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
@@ -265,9 +272,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         backgroundColor: '#000000',
         opacity: 0.3,
-        marginBottom: 5 * dpi,
-        marginRight: 5 * dpi,
-        marginLeft: 7.5 * dpi,
         paddingLeft: 15 * dpi,
     },
     searchBtn: {
@@ -277,17 +281,21 @@ const styles = StyleSheet.create({
         borderRadius: 20 * dpi,
         borderColor: '#FFFFFF',
         padding: 5 * dpi,
-        margin: 7.5 * dpi,
+        marginVertical: 0.01 * hei,
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6
     },
-    searchedFriendListWrapper:{
-        alignItems:'center',
+    searchedFriendListWrapper: {
+        width: 0.7 * wid,
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginTop: 0.015*hei,
     },
     searchListRow: {
         width: 0.7 * wid,
         flexDirection: 'row',
+        alignSelf: 'center',
         justifyContent: 'space-between',
         margin: 1.5 * dpi,
     },
@@ -310,6 +318,24 @@ const styles = StyleSheet.create({
     },
     btnText: {
         color: '#FFFFFF',
-        fontSize: 15*dpi
+        fontSize: 15 * dpi
+    },
+    myFriendListWrapper: {
+        width: 0.7 * wid,
+        alignSelf: 'center',
+    },
+    hr: {
+        borderBottomWidth: 1,
+        borderColor: '#FFFFFF',
+        opacity: 0.8,
+        marginVertical: 10,
+    },
+    myFriendListText: {
+        color: '#FFFFFF',
+        opacity: 0.8,
+        fontSize: 18 * dpi,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        marginBottom: 5,
     },
 });

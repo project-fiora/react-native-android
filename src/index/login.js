@@ -145,16 +145,13 @@ export default class Login extends Component {
                         style={styles.button}
                         underlayColor={'#FFFFFF'}
                         onPress={() => {
-                            this.setState({ logining: true, enableTouch: 'none' },()=>{
-                                this.login(this.state.email, Encrypt.encryptPasswd(this.state.password))
-                            });
+                            this.setState({ logining: true, enableTouch: 'none' });
+                            this.login(this.state.email, Encrypt.encryptPasswd(this.state.password))
                         }}
                     >
                         <Text style={styles.label}>LOGIN</Text>
                     </TouchableHighlight>
                 </View>
-
-
             </View>
         );
     }

@@ -59,7 +59,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
             await StateStore.setType(this.state.currentTYPE);
             Actions.scanner();
         } catch (error) {
-            console.log(error);
+            console.error(error);
             // alert("지갑 임시저장 오류 : " + error);
         }
 
@@ -153,9 +153,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                     />
 
                     <Text style={styles.explainQRcode}>
-                        QR코드 스캐너{'\n'}
-                        스캐너 사용시 자잘한 버그는..{'\n'}
-                        다음 업데이트에서 ㅎ_ㅎ
+                        QR코드 스캐너로 편하게 지갑주소를 입력하세요!
                     </Text>
                     <TouchableOpacity
                         style={styles.scannerBtn}
@@ -185,12 +183,12 @@ const styles = StyleSheet.create({
     explain: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 20 * dpi,
+        fontSize: 18 * dpi,
         margin: 15 * dpi,
     },
     inputName: {
         width: 0.6 * wid,
-        height: 0.075 * hei,
+        height: 0.065 * hei,
         fontSize: 15 * dpi,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
@@ -213,7 +211,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#000000',
         width: 0.6 * wid,
-        height: 0.065 * hei,
+        height: 0.055 * hei,
         opacity: 0.4,
         borderColor: '#FFFFFF',
         borderWidth: 1 * dpi,
@@ -261,7 +259,7 @@ const styles = StyleSheet.create({
         margin: 10 * dpi,
     },
     scannerBtn: {
-        width: 0.4 * wid,
+        width: 0.35 * wid,
         height: 0.06 * hei,
         borderWidth: 1 * dpi,
         borderRadius: 20 * dpi,
@@ -274,7 +272,7 @@ const styles = StyleSheet.create({
     },
     qrBtnText: {
         color: '#FFFFFF',
-        fontSize: 17 * dpi,
+        fontSize: 16 * dpi,
     },
 });
 

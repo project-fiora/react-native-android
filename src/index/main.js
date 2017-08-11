@@ -258,10 +258,14 @@ export default class Main extends Component {
                 Actions.main({ goTo: 'myWalletAdd' });
                 break;
             case 2: //지갑관리
-                Actions.main({
-                    goTo: 'myWalletEdit',
-                    id: StateStore.currentMyWalletId()
-                });
+                if (StateStore.currentMyWalletId() != undefined) {
+                    Actions.main({
+                        goTo: 'myWalletEdit',
+                        id: StateStore.currentMyWalletId()
+                    });
+                } else { //지갑이 없는경우
+                    alert("지갑이 없어요!\n오류가 계속되면 관리자에게 문의해주세요");
+                }
                 break;
             case 3: //거래 조회
                 Actions.main({

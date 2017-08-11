@@ -10,13 +10,11 @@ import StateStore from '../common/stateStore';
 
 export default class Scanner extends Component {
     async onRead(obj) {
-        console.log(obj);
         alert('스캔 완료!\n' + obj.data.toString() + '\n지갑 주소를 확인하세요');
         try {
             StateStore.setAddr(obj.data.toString());
             Actions.main({ goTo: 'myWalletAdd' });
         } catch (error) {
-            console.log(error);
             alert("스캔 후 저장 오류 : " + error);
         }
     }
@@ -30,14 +28,11 @@ export default class Scanner extends Component {
                         <TouchableOpacity
                             style={styles.backBtn}
                             underlayColor={'#000000'}
-                            onPress={() => {
-                                StateStore.setAddr('');
-                                Actions.main({ goTo: 'myWalletAdd' });
-                            }}
+                            onPress={() => Actions.pop()}
                         >
                             <Text style={styles.btnText}>
                                 뒤로가기
-                        </Text>
+                            </Text>
                         </TouchableOpacity>
                     }
                     showMarker={true}
