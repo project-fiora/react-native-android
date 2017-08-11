@@ -38,7 +38,6 @@ class Common extends Component {
                 }).then((response) => {
                     return response.json()
                 }).then((responseJson) => {
-                    console.log(responseJson);
                     if (responseJson.message == "SUCCESS") {
                         alert('글쓰기 성공!');
                         Actions.main({goTo: 'post'});
@@ -83,7 +82,6 @@ class Common extends Component {
                 }).then((response) => {
                     return response.json()
                 }).then((responseJson) => {
-                    console.log(responseJson);
                     if (responseJson.message == "SUCCESS") {
                         alert('수정 성공!');
                         Actions.main({goTo:'postRead', post_id:StateStore.postId()});

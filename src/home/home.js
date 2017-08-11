@@ -106,10 +106,8 @@ class Home extends Component {
         }
     }
 
-    confirmRequest(id) { //오류가발생했습니다 다시시도해주세요! 뜸
-        console.log(id);
+    confirmRequest(id) {
         var intId = parseInt(id);
-        console.log(this.state.token);
         try {
             fetch(PrivateAddr.getAddr() + 'friend/agree?Friendid=' + intId, {
                 method: 'PUT',
@@ -120,19 +118,16 @@ class Home extends Component {
                 },
             }).then((response) => {
                 return response.json()
-            })
-                .then((responseJson) => {
-                    console.log(responseJson);
-                    if (responseJson.message == "SUCCESS") {
-                        alert('친구 요청을 수락했습니다');
-                    } else {
-                        alert('오류가 발생했습니다.\n다시 시도해주세요!');
-                    }
-                })
-                .catch((error) => {
-                    alert('Network Connection Failed');
-                    console.error(error);
-                }).done(() => this.getConfirm()); //refresh를 위해 목록을 다시불러온다
+            }).then((responseJson) => {
+                if (responseJson.message == "SUCCESS") {
+                    alert('친구 요청을 수락했습니다');
+                } else {
+                    alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                }
+            }).catch((error) => {
+                alert('Network Connection Failed');
+                console.error(error);
+            }).done(() => this.getConfirm()); //refresh를 위해 목록을 다시불러온다
         } catch (err) {
             alert('수정실패 ' + err);
             return false;
@@ -251,14 +246,6 @@ class Home extends Component {
                                 })}
                             </View>
                         }
-                        <View style={styles.warningWrapper}>
-                            <Text style={styles.warningText}>
-                                ** 이 앱을 사용하는 도중에 발생하는
-                        </Text>
-                            <Text style={styles.warningText2}>
-                                모든 책임은 사용자 본인에게 있습니다 **
-                        </Text>
-                        </View>
                     </View>
                 </ScrollView>
             </View>
@@ -286,21 +273,6 @@ const styles = StyleSheet.create({
         opacity: 0.8,
         padding: 1 * dpi,
         fontSize: 17 * dpi,
-    },
-    warningWrapper: {
-        marginVertical: 10 * dpi,
-    },
-    warningText: {
-        color: '#FFFFFF',
-        opacity: 0.8,
-        fontSize: 15 * dpi,
-        textAlign: 'left',
-    },
-    warningText2: {
-        color: '#FFFFFF',
-        opacity: 0.8,
-        fontSize: 15 * dpi,
-        textAlign: 'right',
     },
     hr: {
         opacity: 0.5,

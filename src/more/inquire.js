@@ -3,14 +3,14 @@
  */
 
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     ScrollView,
     StyleSheet,
     Text, TextInput, TouchableHighlight,
     View
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 
 import PrivateAddr from '../common/private/address';
 import Common from "../common/common";
@@ -21,9 +21,9 @@ export default class Inquire extends Component {
         super(props);
 
         this.state = {
-            content:'',
+            content: '',
             senderEmail: '',
-            loading:false,
+            loading: false,
         };
     }
 
@@ -64,53 +64,53 @@ export default class Inquire extends Component {
 
     render() {
         return (
-                <ScrollView contentContainerStyle={styles.frame}>
-                    <Text style={styles.btnText}>
-                        문의는 boseokjung@gmail.com 으로 해주세요!{'\n'}
-                        혹은 구글스토어의 리뷰를 이용해주세요!{'\n'}
-                        별 5개 주시면 복받으실꺼에요 ㅎㅎㅎ
+            <ScrollView contentContainerStyle={styles.frame}>
+                <Text style={styles.btnText}>
+                    문의는 boseokjung@gmail.com 으로 해주세요!{'\n'}
+                    혹은 구글스토어의 리뷰를 이용해주세요!{'\n'}
+                    별 5개 주시면 복받으실꺼에요 ㅎㅎㅎ
                     </Text>
-                    {/*{this.state.loading&&*/}
-                    {/*<LoadingIcon/>*/}
-                    {/*}*/}
-                    {/*<TextInput*/}
-                        {/*style={styles.inputContent}*/}
-                        {/*multiline={true}*/}
-                        {/*numberOfLines={4}*/}
-                        {/*value={this.state.content}*/}
-                        {/*onChangeText={(content) => this.setState({content: content})}*/}
-                        {/*placeholder={'1000자 이내로 입력해주세요'}*/}
-                        {/*placeholderTextColor="#FFFFFF"*/}
-                        {/*autoCapitalize = 'none'*/}
-                        {/*maxLength={2000}*/}
-                        {/*autoFocus={true}*/}
-                    {/*/>*/}
-                    {/*<TextInput*/}
-                        {/*style={styles.input}*/}
-                        {/*value={this.state.senderEmail}*/}
-                        {/*onChangeText={(email) => this.setState({senderEmail: email})}*/}
-                        {/*keyboardType='email-address'*/}
-                        {/*placeholder={'답변 받을 이메일 주소'}*/}
-                        {/*placeholderTextColor="#FFFFFF"*/}
-                        {/*autoCapitalize = 'none'*/}
-                        {/*multiline={false}*/}
-                        {/*autoFocus={true}*/}
-                    {/*/>*/}
-                    {/*<TouchableHighlight*/}
-                        {/*style={styles.attachBtn}*/}
-                        {/*underlayColor={'#000000'}*/}
-                        {/*onPress={() => {this.sendMail()}}*/}
-                    {/*>*/}
-                        {/*<Text style={styles.btnText}>보내기</Text>*/}
-                    {/*</TouchableHighlight>*/}
-                    {/*<TouchableHighlight*/}
-                        {/*style={styles.rightBtn}*/}
-                        {/*underlayColor={'#000000'}*/}
-                        {/*onPress={() => this.sendMail()}*/}
-                    {/*>*/}
-                        {/*<Text style={styles.rightBtnText}>전송</Text>*/}
-                    {/*</TouchableHighlight>*/}
-                </ScrollView>
+                {/*{this.state.loading&&*/}
+                {/*<LoadingIcon/>*/}
+                {/*}*/}
+                {/*<TextInput*/}
+                {/*style={styles.inputContent}*/}
+                {/*multiline={true}*/}
+                {/*numberOfLines={4}*/}
+                {/*value={this.state.content}*/}
+                {/*onChangeText={(content) => this.setState({content: content})}*/}
+                {/*placeholder={'1000자 이내로 입력해주세요'}*/}
+                {/*placeholderTextColor="#FFFFFF"*/}
+                {/*autoCapitalize = 'none'*/}
+                {/*maxLength={2000}*/}
+                {/*autoFocus={true}*/}
+                {/*/>*/}
+                {/*<TextInput*/}
+                {/*style={styles.input}*/}
+                {/*value={this.state.senderEmail}*/}
+                {/*onChangeText={(email) => this.setState({senderEmail: email})}*/}
+                {/*keyboardType='email-address'*/}
+                {/*placeholder={'답변 받을 이메일 주소'}*/}
+                {/*placeholderTextColor="#FFFFFF"*/}
+                {/*autoCapitalize = 'none'*/}
+                {/*multiline={false}*/}
+                {/*autoFocus={true}*/}
+                {/*/>*/}
+                {/*<TouchableHighlight*/}
+                {/*style={styles.attachBtn}*/}
+                {/*underlayColor={'#000000'}*/}
+                {/*onPress={() => {this.sendMail()}}*/}
+                {/*>*/}
+                {/*<Text style={styles.btnText}>보내기</Text>*/}
+                {/*</TouchableHighlight>*/}
+                {/*<TouchableHighlight*/}
+                {/*style={styles.rightBtn}*/}
+                {/*underlayColor={'#000000'}*/}
+                {/*onPress={() => this.sendMail()}*/}
+                {/*>*/}
+                {/*<Text style={styles.rightBtnText}>전송</Text>*/}
+                {/*</TouchableHighlight>*/}
+            </ScrollView>
         );
     }
 }
@@ -119,55 +119,56 @@ const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 var styles = StyleSheet.create({
-    frame:{
-        flex:1,
-        padding:20*dpi,
+    frame: {
+        flex: 1,
+        padding: 20 * dpi,
         // paddingBottom:15*dpi,
     },
-    inputContent:{
-        width: 0.7*wid,
-        height: 350*dpi,
-        fontSize: 15*dpi,
+    inputContent: {
+        width: 0.7 * wid,
+        height: 350 * dpi,
+        fontSize: 15 * dpi,
         color: '#FFFFFF',
-        padding: 15*dpi,
-        paddingTop:15*dpi,
+        padding: 15 * dpi,
+        paddingTop: 15 * dpi,
         borderColor: '#FFFFFF',
-        borderWidth: 1*dpi,
-        borderRadius: 15*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 15 * dpi,
         alignSelf: 'center',
         backgroundColor: 'transparent',
-        marginBottom: 5*dpi,
+        marginBottom: 5 * dpi,
         opacity: 0.7
     },
     input: { //입력칸
-        width: 0.7*wid,
-        fontSize: 15*dpi,
+        width: 0.7 * wid,
+        fontSize: 15 * dpi,
         color: '#FFFFFF',
-        padding: 15*dpi,
-        height: 50*dpi,
+        padding: 15 * dpi,
+        height: 50 * dpi,
         borderColor: '#FFFFFF',
-        borderWidth: 1*dpi,
-        borderRadius: 15*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 15 * dpi,
         alignSelf: 'center',
         backgroundColor: 'transparent',
         marginBottom: 5,
         opacity: 0.7
     },
-    attachBtn:{
-        width: 0.5*wid,
-        padding: 15*dpi,
-        height: 40*dpi,
+    attachBtn: {
+        width: 0.5 * wid,
+        padding: 15 * dpi,
+        height: 40 * dpi,
         borderColor: '#FFFFFF',
-        borderWidth: 1*dpi,
-        borderRadius: 15*dpi,
+        borderWidth: 1 * dpi,
+        borderRadius: 15 * dpi,
         alignSelf: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
         backgroundColor: 'transparent',
         opacity: 0.8
     },
-    btnText:{
-        textAlign:'center',
-        color:'#FFFFFF',
-        opacity:0.9
+    btnText: {
+        textAlign: 'center',
+        color: '#FFFFFF',
+        opacity: 0.9,
+        fontSize: 17,
     },
 });

@@ -92,7 +92,6 @@ export default class Post extends Component {
             }
         } else { //좋아요가 true가 아닐때
             // POST /api/post/postlike //조아요!
-            console.log(this.props.post_id);
             fetch(PrivateAddr.getAddr() + 'post/postlike?post_id='+this.props.post_id, {
                 method: 'POST',
                 headers: {
@@ -103,7 +102,6 @@ export default class Post extends Component {
             }).then((response) => {
                 return response.json()
             }).then((responseJson) => {
-                console.log(responseJson);
                 if (responseJson.message == "SUCCESS") {
                     this.setState({like: true});
                 } else {
@@ -205,7 +203,6 @@ export default class Post extends Component {
             }).then((response) => {
                 return response.json()
             }).then((responseJson) => {
-                console.log(responseJson);
                 if (responseJson.message == "SUCCESS") {
                     this.getPost();
                 } else {

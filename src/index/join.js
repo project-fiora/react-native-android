@@ -51,8 +51,6 @@ export default class Join extends Component {
                         if (this.state.enableNickname) {
                             if (this.state.agree) {
                                 var encPass = Encrypt.encryptPasswd(this.state.passwd);
-                                console.log(encPass);
-                                console.log(Encrypt.encryptPasswd("1"));
                                 fetch(PrivateAddr.getAddr() + 'member/join', {
                                     method: 'POST',
                                     headers: {

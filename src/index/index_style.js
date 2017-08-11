@@ -11,17 +11,18 @@ const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 const styles = StyleSheet.create({
-    container: { //background image
+    container: { 
         flex: 1,
         justifyContent: 'center',
     },
-    backgroundImg: {
+    backgroundImg: { //background image
         width: '100%',
         height: '100%',
         resizeMode: 'cover',
     },
     loginContainer: { //wrapper
         alignItems: 'center',
+        justifyContent: 'center',
     },
     row: {
         alignItems: 'center',
