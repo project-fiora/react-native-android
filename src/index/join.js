@@ -370,6 +370,8 @@ export default class Join extends Component {
 - 사용자의 비밀번호 : 단순 로그인을 위한 암호. AES-128을 사용하여 암호화. 로그인외에는 사용하지 않습니다\n\
 - 사용자 디바이스의 카메라 : QR코드 스캐너를 이용하기위한 카메라 사용 외에는 사용하지 않습니다. (android.permission.CAMERA)\n\
 (android.permission.VIBRATE는 QR코드를 인식했을경우, 진동이 울립니다.)\n\
+android.permission.INTERNET - 거래소 바로가기, 개인정보처리방침 페이지에서 이용됩니다\n\
+android.permission.SYSTEM_ALERT_WINDOW - 지금보시는 alert창을 띄울때 이용합니다\n\
 \n\
 ** 2년 이상 비로그인시, 서비스 종료시 모든 회원정보를 삭제합니다. **\n\
 \n\
