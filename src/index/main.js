@@ -50,6 +50,7 @@ import Inquire from '../more/inquire';
 import Common from "../common/common";
 import PostAddEdit from "../more/post/postAddEdit";
 import StateStore from "../common/stateStore";
+import PrivatePolicy from "../more/privateInfoPolicy";
 import License from "../more/license";
 import TradeRecord from "../common/TradeRecord";
 
@@ -240,6 +241,12 @@ export default class Main extends Component {
                     enableBackBtn: true,
                 });
                 break;
+            case 'privatePolicy':
+                this.setState({
+                    title: '개인정보처리방침',
+                    enableBackBtn: true,
+                });
+                break;
             case 'license':
                 this.setState({
                     title: '오픈소스 라이센스',
@@ -406,6 +413,7 @@ export default class Main extends Component {
                         }
                         {this.props.goTo === 'version' && <Version />}
                         {this.props.goTo === 'inquire' && <Inquire />}
+                        {this.props.goTo === 'privatePolicy' && <PrivatePolicy />}
                         {this.props.goTo === 'license' && <License />}
                     </View>
                     <TabButton />

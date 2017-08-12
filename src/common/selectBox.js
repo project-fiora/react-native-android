@@ -17,7 +17,7 @@ import {
     list={this.state.TYPE} //selectBox list, array or object array
     selectBoxText={null}  
     //if your list is object, selectBoxText's value == something print Variable in the object.
-    // ex) obj={id,:1, name:"boseok"} than selectBoxText="name"
+    // ex) obj={id,:1, name:"boseok"} than selectBoxText="name" (variable name)
     
     // ex2) <SelectBox 
                     list={[{id:1, name:"boseok1"},{id:2, name:"boseok2"}]} //Array or [Object]

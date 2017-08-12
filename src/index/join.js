@@ -4,11 +4,10 @@
 
 import React, { Component } from 'react';
 import {
-    Image,
+    Image, Alert,
     Text, TextInput, TouchableHighlight,
-    View, ScrollView
+    View, ScrollView, TouchableOpacity, WebView
 } from 'react-native';
-import CheckBox from 'react-native-checkbox';
 
 import styles from './index_style';
 import PrivateAddr from '../common/private/address';
@@ -32,6 +31,8 @@ export default class Join extends Component {
             passwd: '',
             passwd2: '',
             nickname: '',
+            policy: false,
+            showPolicy: false,
             agree: false,
             enable: null,
             enableNickname: false,
@@ -353,18 +354,59 @@ export default class Join extends Component {
                     }
 
                     <Text style={styles.agreeText}>
-                        ** 이 앱을 사용하는 도중에 발생하는{'\n'}모든 책임은 사용자 본인에게 있습니다 **
+                        ** 이 앱을 사용하는 도중에 발생하는{'\n'}모든 책임은 사용자 본인에게 있습니다 **{'\n'}
+                        또한, 개인정보처리방침에 동의합니다
                     </Text>
-                    <CheckBox
-                        containerStyle={{ width: 90 * dpi, marginTop: 10 * dpi, marginBottom: 10 * dpi }}
-                        label="동의합니다"
-                        labelStyle={{ opacity: 0.7, color: '#FFFFFF', fontSize: 13 * dpi, }}
-                        checkboxStyle={{ opacity: 0.7, width: 15 * dpi, height: 15 * dpi }}
-                        checkedImage={require('../common/img/check.png')}
-                        uncheckedImage={require('../common/img/un.png')}
-                        underlayColor="transparent"
-                        onChange={() => this.setState({ agree: !this.state.agree })}
-                    />
+                    <TouchableOpacity
+                        onPress={() => {
+                            Alert.alert(
+                                '경고!',
+                                "개인정보처리방침\n\
+                                \n\
+ 1. 이용자의 개인정보를 매우 중요하게 생각하며 각별히 주의를 기울여 처리하고 있습니다.\n\
+ 특히 최신 암호화 기술(예: HTTPS 연결 사용)을 사용하여 전송하는 등 사용자 데이터를 안전하게 처리합니다\n\
+다음과 같은 목적외에는 사용하지 않습니다.\n\
+- 사용자의 이메일 : 사용자 1명당 아이디 1개를 위한 인증용도,\n\
+- 사용자의 비밀번호 : 단순 로그인을 위한 암호. AES-128을 사용하여 암호화. 로그인외에는 사용하지 않습니다\n\
+- 사용자 디바이스의 카메라 : QR코드 스캐너를 이용하기위한 카메라 사용 외에는 사용하지 않습니다. (android.permission.CAMERA)\n\
+(android.permission.VIBRATE는 QR코드를 인식했을경우, 진동이 울립니다.)\n\
+\n\
+** 2년 이상 비로그인시, 서비스 종료시 모든 회원정보를 삭제합니다. **\n\
+\n\
+2. 이용자는 다음과 같은 권리를 행사할 수 있습니다.\n\
+- 회원탈퇴 : boseokjung@gmail.com으로 연락주시면 회원탈퇴처리를 해드리겠습니다(추후 메뉴에 회원탈퇴를 구현할 예정)\n\
+- 회원탈퇴시 이용자의 아이디, 패스워드, 지갑 정보등 모든 정보를 삭제합니다\n\
+\n\
+3. 개인정보 담당자\n\
+- 성명 : 정보석\n\
+- 직책 : 대표\n\
+- 연락처 : boseokjung@gmail.com\n\
+\n\
+4. 개인정보 처리방침 변경\n\
+\n\
+- 이 개인정보 처리 방침은 시행일로부터 적용되며, 법령 및 방침에 따른 변경내용의 추가, 삭제 및 정정이 있는 경우에는\n\
+ 변경사항의 시행 7일 전부터 공지사항을 통하여 고지할 것입니다.\n\
+이 개인정보 처리방침은 2017년 8월 12일 부터 적용됩니다.\n\
+",
+                                [
+                                    {
+                                        text: '동의안함', onPress: () => {
+                                            this.setState({ agree: false })
+                                            alert("동의안하시면 가입이 불가능합니다");
+                                            return false
+                                        }, style: 'cancel'
+                                    },
+                                    {
+                                        text: '동의', onPress: () => {
+                                            this.setState({ agree: true })
+                                        }
+                                    },
+                                ],
+                                { cancelable: false }
+                            )
+                        }}>
+                        <Text style={styles.agreeText}>**개인정보처리방침 보기**{'\n'} </Text>
+                    </TouchableOpacity>
 
                     <TouchableHighlight
                         style={styles.button}

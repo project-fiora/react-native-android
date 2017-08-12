@@ -125,7 +125,6 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                     </Text>
                     <TouchableOpacity
                         style={styles.scannerBtn}
-                        underlayColor={'#000000'}
                         onPress={() => this.qrScanner()}
                     >
                         <Text style={styles.qrBtnText}>
