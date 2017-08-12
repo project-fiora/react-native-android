@@ -72,11 +72,11 @@ const styles = StyleSheet.create({
     },
     balance: {
         color: '#DBCEFF',
-        fontSize: 19 * dpi,
+        fontSize: 18 * dpi,
     },
     realBalance: {
         color: '#FFFFFF',
-        fontSize: 19 * dpi,
+        fontSize: 18 * dpi,
     },
     qrCodeWrapper: {
         marginTop: 10 * dpi,

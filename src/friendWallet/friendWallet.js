@@ -14,6 +14,7 @@ import Common from "../common/common";
 import WalletInfo from "../common/walletInfo";
 import LoadingIcon from "../common/loadingIcon";
 import StateStore from "../common/stateStore";
+import SelectBox from '../common/selectBox';
 
 export default class FriendWallet extends Component {
     constructor(props) {
@@ -24,8 +25,6 @@ export default class FriendWallet extends Component {
             walletList: [],
             load: false,
             secondLoad: false,
-            onClickFriendBox: false,
-            onClickBox: false,
             enable: 'none',
             currentFriend: 0,
             currentWallet: 0,
@@ -124,8 +123,6 @@ export default class FriendWallet extends Component {
             friendId: friendId,
             secondLoad: false,
             enable: 'none',
-            onClickFriendBox: !this.state.onClickFriendBox,
-            onClickBox: false,
         }, () => this.getFriendWallet(friendId));
     }
 
@@ -134,7 +131,6 @@ export default class FriendWallet extends Component {
             balance: '조회 중..',
             secondLoad: false,
             currentWallet: i,
-            onClickBox: !this.state.onClickBox,
             secondLoad: true
         }, () => {
             StateStore.setCurrentWallet(i);
@@ -167,98 +163,31 @@ export default class FriendWallet extends Component {
                         </Text>
                         </View>
                     }
-                    {/*////////////////친구 리스트 select Box////////////////////*/}
+
                     {(this.state.load && this.state.friendList.length != 0) &&
                         <View pointerEvents={this.state.enable}>
                             <Text style={styles.titleText}>아래 버튼을 눌러서 친구와 친구지갑을 선택하세요!</Text>
-                            <TouchableOpacity
-                                underlayColor={'#AAAAAA'}
-                                onPress={() => this.setState({ onClickFriendBox: !this.state.onClickFriendBox })}
-                            >
-                                <View style={styles.selectBoxWrapper}>
-                                    <View style={styles.selectBoxRow}>
-                                        <View style={styles.selectBoxTextWrapper}>
-                                            <Text style={styles.selectBox}>
-                                                {this.state.friendList[this.state.currentFriend].nickname}
-                                            </Text>
-                                        </View>
-                                        <View style={styles.selectBoxIconWrapper}>
-                                            <Text style={styles.selectIcon}>
-                                                ▼
-                                        </Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                            {(() => {
-                                if (this.state.onClickFriendBox == true) {
-                                    return this.state.friendList.map((friend, i) => {
-                                        if (this.state.currentFriend != i)
-                                            return (
-                                                <TouchableOpacity
-                                                    underlayColor={'#AAAAAA'}
-                                                    onPress={() => this.showFriend(i, friend.id)}
-                                                    key={i}
-                                                >
-                                                    <View style={styles.selectBoxWrapper}>
-                                                        <Text style={styles.selectBox}>
-                                                            {friend.nickname}
-                                                        </Text>
-                                                    </View>
-                                                </TouchableOpacity>
-                                            );
-                                    })
-                                }
-                            })()}
+
+                            <SelectBox
+                                list={this.state.friendList}
+                                currentItem={0}
+                                selectBoxText="nickname"
+                                onClickBoxFunction={(i) => {
+                                    this.showFriend(i, this.state.friendList[i].id)
+                                }} />
                             <View style={styles.blank} />
-                            {/*////////////////친구 리스트 select Box////////////////////*/}
+
                             {(this.state.secondLoad && this.state.walletList.length == 0) &&
-                                <View>
-                                    <Text style={styles.titleText}>친구 지갑이 없어요!</Text>
-                                </View>
+                                <Text style={styles.titleText}>친구 지갑이 없어요!</Text>
                             }
                             {(this.state.secondLoad && this.state.walletList.length != 0) &&
-                                <View>
-                                    <TouchableOpacity
-                                        underlayColor={'#AAAAAA'}
-                                        onPress={() => this.setState({ onClickBox: !this.state.onClickBox })}
-                                    >
-                                        <View style={styles.selectBoxWrapper}>
-                                            <View style={styles.selectBoxRow}>
-                                                <View style={styles.selectBoxTextWrapper}>
-                                                    <Text style={styles.selectBox}>
-                                                        {this.state.walletList[this.state.currentWallet].wallet_name}
-                                                    </Text>
-                                                </View>
-                                                <View style={styles.selectBoxIconWrapper}>
-                                                    <Text style={styles.selectIcon}>
-                                                        ▼
-                                            </Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                    </TouchableOpacity>
-                                    {(() => {
-                                        if (this.state.onClickBox == true) {
-                                            return this.state.walletList.map((wallet, i) => {
-                                                if (this.state.currentWallet != i)
-                                                    return (
-                                                        <TouchableOpacity
-                                                            underlayColor={'#AAAAAA'}
-                                                            onPress={() => this.showWallet(i, wallet.wallet_type, wallet.wallet_add)}
-                                                            key={i}
-                                                        >
-                                                            <View style={styles.selectBoxWrapper}>
-                                                                <Text style={styles.selectBox}>
-                                                                    {wallet.wallet_name}
-                                                                </Text>
-                                                            </View>
-                                                        </TouchableOpacity>
-                                                    );
-                                            })
-                                        }
-                                    })()}
-                                </View>
+                                <SelectBox
+                                    list={this.state.walletList}
+                                    currentItem={0}
+                                    selectBoxText="wallet_name"
+                                    onClickBoxFunction={(i) => {
+                                        this.showWallet(i, this.state.walletList[i].wallet_type, this.state.walletList[i].wallet_add)
+                                    }} />
                             }
                             {(this.state.load && this.state.secondLoad && this.state.walletList.length != 0) &&
                                 <WalletInfo

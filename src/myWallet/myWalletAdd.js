@@ -14,6 +14,7 @@ import { Actions } from 'react-native-router-flux';
 import { observer } from 'mobx-react/native';
 import Common from "../common/common";
 import StateStore from '../common/stateStore';
+import SelectBox from '../common/selectBox';
 
 const MyWalletAdd = observer(class MyWalletAdd extends Component {
     constructor(props) {
@@ -22,7 +23,6 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
         this.state = {
             name: '',
             addr: '',
-            onClickBox: false,
             TYPE: ['BTC', 'ETH', 'ETC', 'XRP', 'LTC', 'DASH'],
             currentTYPE: 0,
         };
@@ -66,7 +66,7 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
     }
 
     setType(i) {
-        this.setState({ currentTYPE: i, onClickBox: !this.state.onClickBox }, () => {
+        this.setState({ currentTYPE: i }, () => {
             StateStore.setType(this.state.currentTYPE);
         });
     }
@@ -92,47 +92,15 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
                         maxLength={20}
                         multiline={false}
                     />
-                    {/*////////////////////////////////////////////////////////////////////////////////*/}
+
                     <Text style={styles.explain2}>아래 버튼을 눌러서 지갑 유형을 선택하세요!</Text>
-                    <TouchableOpacity
-                        underlayColor={'#AAAAAA'}
-                        onPress={() => this.setState({ onClickBox: !this.state.onClickBox })}
-                    >
-                        <View style={styles.selectBoxWrapper}>
-                            <View style={styles.selectBoxRow}>
-                                <Text style={styles.selectBoxText}>
-                                    {this.state.TYPE[this.state.currentTYPE]}
-                                </Text>
-                                <View style={styles.selectBoxIconWrapper}>
-                                    <Text style={styles.selectIcon}>
-                                        ▼
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                    {(() => {
-                        if (this.state.onClickBox == true) {
-                            return this.state.TYPE.map((type, i) => {
-                                return (
-                                    <TouchableOpacity
-                                        underlayColor={'#AAAAAA'}
-                                        onPress={() => this.setType(i)}
-                                        key={i}
-                                    >
-                                        <View style={styles.selectBoxWrapper}>
-                                            <View style={styles.selectBoxRow}>
-                                                <Text style={styles.selectBoxText}>
-                                                    {type}
-                                                </Text>
-                                            </View>
-                                        </View>
-                                    </TouchableOpacity>
-                                );
-                            })
-                        }
-                    })()}
-                    {/*////////////////////////////////////////////////////////////////////////////////*/}
+                    <SelectBox
+                        list={this.state.TYPE}
+                        currentItem={0}
+                        onClickBoxFunction={(i) => {
+                            this.setType(i)
+                        }} />
+
                     <Text style={styles.explain2}>
                         순수한 지갑 주소만 입력해주세요{'\n'}
                         예)0x6b83f808fce08f51adb2e9e

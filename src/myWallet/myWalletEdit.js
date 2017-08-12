@@ -12,6 +12,7 @@ import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
 import LoadingIcon from "../common/loadingIcon";
 import StateStore from "../common/stateStore";
+import SelectBox from '../common/selectBox';
 
 export default class MyWalletEdit extends Component {
     constructor(props) {
@@ -22,7 +23,6 @@ export default class MyWalletEdit extends Component {
             name: '',
             addr: '',
             wallet: {},
-            onClickBox: false,
             TYPE: ['BTC', 'ETH', 'ETC', 'XRP', 'LTC', 'DASH'],
             currentTYPE: 0,
             token: '',
@@ -107,7 +107,7 @@ export default class MyWalletEdit extends Component {
     }
 
     setType(i) {
-        this.setState({ currentTYPE: i, onClickBox: !this.state.onClickBox }, () => {
+        this.setState({ currentTYPE: i }, () => {
             StateStore.setEdit_walletType(this.state.TYPE[this.state.currentTYPE]);
         });
     }
@@ -134,47 +134,15 @@ export default class MyWalletEdit extends Component {
                             maxLength={10}
                             multiline={false}
                         />
-                        {/*-------------SELECT BOX START---------------*/}
+
                         <Text style={styles.explain2}>아래 버튼을 눌러서 지갑 유형을 선택하세요!</Text>
-                        <TouchableOpacity
-                            underlayColor={'#AAAAAA'}
-                            onPress={() => this.setState({ onClickBox: !this.state.onClickBox })}
-                        >
-                            <View style={styles.selectBoxWrapper}>
-                                <View style={styles.selectBoxRow}>
-                                    <Text style={styles.selectBoxText}>
-                                        {this.state.TYPE[this.state.currentTYPE]}
-                                    </Text>
-                                    <View style={styles.selectBoxIconWrapper}>
-                                        <Text style={styles.selectIcon}>
-                                            ▼
-                                        </Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        {(() => {
-                            if (this.state.onClickBox == true) {
-                                return this.state.TYPE.map((type, i) => {
-                                    return (
-                                        <TouchableOpacity
-                                            underlayColor={'#AAAAAA'}
-                                            onPress={() => this.setType(i)}
-                                            key={i}
-                                        >
-                                            <View style={styles.selectBoxWrapper}>
-                                                <View style={styles.selectBoxRow}>
-                                                    <Text style={styles.selectBoxText}>
-                                                        {type}
-                                                    </Text>
-                                                </View>
-                                            </View>
-                                        </TouchableOpacity>
-                                    );
-                                })
-                            }
-                        })()}
-                        {/*-------------SELECT BOX END---------------*/}
+                        <SelectBox
+                            list={this.state.TYPE}
+                            currentItem={this.state.currentTYPE}
+                            onClickBoxFunction={(i) => {
+                                this.setType(i)
+                            }} />
+
                         <TextInput
                             style={styles.inputWalletAddr}
                             value={this.state.addr}

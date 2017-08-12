@@ -13,6 +13,7 @@ import {
 import Common from "../common/common";
 import StateStore from '../common/stateStore';
 import LoadingIcon from "../common/loadingIcon";
+import SelectBox from '../common/selectBox';
 
 class TradeRecord extends Component {
     constructor(props) {
@@ -21,7 +22,6 @@ class TradeRecord extends Component {
         this.state = {
             loaded: false,
             success: false,
-            onClickBox: false,
             list: StateStore.currentMyWalletList(),
             currentWallet: StateStore.currentWallet(),
             message: '',
@@ -39,7 +39,6 @@ class TradeRecord extends Component {
             success: false,
             message: '',
             currentWallet: i,
-            onClickBox: !this.state.onClickBox,
         }, () => this.getData());
     }
 
@@ -154,45 +153,14 @@ class TradeRecord extends Component {
                     }
                     {(this.state.list.length != 0) &&
                         <View>
-                            <TouchableOpacity
-                                underlayColor={'#AAAAAA'}
-                                onPress={() => this.setState({ onClickBox: !this.state.onClickBox })}
-                            >
-                                <View style={styles.selectBoxWrapper}>
-                                    <View style={styles.selectBoxRow}>
-                                        <Text style={styles.selectBoxText}>
-                                            {this.state.list[this.state.currentWallet].wallet_name}
-                                        </Text>
-                                        <View style={styles.selectBoxIconWrapper}>
-                                            <Text style={styles.selectIcon}>
-                                                ▼
-                                        </Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                            {(() => {
-                                if (this.state.onClickBox == true) {
-                                    return this.state.list.map((wallet, i) => {
-                                        if (this.state.currentWallet != i)
-                                            return (
-                                                <TouchableOpacity
-                                                    underlayColor={'#AAAAAA'}
-                                                    onPress={() => this.showWallet(i)}
-                                                    key={i}
-                                                >
-                                                    <View style={styles.selectBoxWrapper}>
-                                                        <View style={styles.selectBoxRow}>
-                                                            <Text style={styles.selectBoxText}>
-                                                                {wallet.wallet_name}
-                                                            </Text>
-                                                        </View>
-                                                    </View>
-                                                </TouchableOpacity>
-                                            );
-                                    })
-                                }
-                            })()}
+                            <SelectBox
+                                list={this.state.list}
+                                currentItem={StateStore.currentWallet()}
+                                selectBoxText="wallet_name"
+                                onClickBoxFunction={(i) => {
+                                    this.showWallet(i)
+                                }} />
+
                             <View style={styles.blank} />
                             <Text style={styles.addr}>
                                 {this.state.list[this.state.currentWallet].wallet_add}

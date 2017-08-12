@@ -14,6 +14,7 @@ import Common from "../common/common";
 import WalletInfo from "../common/walletInfo";
 import LoadingIcon from "../common/loadingIcon";
 import StateStore from "../common/stateStore";
+import SelectBox from '../common/selectBox';
 
 export default class MyWallet extends Component {
     constructor(props) {
@@ -24,7 +25,6 @@ export default class MyWallet extends Component {
             email: 'boseokjung@gmail.com',
             qrcode: '',
             load: false,
-            onClickBox: false,
             currentWallet: 0,
             balance: '조회 중..',
         };
@@ -98,7 +98,6 @@ export default class MyWallet extends Component {
         this.setState({
             currentWallet: i,
             balance: '조회 중..',
-            onClickBox: !this.state.onClickBox,
         }, () => {
             StateStore.setCurrentWallet(i);
             StateStore.setCurrentMyWalletId(this.state.walletList[i].wallet_Id);
@@ -136,45 +135,15 @@ export default class MyWallet extends Component {
                     {(this.state.load == true && this.state.walletList.length != 0) &&
                         <View>
                             <Text style={styles.titleText}>아래 버튼을 눌러서 지갑을 선택하세요!</Text>
-                            <TouchableOpacity
-                                underlayColor={'#AAAAAA'}
-                                onPress={() => this.setState({ onClickBox: !this.state.onClickBox })}
-                            >
-                                <View style={styles.selectBoxWrapper}>
-                                    <View style={styles.selectBoxRow}>
-                                        <Text style={styles.selectBoxText}>
-                                            {this.state.walletList[this.state.currentWallet].wallet_name}
-                                        </Text>
-                                        <View style={styles.selectBoxIconWrapper}>
-                                            <Text style={styles.selectIcon}>
-                                                ▼
-                                        </Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                            {(() => {
-                                if (this.state.onClickBox == true) {
-                                    return this.state.walletList.map((wallet, i) => {
-                                        if (this.state.currentWallet != i)
-                                            return (
-                                                <TouchableOpacity
-                                                    underlayColor={'#AAAAAA'}
-                                                    onPress={() => this.showWallet(i, wallet.wallet_type, wallet.wallet_add)}
-                                                    key={i}
-                                                >
-                                                    <View style={styles.selectBoxWrapper}>
-                                                        <View style={styles.selectBoxRow}>
-                                                            <Text style={styles.selectBoxText}>
-                                                                {wallet.wallet_name}
-                                                            </Text>
-                                                        </View>
-                                                    </View>
-                                                </TouchableOpacity>
-                                            );
-                                    })
-                                }
-                            })()}
+
+                            <SelectBox
+                                list={this.state.walletList}
+                                currentItem={0}
+                                selectBoxText="wallet_name"
+                                onClickBoxFunction={(i) => {
+                                    this.showWallet(i, this.state.walletList[i].wallet_type, this.state.walletList[i].wallet_add)
+                                }} />
+
                             <WalletInfo
                                 wallet_name={this.state.walletList[this.state.currentWallet].wallet_name}
                                 wallet_type={this.state.walletList[this.state.currentWallet].wallet_type}
