@@ -5,7 +5,7 @@ import PrivateAddr from "../../common/private/address";
 import StateStore from '../../common/stateStore';
 
 
-class Common extends Component {
+class PostAddEdit extends Component {
     static async writePost() {
         if(StateStore.postTitle()==""||StateStore.postTitle()==undefined){
             alert("제목을 입력하세요!");
@@ -102,4 +102,4 @@ class Common extends Component {
     }
 }
 
-export default Common
+export default PostAddEdit

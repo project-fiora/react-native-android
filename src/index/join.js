@@ -20,6 +20,7 @@ export default class Join extends Component {
         super(props);
 
         this.state = {
+            loading: false,
             email: '',
             disableConfirmEmail: false,
             confirmEmail: false,
@@ -44,14 +45,13 @@ export default class Join extends Component {
     }
 
     join() {//회원가입 POST api call
-        this.setState({ enable: 'none' });
-        if (this.state.confirmAuth) {
+        
             if (this.state.passwd != "" && this.state.passwd2 != "") {
                 if (this.state.passwd == this.state.passwd2) {
                     if (this.state.nickname != "") {
                         if (this.state.enableNickname) {
                             if (this.state.agree) {
-                                var encPass = Encrypt.encryptPasswd(this.state.passwd);
+                                alert("잠시만 기다려주세요!");
                                 fetch(PrivateAddr.getAddr() + 'member/join', {
                                     method: 'POST',
                                     headers: {
@@ -60,24 +60,22 @@ export default class Join extends Component {
                                     },
                                     body: JSON.stringify({
                                         email: this.state.email,
-                                        password: encPass,
+                                        password: Encrypt.encryptPasswd(this.state.passwd),
                                         nickname: this.state.nickname
                                     })
                                 }).then((response) => {
                                     return response.json()
-                                })
-                                    .then((responseJson) => {
-                                        if (responseJson.message == "SUCCESS") {
-                                            this.goTitle();
-                                            alert('회원가입에 성공했습니다!');
-                                        } else {
-                                            alert('오류가 발생했습니다.\n다시 시도해주세요!');
-                                        }
-                                    })
-                                    .catch((error) => {
-                                        alert('Network Connection Failed');
-                                        console.error(error);
-                                    }).done(() => this.setState({ enable: null }));
+                                }).then((responseJson) => {
+                                    if (responseJson.message == "SUCCESS") {
+                                        this.goTitle();
+                                        alert('회원가입에 성공했습니다!');
+                                    } else {
+                                        alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                                    }
+                                }).catch((error) => {
+                                    alert('Network Connection Failed');
+                                    console.error(error);
+                                }).done();
                             } else {
                                 alert('동의하셔야 가입이 가능합니다!');
                             }
@@ -93,10 +91,8 @@ export default class Join extends Component {
             } else {
                 alert('비밀번호를 입력해주세요');
             }
-        } else {
-            alert('이메일 인증을 해주세요!');
         }
-        this.setState({ enable: null });
+        this.setState({ loading: false });
     }
 
     goTitle() {
@@ -212,9 +208,9 @@ export default class Join extends Component {
     render() {
         const dpi = Common.getRatio();
         return (
-            <View pointerEvents={this.state.enable}>
+            <View>
                 <ScrollView contentContainerStyle={styles.loginContainer}>
-                    {this.state.enable == 'none' &&
+                    {(this.state.enable == 'none' || this.state.loading) &&
                         <LoadingIcon />
                     }
                     <View style={styles.inputWrapper}>
@@ -231,30 +227,28 @@ export default class Join extends Component {
                             multiline={false}
                             autoFocus={true}
                             autoCorrect={false}
-                            editable={!this.state.confirmEmail}
+                            editable={!this.state.toggleAuth}
                         />
                     </View>
 
                     {this.state.confirmEmail == false &&
-                        <TouchableHighlight
+                        <TouchableOpacity
                             style={styles.authBtn}
-                            underlayColor={'#000000'}
                             onPress={() => this.confirmEmail(this.state.email)}
                             disabled={this.state.disableConfirmEmail}
                         >
                             <Text style={styles.label}>이메일 중복확인</Text>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     }
                     {(this.state.toggleAuth == false && this.state.confirmAuth == false
                         && this.state.confirmEmail == true) &&
-                        <TouchableHighlight
+                        <TouchableOpacity
                             style={styles.authBtn}
-                            underlayColor={'#000000'}
                             onPress={() => this.getAuthCode(this.state.email)}
 
                         >
                             <Text style={styles.label}>인증번호 발송</Text>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     }
 
                     {(this.state.toggleAuth == true && this.state.confirmAuth == false) &&
@@ -273,13 +267,12 @@ export default class Join extends Component {
                                     keyboardType='numeric'
                                 />
                             </View>
-                            <TouchableHighlight
+                            <TouchableOpacity
                                 style={styles.authBtn}
-                                underlayColor={'#000000'}
                                 onPress={() => this.authCodeMatching(this.state.userInputAuthCode)}
                             >
                                 <Text style={styles.authLabel}>인증</Text>
-                            </TouchableHighlight>
+                            </TouchableOpacity>
                         </View>
                     }
 
@@ -326,13 +319,12 @@ export default class Join extends Component {
                                     autoCorrect={false}
                                 />
                             </View>
-                            <TouchableHighlight
+                            <TouchableOpacity
                                 style={styles.authBtn}
-                                underlayColor={'#000000'}
                                 onPress={() => this.checkNickname()}
                             >
                                 <Text style={styles.authLabel}>닉네임 중복검사</Text>
-                            </TouchableHighlight>
+                            </TouchableOpacity>
                         </View>
                     }
                     {this.state.enableNickname &&
@@ -353,15 +345,17 @@ export default class Join extends Component {
                         </View>
                     }
 
-                    <Text style={styles.agreeText}>
-                        ** 이 앱을 사용하는 도중에 발생하는{'\n'}모든 책임은 사용자 본인에게 있습니다 **{'\n'}
-                        또한, 개인정보처리방침에 동의합니다
-                    </Text>
-                    <TouchableOpacity
-                        onPress={() => {
-                            Alert.alert(
-                                '경고!',
-                                "개인정보처리방침\n\
+                    {!this.state.agree &&
+                        <View>
+                            <Text style={styles.agreeText}>
+                                ** 이 앱을 사용하는 도중에 발생하는{'\n'}모든 책임은 사용자 본인에게 있습니다 **{'\n'}
+                                또한, 개인정보처리방침에 동의합니다
+                            </Text>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    Alert.alert(
+                                        '경고!',
+                                        "개인정보처리방침\n\
                                 \n\
  1. 이용자의 개인정보를 매우 중요하게 생각하며 각별히 주의를 기울여 처리하고 있습니다.\n\
  특히 최신 암호화 기술(예: HTTPS 연결 사용)을 사용하여 전송하는 등 사용자 데이터를 안전하게 처리합니다\n\
@@ -390,42 +384,51 @@ android.permission.SYSTEM_ALERT_WINDOW - 지금보시는 alert창을 띄울때 �
  변경사항의 시행 7일 전부터 공지사항을 통하여 고지할 것입니다.\n\
 이 개인정보 처리방침은 2017년 8월 12일 부터 적용됩니다.\n\
 ",
-                                [
-                                    {
-                                        text: '동의안함', onPress: () => {
-                                            this.setState({ agree: false })
-                                            alert("동의안하시면 가입이 불가능합니다");
-                                            return false
-                                        }, style: 'cancel'
-                                    },
-                                    {
-                                        text: '동의', onPress: () => {
-                                            this.setState({ agree: true })
-                                        }
-                                    },
-                                ],
-                                { cancelable: false }
-                            )
-                        }}>
-                        <Text style={styles.agreeText}>**개인정보처리방침 보기**{'\n'} </Text>
-                    </TouchableOpacity>
+                                        [
+                                            {
+                                                text: '동의안함', onPress: () => {
+                                                    this.setState({ agree: false })
+                                                    alert("동의안하시면 가입이 불가능합니다");
+                                                    return false
+                                                }, style: 'cancel'
+                                            },
+                                            {
+                                                text: '동의', onPress: () => {
+                                                    this.setState({ agree: true })
+                                                }
+                                            },
+                                        ],
+                                        { cancelable: false }
+                                    )
+                                }}>
+                                <Text style={styles.viewPolicyBtnText}>**개인정보처리방침 보기**</Text>
+                            </TouchableOpacity>
+                        </View>
+                    }
 
-                    <TouchableHighlight
+                    <TouchableOpacity
                         style={styles.button}
-                        underlayColor={'#FFFFFF'}
-                        onPress={() => this.join()}
+                        onPress={() => {
+                            this.setState({ loading: true }, () => {
+                                if (this.state.confirmAuth) {
+
+                                } else {
+                                    alert('이메일 인증을 해주세요!');
+                                    return false;
+                                }
+                            });
+                        }}
+                        disabled={this.state.loading}
                     >
                         <Text style={styles.label}>JOIN</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
 
-                    <TouchableHighlight
+                    <TouchableOpacity
                         style={styles.button}
-                        underlayColor={'#FFFFFF'}
                         onPress={() => this.goTitle()}
-
                     >
                         <Text style={styles.label}>CANCEL</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </ScrollView>
             </View>
         );

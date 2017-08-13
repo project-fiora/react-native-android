@@ -166,6 +166,18 @@ const styles = StyleSheet.create({
         marginTop: 10 * dpi,
         fontWeight: "900",
     },
+    viewPolicyBtnText:{
+        borderColor:'#FFFFFF',
+        opacity:0.7,
+        borderWidth:1,
+        borderRadius:15,
+        justifyContent:'center',
+        textAlign:'center',
+        color:'#FFFFFF',
+        padding:10,
+        fontSize:17,
+        fontWeight:'600',
+    },
     loadingIcon: {
         position: 'absolute',
         width: 40 * dpi,

@@ -37,7 +37,7 @@ export default class PostAdd extends Component {
 
     render() {
         return (
-            <View>
+            <ScrollView>
                 <ScrollView
                     pointerEvents={StateStore.loaded()}
                     contentContainerStyle={styles.frame}>
@@ -61,7 +61,7 @@ export default class PostAdd extends Component {
                     <TextInput
                         style={styles.inputContent}
                         multiline={true}
-                        numberOfLines={5}
+                        numberOfLines={10}
                         value={this.state.contents}
                         onChangeText={(contents) => {
                             this.setState({contents: contents});
@@ -86,7 +86,7 @@ export default class PostAdd extends Component {
                     {/*<Text style={styles.btnText}>첨부파일</Text>*/}
                     {/*</TouchableHighlight>*/}
                 </ScrollView>
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -102,7 +102,7 @@ var styles = StyleSheet.create({
     },
     inputContent: {
         width: 0.75 * wid,
-        height: 350 * dpi,
+        // height: 350 * dpi,
         fontSize: 15 * dpi,
         color: '#FFFFFF',
         padding: 15 * dpi,
