@@ -12,7 +12,7 @@ import CheckBox from 'react-native-checkbox';
 import styles from './index_style';
 
 import PrivateAddr from "../common/private/address";
-import Encrypt from '../common/private/encrypt';
+import Encrypt2 from '../common/private/encrypt2';
 import LoadingIcon from "../common/loadingIcon";
 
 export default class Login extends Component {
@@ -44,7 +44,7 @@ export default class Login extends Component {
 
     login(email, password) {
         if(!this.state.auto){
-            password = Encrypt.encryptPasswd(password);
+            password = Encrypt2.encryptPasswd(password);
         }
         fetch(PrivateAddr.getAddr() + 'member/login', {
             method: 'POST',
@@ -71,7 +71,7 @@ export default class Login extends Component {
                     alert("storage save fail : " + e);
                 }
             } else {
-                alert('로그인에 실패했습니다!');
+                alert('로그인에 실패했습니다!'+password);
             }
         }).catch((error) => {
             alert('Network Connection Failed');
