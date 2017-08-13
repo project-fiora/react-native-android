@@ -192,7 +192,7 @@ export default class FriendWalletMng extends Component {
     searchNickname() {
         this.setState({ searching: true, searched: false }, () => {
             if (this.state.nickname.length == 0) {
-                alert("닉네임을 입력해주세요!");
+                Common.alert("닉네임을 입력해주세요!");
                 return false;
             }
             fetch(PrivateAddr.getAddr() + "friend/search?FriendNickName=" + this.state.nickname, {
@@ -206,7 +206,7 @@ export default class FriendWalletMng extends Component {
                     if (responseJson.message == "SUCCESS") {
                         this.setState({ searchList: responseJson.list, searching: false, searched: true });
                     } else {
-                        alert("정보를 가져올 수 없습니다");
+                        Common.alert("정보를 가져올 수 없습니다");
                         return false;
                     }
                 })
@@ -229,13 +229,13 @@ export default class FriendWalletMng extends Component {
             return response.json()
         }).then((responseJson) => {
             if (responseJson.message == "SUCCESS") {
-                alert('친구 신청 완료!');
+                Common.alert('친구 신청 완료!');
                 Actions.main({ goTo: 'friendWallet' });
             } else if (responseJson.message == "EXIST") {
-                alert('이미 요청된 친구입니다!');
+                Common.alert('이미 요청된 친구입니다!');
                 return false;
             } else {
-                alert('친구 요청에 실패했습니다.\n이미 친구 요청을 하신것이 아니라면\n서버관리자에게 문의해주세요.');
+                Common.alert('친구 요청에 실패했습니다.\n이미 친구 요청을 하신것이 아니라면\n서버관리자에게 문의해주세요.');
                 return false;
             }
         })
@@ -267,10 +267,10 @@ export default class FriendWalletMng extends Component {
                                 .then((response) => response.json())
                                 .then((responseJson) => {
                                     if (responseJson.message == "SUCCESS") {
-                                        alert("친구를 삭제했습니다");
+                                        Common.alert("친구를 삭제했습니다");
                                         Actions.main({ goTo: 'friendWallet' });
                                     } else {
-                                        alert("친구 삭제 실패\n서버관리자에게 문의하세요");
+                                        Common.alert("친구 삭제 실패\n서버관리자에게 문의하세요");
                                         return false;
                                     }
                                 })

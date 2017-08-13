@@ -34,7 +34,7 @@ export default class Notice extends Component {
                 if (responseJson.message == "SUCCESS") {
                     this.setState({noticeList: responseJson.list, load: true});
                 } else {
-                    alert('공지사항을 불러오지 못했습니다.');
+                    Common.alert('공지사항을 불러오지 못했습니다.');
                 }
             })
             .catch((error) => {

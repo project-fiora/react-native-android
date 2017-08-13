@@ -61,13 +61,13 @@ export default class Join extends Component {
         }).then((responseJson) => {
             if (responseJson.message == "SUCCESS") {
                 this.goTitle();
-                alert('회원가입에 성공했습니다!');
+                Common.alert('회원가입에 성공했습니다!');
             } else {
-                alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                Common.alert('오류가 발생했습니다.\n다시 시도해주세요!');
                 this.setState({ loading: false });
             }
         }).catch((error) => {
-            alert('Network Connection Failed');
+            Common.alert('Network Connection Failed');
             this.setState({ loading: false });
             console.error(error);
         }).done();
@@ -86,23 +86,23 @@ export default class Join extends Component {
             .then((responseJson) => {
                 var re = /^[a-z][a-zA-Z0-9_.]*(\.[a-zA-Z][a-zA-Z0-9_.]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?$/;
                 if (this.state.email == '') {
-                    alert('이메일을 입력해주세요');
+                    Common.alert('이메일을 입력해주세요');
                     this.setState({ disableConfirmEmail: false });
                 } else if (!re.test(this.state.email)) {
-                    alert('이메일 형식을 맞춰주세요');
+                    Common.alert('이메일 형식을 맞춰주세요');
                     this.setState({ disableConfirmEmail: false });
                 } else {
                     if (responseJson.email == this.state.email) {
-                        alert("이메일 중복입니다!");
+                        Common.alert("이메일 중복입니다!");
                         this.setState({ disableConfirmEmail: false });
                     } else {
-                        alert('사용 가능한 이메일 주소입니다!');
+                        Common.alert('사용 가능한 이메일 주소입니다!');
                         this.setState({ confirmEmail: true });
                     }
                 }
             })
             .catch((error) => {
-                alert('Network Connection Failed');
+                Common.alert('Network Connection Failed');
                 console.error(error);
             }).done(() => this.setState({ enable: null }));
     }
@@ -114,7 +114,7 @@ export default class Join extends Component {
                     this.setState({ authTimer: this.state.authTimer - 1 })
                 } else {
                     //타임아웃
-                    alert('시간 초과입니다\n다시 시도해주세요!\n메인으로 이동합니다');
+                    Common.alert('시간 초과입니다\n다시 시도해주세요!\n메인으로 이동합니다');
                     this.goTitle();
                 }
             }, 1000
@@ -137,7 +137,7 @@ export default class Join extends Component {
     }
 
     getAuthCode(email) { //인증번호 발송, 인증번호 서버에서 받아서 state에 저장
-        alert('이메일로 인증코드를 발송했습니다.');
+        Common.alert('이메일로 인증코드를 발송했습니다.');
         this.setState({ toggleAuth: true });
         fetch(PrivateAddr.getAddr() + "member/auth?email=" + email)
             .then((response) => {
@@ -147,17 +147,17 @@ export default class Join extends Component {
                 this.setState({ serverAuthCode: responseJson.code });
             })
             .catch((error) => {
-                alert('Network Connection Failed');
+                Common.alert('Network Connection Failed');
                 console.error(error);
             });
     }
 
     authCodeMatching(userInputAuthCode) {
         if (userInputAuthCode == this.state.serverAuthCode) {
-            alert('이메일 인증 완료!');
+            Common.alert('이메일 인증 완료!');
             this.setState({ confirmAuth: true });
         } else {
-            alert('인증번호를 확인해주세요!');
+            Common.alert('인증번호를 확인해주세요!');
         }
     }
 
@@ -170,15 +170,15 @@ export default class Join extends Component {
             })
             .then((responseJson) => {
                 if (responseJson.message == "SUCCESS" && (this.state.nickname != "")) {
-                    alert("사용 가능한 닉네임 입니다!");
+                    Common.alert("사용 가능한 닉네임 입니다!");
                     this.setState({ enableNickname: true });
                 } else {
-                    alert("사용할 수 없는 닉네임 입니다!");
+                    Common.alert("사용할 수 없는 닉네임 입니다!");
                     return false;
                 }
             })
             .catch((error) => {
-                alert('Network Connection Failed');
+                Common.alert('Network Connection Failed');
                 console.error(error);
             }).done(() => this.setState({ enable: null }));
     }
@@ -397,27 +397,27 @@ android.permission.SYSTEM_ALERT_WINDOW - 지금보시는 alert창을 띄울때 �
                                                     if (this.state.agree) {
                                                         this.join();
                                                     } else {
-                                                        alert('개인정보처리방침을 보고,\n동의하셔야 가입이 가능합니다!');
+                                                        Common.alert('개인정보처리방침을 보고,\n동의하셔야 가입이 가능합니다!');
                                                         this.setState({ loading: false });
                                                     }
                                                 } else {
-                                                    alert('닉네임 중복검사를 하세요!');
+                                                    Common.alert('닉네임 중복검사를 하세요!');
                                                     this.setState({ loading: false });
                                                 }
                                             } else {
-                                                alert('닉네임을 입력해주세요');
+                                                Common.alert('닉네임을 입력해주세요');
                                                 this.setState({ loading: false });
                                             }
                                         } else {
-                                            alert('비밀번호가 일치하지 않습니다!');
+                                            Common.alert('비밀번호가 일치하지 않습니다!');
                                             this.setState({ loading: false });
                                         }
                                     } else {
-                                        alert('비밀번호를 입력해주세요');
+                                        Common.alert('비밀번호를 입력해주세요');
                                         this.setState({ loading: false });
                                     }
                                 } else {
-                                    alert('이메일 인증을 해주세요!');
+                                    Common.alert('이메일 인증을 해주세요!');
                                     this.setState({ loading: false });
                                 }
                             });

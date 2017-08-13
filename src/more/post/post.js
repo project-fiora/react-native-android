@@ -51,7 +51,7 @@ export default class Post extends Component {
                         currentPage: this.state.currentPage + 1
                     });
                 } else {
-                    alert("게시판 정보를 가져올 수 없습니다");
+                    Common.alert("게시판 정보를 가져올 수 없습니다");
                     return false;
                 }
             }).catch((error) => {

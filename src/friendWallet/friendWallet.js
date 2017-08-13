@@ -60,7 +60,7 @@ export default class FriendWallet extends Component {
                             this.setState({ secondLoad: true, enable: null });
                         }
                     } else {
-                        alert("친구정보를 가져올 수 없습니다");
+                        Common.alert("친구정보를 가져올 수 없습니다");
                         return false;
                     }
                 }).catch((error) => {
@@ -92,7 +92,7 @@ export default class FriendWallet extends Component {
                     StateStore.setCurrentMyWalletList(list);
                     this.setState({ walletList: list, load: true, enable: null, secondLoad: true });
                 } else {
-                    alert("친구지갑정보를 가져올 수 없습니다");
+                    Common.alert("친구지갑정보를 가져올 수 없습니다");
                     return false;
                 }
             }).catch((error) => {

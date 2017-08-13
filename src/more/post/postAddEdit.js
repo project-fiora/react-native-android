@@ -3,16 +3,16 @@ import {Dimensions, AsyncStorage} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from "../../common/private/address";
 import StateStore from '../../common/stateStore';
-
+import Common from '../../common/common';
 
 class PostAddEdit extends Component {
     static async writePost() {
         if(StateStore.postTitle()==""||StateStore.postTitle()==undefined){
-            alert("제목을 입력하세요!");
+            Common.alert("제목을 입력하세요!");
             return false;
         }
         if(StateStore.postContents()==""||StateStore.postContents()==undefined){
-            alert("내용을 입력하세요!");
+            Common.alert("내용을 입력하세요!");
             return false;
         }
         try {
@@ -39,10 +39,10 @@ class PostAddEdit extends Component {
                     return response.json()
                 }).then((responseJson) => {
                     if (responseJson.message == "SUCCESS") {
-                        alert('글쓰기 성공!');
+                        Common.alert('글쓰기 성공!');
                         Actions.main({goTo: 'post'});
                     } else {
-                        alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                        Common.alert('오류가 발생했습니다.\n다시 시도해주세요!');
                     }
                 }).catch((error) => {
                     alert('Network Connection Failed');
@@ -83,10 +83,10 @@ class PostAddEdit extends Component {
                     return response.json()
                 }).then((responseJson) => {
                     if (responseJson.message == "SUCCESS") {
-                        alert('수정 성공!');
+                        Common.alert('수정 성공!');
                         Actions.main({goTo:'postRead', post_id:StateStore.postId()});
                     } else {
-                        alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                        Common.alert('오류가 발생했습니다.\n다시 시도해주세요!');
                     }
                 }).catch((error) => {
                     alert('Network Connection Failed');

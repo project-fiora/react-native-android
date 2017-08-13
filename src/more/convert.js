@@ -51,7 +51,7 @@ export default class Convert extends Component {
 
     convert() {
         if (this.state.coinValue == "") {
-            alert("값을 입력하세요!");
+            Common.alert("값을 입력하세요!");
             return false;
         }
         var result = parseFloat(this.state.cryptoList[this.state.currentTYPE]) * parseFloat(this.state.coinValue);

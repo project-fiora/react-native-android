@@ -18,9 +18,9 @@ import Menu, {
 } from 'react-native-popup-menu';
 
 const { SlideInMenu } = renderers;
+import Common from "../common/common";
 
 import TabButton from '../common/tapButton';
-import Home from '../home/home';
 
 import MyWallet from '../myWallet/myWallet';
 import MyWalletEdit from '../myWallet/myWalletEdit';
@@ -45,9 +45,7 @@ import PostAdd from "../more/post/postAdd";
 import Notice from '../more/notice/notice';
 import NoticeDetail from "../more/notice/noticeDetail";
 
-import Version from '../more/version';
 import Inquire from '../more/inquire';
-import Common from "../common/common";
 import PostAddEdit from "../more/post/postAddEdit";
 import StateStore from "../common/stateStore";
 import PrivatePolicy from "../more/privateInfoPolicy";
@@ -102,9 +100,6 @@ export default class Main extends Component {
     componentWillMount() { //title, backBtn handler
         var p = this.props.goTo;
         switch (p) {
-            case 'home':
-                this.setState({ title: '요약' });
-                break;
             case 'price':
                 this.setState({
                     title: '시세 정보',
@@ -229,12 +224,6 @@ export default class Main extends Component {
                     enableBackBtn: true,
                 });
                 break;
-            case 'version':
-                this.setState({
-                    title: '버전정보',
-                    enableBackBtn: true,
-                });
-                break;
             case 'inquire':
                 this.setState({
                     title: '문의하기',
@@ -271,7 +260,7 @@ export default class Main extends Component {
                         id: StateStore.currentMyWalletId()
                     });
                 } else { //지갑이 없는경우
-                    alert("지갑이 없어요!\n오류가 계속되면 관리자에게 문의해주세요");
+                    Common.alert("지갑이 없어요!\n오류가 계속되면 관리자에게 문의해주세요");
                 }
                 break;
             case 3: //거래 조회
@@ -375,7 +364,6 @@ export default class Main extends Component {
                             </View>
                         </View>
                         <View style={styles.hr} />
-                        {this.props.goTo === 'home' && <Home />}
                         {this.props.goTo === 'price' && <Cryptocompare />}
                         {this.props.goTo === 'coinmarketcap' && <Coinmarketcap />}
 
@@ -411,7 +399,6 @@ export default class Main extends Component {
                                 date={this.props.date}
                             />
                         }
-                        {this.props.goTo === 'version' && <Version />}
                         {this.props.goTo === 'inquire' && <Inquire />}
                         {this.props.goTo === 'privatePolicy' && <PrivatePolicy />}
                         {this.props.goTo === 'license' && <License />}

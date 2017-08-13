@@ -60,7 +60,6 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
             Actions.scanner();
         } catch (error) {
             console.error(error);
-            // alert("지갑 임시저장 오류 : " + error);
         }
 
     }

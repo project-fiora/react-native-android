@@ -7,15 +7,16 @@ import { AsyncStorage, Text, TouchableOpacity, StyleSheet, View } from "react-na
 import { Actions } from 'react-native-router-flux';
 import QRCodeScanner from "react-native-qrcode-scanner";
 import StateStore from '../common/stateStore';
+import Common from '../common/common';
 
 export default class Scanner extends Component {
     async onRead(obj) {
-        alert('스캔 완료!\n' + obj.data.toString() + '\n지갑 주소를 확인하세요');
+        Common.alert('스캔 완료!\n' + obj.data.toString() + '\n지갑 주소를 확인하세요');
         try {
             StateStore.setAddr(obj.data.toString());
             Actions.main({ goTo: 'myWalletAdd' });
         } catch (error) {
-            alert("스캔 후 저장 오류 : " + error);
+            Common.alert("스캔 후 저장 오류 : " + error);
         }
     }
 

@@ -206,7 +206,7 @@ export default class Post extends Component {
                 if (responseJson.message == "SUCCESS") {
                     this.getPost();
                 } else {
-                    alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                    Common.alert('오류가 발생했습니다.\n다시 시도해주세요!');
                 }
             }).catch((error) => {
                 alert('Network Connection Failed');
@@ -253,7 +253,7 @@ export default class Post extends Component {
                                 stateCopy.post.comment_list.pop();
                                 this.setState(stateCopy);
                             } else {
-                                alert("댓글 삭제 실패");
+                                Common.alert("댓글 삭제 실패");
                                 return false;
                             }
                         }).catch((error) => {
@@ -298,7 +298,7 @@ export default class Post extends Component {
                     alert("댓글 생성 에러\n" + err);
                 }
             } else {
-                alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                Common.alert('오류가 발생했습니다.\n다시 시도해주세요!');
             }
         }).catch((error) => {
             alert('Network Connection Failed');

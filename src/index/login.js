@@ -14,6 +14,7 @@ import styles from './index_style';
 import PrivateAddr from "../common/private/address";
 import Encrypt2 from '../common/private/encrypt2';
 import LoadingIcon from "../common/loadingIcon";
+import Common from "../common/common";
 
 export default class Login extends Component {
     constructor(props) {
@@ -68,13 +69,13 @@ export default class Login extends Component {
                         autoLogin: this.state.autoLogin
                     }), () => Actions.main({ goTo: 'price' }));
                 } catch (e) {
-                    alert("storage save fail : " + e);
+                    Common.alert("storage save fail : " + e);
                 }
             } else {
-                alert('로그인에 실패했습니다!');
+                Common.alert('로그인에 실패했습니다!');
             }
         }).catch((error) => {
-            alert('Network Connection Failed');
+            Common.alert('Network Connection Failed');
             console.error(error);
         }).done(() => this.setState({ logining: false, enableTouch: null }));
     }

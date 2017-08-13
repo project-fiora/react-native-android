@@ -85,9 +85,9 @@ export default class MyWalletEdit extends Component {
                                 .then((response) => response.json())
                                 .then((responseJson) => {
                                     if (responseJson.message == "SUCCESS") {
-                                        alert("지갑을 삭제했습니다");
+                                        Common.alert("지갑을 삭제했습니다");
                                     } else {
-                                        alert("지갑 삭제 실패");
+                                        Common.alert("지갑 삭제 실패");
                                         return false;
                                     }
                                 })

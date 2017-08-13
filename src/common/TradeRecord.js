@@ -243,7 +243,7 @@ class TradeRecord extends Component {
                                                 if (etc.to == this.state.list[this.state.currentWallet].wallet_add) {
                                                     return (
                                                         <TouchableOpacity
-                                                            onPress={() => { alert(etc.from) }}
+                                                            onPress={() => { Common.alert(etc.from) }}
                                                             key={i}
                                                         >
                                                             <Text style={styles.titleText}>
@@ -254,7 +254,7 @@ class TradeRecord extends Component {
                                                 } else {
                                                     return (
                                                         <TouchableOpacity
-                                                            onPress={() => { alert(etc.to) }}
+                                                            onPress={() => { Common.alert(etc.to) }}
                                                             key={i}
                                                         >
                                                             <Text style={styles.titleText}>
@@ -280,7 +280,7 @@ class TradeRecord extends Component {
                                                             return (
                                                                 <TouchableOpacity
                                                                     onPress={() => {
-                                                                        alert(xrp.tx.Account);
+                                                                        Common.alert(xrp.tx.Account);
                                                                     }}
                                                                     key={i}
                                                                 >
@@ -293,7 +293,7 @@ class TradeRecord extends Component {
                                                             return (
                                                                 <TouchableOpacity
                                                                     onPress={() => {
-                                                                        alert(xrp.tx.Account);
+                                                                        Common.alert(xrp.tx.Account);
                                                                     }}
                                                                     key={i}
                                                                 >
@@ -308,7 +308,7 @@ class TradeRecord extends Component {
                                                             return (
                                                                 <TouchableOpacity
                                                                     onPress={() => {
-                                                                        alert(xrp.tx.Destination);
+                                                                        Common.alert(xrp.tx.Destination);
                                                                     }}
                                                                     key={i}
                                                                 >
@@ -321,7 +321,7 @@ class TradeRecord extends Component {
                                                             return (
                                                                 <TouchableOpacity
                                                                     onPress={() => {
-                                                                        alert(xrp.tx.Destination);
+                                                                        Common.alert(xrp.tx.Destination);
                                                                     }}
                                                                     key={i}
                                                                 >

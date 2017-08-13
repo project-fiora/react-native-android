@@ -64,7 +64,7 @@ export default class MyWallet extends Component {
                                 AsyncStorage.setItem('WalletList', JSON.stringify(this.state.walletList))
                             });
                         } else {
-                            alert("지갑정보를 가져올 수 없습니다");
+                            Common.alert("지갑정보를 가져올 수 없습니다");
                             return false;
                         }
                     })

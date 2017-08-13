@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from 'react';
-import { PixelRatio, Dimensions, AsyncStorage } from 'react-native';
+import { PixelRatio, Dimensions, AsyncStorage, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import PrivateAddr from "./private/address";
 import StateStore from '../common/stateStore';
@@ -11,6 +11,20 @@ import StateStore from '../common/stateStore';
 var { height, width } = Dimensions.get('window');
 
 class Common extends Component {
+    static alert(content, title){
+        if(title==undefined||title==null){
+            title="알림";
+        }
+        Alert.alert(
+            title,
+            content,
+            [
+              {text: 'OK'},
+            ],
+            { cancelable: false }
+          )
+    }
+
     static clone(obj) {
         if (obj === null || typeof (obj) !== 'object')
             return obj;
@@ -21,6 +35,24 @@ class Common extends Component {
             }
         }
         return copy;
+    }
+
+    getMynickname() { //나의 닉네임 확인
+        // GET /api/member/mynickname
+        fetch(PrivateAddr.getAddr() + "member/mynickname", {
+            method: 'GET', headers: {
+                "Authorization": this.state.token,
+                "Accept": "*/*",
+            }
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({ nickname: responseJson.nickname, nicknameLoad: true });
+            })
+            .catch((error) => {
+                alert('Network Connection Fail : ' + error);
+                console.error(error);
+            }).done();
     }
 
     static getRatio() {
