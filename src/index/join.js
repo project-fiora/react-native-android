@@ -45,54 +45,32 @@ export default class Join extends Component {
     }
 
     join() {//회원가입 POST api call
-        
-            if (this.state.passwd != "" && this.state.passwd2 != "") {
-                if (this.state.passwd == this.state.passwd2) {
-                    if (this.state.nickname != "") {
-                        if (this.state.enableNickname) {
-                            if (this.state.agree) {
-                                alert("잠시만 기다려주세요!");
-                                fetch(PrivateAddr.getAddr() + 'member/join', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        email: this.state.email,
-                                        password: Encrypt.encryptPasswd(this.state.passwd),
-                                        nickname: this.state.nickname
-                                    })
-                                }).then((response) => {
-                                    return response.json()
-                                }).then((responseJson) => {
-                                    if (responseJson.message == "SUCCESS") {
-                                        this.goTitle();
-                                        alert('회원가입에 성공했습니다!');
-                                    } else {
-                                        alert('오류가 발생했습니다.\n다시 시도해주세요!');
-                                    }
-                                }).catch((error) => {
-                                    alert('Network Connection Failed');
-                                    console.error(error);
-                                }).done();
-                            } else {
-                                alert('동의하셔야 가입이 가능합니다!');
-                            }
-                        } else {
-                            alert('닉네임 중복검사를 하세요!');
-                        }
-                    } else {
-                        alert('닉네임을 입력해주세요');
-                    }
-                } else {
-                    alert('비밀번호가 일치하지 않습니다!');
-                }
+        fetch(PrivateAddr.getAddr() + 'member/join', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: this.state.email,
+                password: Encrypt.encryptPasswd(this.state.passwd),
+                nickname: this.state.nickname
+            })
+        }).then((response) => {
+            return response.json()
+        }).then((responseJson) => {
+            if (responseJson.message == "SUCCESS") {
+                this.goTitle();
+                alert('회원가입에 성공했습니다!');
             } else {
-                alert('비밀번호를 입력해주세요');
+                alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                this.setState({ loading: false });
             }
-        }
-        this.setState({ loading: false });
+        }).catch((error) => {
+            alert('Network Connection Failed');
+            this.setState({ loading: false });
+            console.error(error);
+        }).done();
     }
 
     goTitle() {
@@ -410,13 +388,34 @@ android.permission.SYSTEM_ALERT_WINDOW - 지금보시는 alert창을 띄울때 �
                         style={styles.button}
                         onPress={() => {
                             this.setState({ loading: true }, () => {
-                                if (this.state.confirmAuth) {
-
+                                this.join();
+                                {/* if (this.state.confirmAuth) {
+                                    if (this.state.passwd != "" && this.state.passwd2 != "") {
+                                        if (this.state.passwd == this.state.passwd2) {
+                                            if (this.state.nickname != "") {
+                                                if (this.state.enableNickname) {
+                                                    if (this.state.agree) {
+                                                        
+                                                    } else {
+                                                        alert('동의하셔야 가입이 가능합니다!');
+                                                    }
+                                                } else {
+                                                    alert('닉네임 중복검사를 하세요!');
+                                                }
+                                            } else {
+                                                alert('닉네임을 입력해주세요');
+                                            }
+                                        } else {
+                                            alert('비밀번호가 일치하지 않습니다!');
+                                        }
+                                    } else {
+                                        alert('비밀번호를 입력해주세요');
+                                    }
                                 } else {
                                     alert('이메일 인증을 해주세요!');
-                                    return false;
-                                }
+                                } */}
                             });
+                            this.setState({ loading: false });
                         }}
                         disabled={this.state.loading}
                     >
@@ -430,7 +429,7 @@ android.permission.SYSTEM_ALERT_WINDOW - 지금보시는 alert창을 띄울때 �
                         <Text style={styles.label}>CANCEL</Text>
                     </TouchableOpacity>
                 </ScrollView>
-            </View>
+            </View >
         );
     }
 }
