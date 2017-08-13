@@ -34,8 +34,10 @@ export default class FriendWallet extends Component {
     }
 
     async componentDidMount() {
-        await this.getFriendList();
-        StateStore.setCurrentWallet(this.state.currentWallet);
+        if (!StateStore.guest()) {
+            await this.getFriendList();
+            StateStore.setCurrentWallet(this.state.currentWallet);
+        }
     }
 
     async getFriendList() {
@@ -150,17 +152,28 @@ export default class FriendWallet extends Component {
     render() {
         return (
             <ScrollView contentContainerStyle={styles.frame}>
-                {(!this.state.secondLoad || !this.state.load) &&
+                {((!this.state.secondLoad || !this.state.load) && !StateStore.guest()) &&
                     <LoadingIcon />
                 }
                 <ScrollView contentContainerStyle={styles.content}>
+                    {StateStore.guest() &&
+                        <Text style={{
+                            color: '#FFFFFF',
+                            fontSize: 18,
+                            textAlign: 'center',
+                            padding: 20,
+                        }}>
+                            로그인해야 친구 지갑 기능을 이용하실 수 있습니다!
+                            서로 친구를 등록하고, 친구의 지갑 정보를 확인하세요!
+                        </Text>
+                    }
                     {(this.state.load && this.state.friendList.length == 0) &&
                         <View>
                             <Text style={styles.titleText}>
                                 아직 친구가 한명도 없어요!{'\n'}
                                 오른쪽 상단의 친구 관리에서{'\n'}
                                 친구를 추가해보세요!
-                        </Text>
+                            </Text>
                         </View>
                     }
 

@@ -21,9 +21,11 @@ export default class MyWallet extends Component {
         super(props);
 
         this.state = {
-            walletList: [],
-            email: 'boseokjung@gmail.com',
-            qrcode: '',
+            walletList: [{
+                wallet_add:"3D2oetdNuZUqQHPJmcMDDHYoqkyNVsFk9r",
+                wallet_name:"보석이의 지갑",
+                wallet_type:"BTC",
+            }],
             load: false,
             currentWallet: 0,
             balance: '조회 중..',
@@ -31,8 +33,23 @@ export default class MyWallet extends Component {
     }
 
     async componentDidMount() {
-        await this.getMyWallet();
-        StateStore.setCurrentWallet(this.state.currentWallet);
+        if (!StateStore.guest()) {
+            await this.getMyWallet();
+            StateStore.setCurrentWallet(this.state.currentWallet);
+        } else {
+            Promise.resolve()
+            .then(() => Common.getBalance(this.state.walletList[0].wallet_type,
+                this.state.walletList[0].wallet_add))
+            .then(result => {
+                var balance;
+                if (Number.isInteger(result)) {
+                    balance = (parseInt(result) / 100000000) + " " + this.state.walletList[0].wallet_type;
+                } else {
+                    balance = result;
+                }
+                this.setState({ balance: balance });
+            });
+        }
     }
 
     goTo(part) {
@@ -119,10 +136,30 @@ export default class MyWallet extends Component {
     render() {
         return (
             <ScrollView contentContainerStyle={styles.frame}>
-                {!this.state.load &&
+                {(!this.state.load && !StateStore.guest()) &&
                     <LoadingIcon />
                 }
                 <ScrollView contentContainerStyle={styles.content}>
+                    {StateStore.guest() &&
+                        <View>
+                            <Text style={{
+                                color: '#FFFFFF',
+                                fontSize: 18,
+                                textAlign: 'center',
+                            }}>
+                                ** 지금 보시는 지갑은 예시입니다 **{'\n'}
+                                로그인 시, 지갑 이름(마음대로)과
+                                지갑 주소를 등록하시면 아래처럼 지갑정보를 볼수있고,
+                                거래내역조회도 가능합니다.
+                            </Text>
+                            <WalletInfo
+                                wallet_name={this.state.walletList[0].wallet_name}
+                                wallet_type={this.state.walletList[0].wallet_type}
+                                balance={this.state.balance}
+                                wallet_add={this.state.walletList[0].wallet_add}
+                            />
+                        </View>
+                    }
                     {(this.state.load == true && this.state.walletList.length == 0) &&
                         <View>
                             <Text style={styles.titleText}>
@@ -149,7 +186,6 @@ export default class MyWallet extends Component {
                                 wallet_type={this.state.walletList[this.state.currentWallet].wallet_type}
                                 balance={this.state.balance}
                                 wallet_add={this.state.walletList[this.state.currentWallet].wallet_add}
-                                qrcode={this.state.qrcode}
                             />
                         </View>
                     }

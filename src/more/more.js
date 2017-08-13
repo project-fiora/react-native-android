@@ -16,7 +16,7 @@ export default class More extends Component {
         return (
             <ScrollView>
                 <MoreBtn text="거래소 바로가기" img={images.stockMarket} goTo="exchangeLink"/>
-                <MoreBtn text="자동거래" img={images.autoDeal} goTo="exchange"/>
+                {/* <MoreBtn text="자동거래" img={images.autoDeal} goTo="exchange"/> */}
                 <MoreBtn text="모의환전" img={images.sampleExchange} goTo="convert"/>
                 <MoreBtn text="커뮤니티" img={images.community} goTo="post"/>
                 <MoreBtn text="공지사항" img={images.notice} goTo="notice"/>

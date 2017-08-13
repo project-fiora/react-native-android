@@ -243,6 +243,16 @@ export default class Main extends Component {
                 });
                 break;
         }
+        if (StateStore.guest()) {
+            this.setState({
+                enableRightHambug: false,
+            });
+            if(p=='post'){
+                this.setState({
+                    enableRightBtn: false,
+                });
+            }
+        }
     }
 
     selectMenu(val) { //myWallet SideMenu

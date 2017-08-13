@@ -72,7 +72,8 @@ export default class Convert extends Component {
                 }
 
                 <Text style={styles.centerTxt}>
-                    임의의 가상화폐를 한화로 변환해보세요!
+                    임의의 가상화폐를 한화로 변환해보세요!{'\n'}
+                    cryptocompare의 데이터를 기반으로 합니다.
                 </Text>
                 <TextInput
                     style={styles.inputCoinValue}

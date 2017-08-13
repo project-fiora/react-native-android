@@ -15,6 +15,7 @@ import PrivateAddr from "../common/private/address";
 import Encrypt2 from '../common/private/encrypt2';
 import LoadingIcon from "../common/loadingIcon";
 import Common from "../common/common";
+import StateStore from "../common/stateStore";
 
 export default class Login extends Component {
     constructor(props) {
@@ -44,7 +45,7 @@ export default class Login extends Component {
     }
 
     login(email, password) {
-        if(!this.state.auto){
+        if (!this.state.auto) {
             password = Encrypt2.encryptPasswd(password);
         }
         fetch(PrivateAddr.getAddr() + 'member/login', {
@@ -151,6 +152,7 @@ export default class Login extends Component {
                             style={styles.button}
                             onPress={() => {
                                 this.setState({ logining: true, enableTouch: 'none' }, () => {
+                                    StateStore.setGuest(false);
                                     this.login(this.state.email, this.state.password);
                                 });
                             }}
@@ -158,6 +160,15 @@ export default class Login extends Component {
                             <Text style={styles.label}>LOGIN</Text>
                         </TouchableOpacity>
                     </View>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {
+                            StateStore.setGuest(true);
+                            Actions.main({goTo:'price'});
+                        }}
+                    >
+                        <Text style={styles.label}>로그인없이 둘러보기</Text>
+                    </TouchableOpacity>
                 </ScrollView>
             </View>
         );

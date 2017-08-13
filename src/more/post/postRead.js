@@ -353,20 +353,22 @@ export default class Post extends Component {
                                 <Text style={styles.commentLength}>
                                     댓글 {this.state.post.comment_list.length}개
                                 </Text>
-                                <TouchableOpacity
-                                    onPress={() => this.onClickLike()}
-                                >
-                                    {!this.state.like &&
-                                        <Text style={styles.likeBtn}>
-                                            추천
-                                    </Text>
-                                    }
-                                    {this.state.like &&
-                                        <Text style={styles.likeCancelBtn}>
-                                            추천 취소
-                                    </Text>
-                                    }
-                                </TouchableOpacity>
+                                {!StateStore.guest() &&
+                                    <TouchableOpacity
+                                        onPress={() => this.onClickLike()}
+                                    >
+                                        {!this.state.like &&
+                                            <Text style={styles.likeBtn}>
+                                                추천
+                                            </Text>
+                                        }
+                                        {this.state.like &&
+                                            <Text style={styles.likeCancelBtn}>
+                                                추천 취소
+                                            </Text>
+                                        }
+                                    </TouchableOpacity>
+                                }
                             </View>
                             {/*//////////////////////////////댓글 갯수////////////////////////////////////////*/}
                             {this.state.post.comment_list.map((comment, i) => {
@@ -445,36 +447,38 @@ export default class Post extends Component {
                                     </View>
                                 )
                             })}
-                            <View style={styles.commentAddRow}>
-                                <TextInput
-                                    style={styles.inputComment}
-                                    multiline={true}
-                                    numberOfLines={3}
-                                    value={this.state.comment}
-                                    onChangeText={(comment) => this.setState({ comment: comment })}
-                                    placeholder={'댓글 내용'}
-                                    placeholderTextColor="#FFFFFF"
-                                    autoCapitalize='none'
-                                    autoCorrect={false}
-                                    maxLength={1000}
-                                    returnKeyType='next'
-                                    numberOfLines={5}
-                                    multiline={true}
-                                    blurOnSubmit={false}
-                                    ref='CommentInput'
-                                    onSubmitEditing={() => {
-                                        this.setState({ comment: (this.state.comment + '\n') });
-                                        this.refs.CommentInput.focus();
-                                    }}
-                                />
-                                <TouchableHighlight
-                                    style={styles.commentBtn}
-                                    underlayColor={'#000000'}
-                                    onPress={() => this.addComment()}
-                                >
-                                    <Text style={styles.commentBtnText}>등록</Text>
-                                </TouchableHighlight>
-                            </View>
+                            {!StateStore.guest() &&
+                                <View style={styles.commentAddRow}>
+                                    <TextInput
+                                        style={styles.inputComment}
+                                        multiline={true}
+                                        numberOfLines={3}
+                                        value={this.state.comment}
+                                        onChangeText={(comment) => this.setState({ comment: comment })}
+                                        placeholder={'댓글 내용'}
+                                        placeholderTextColor="#FFFFFF"
+                                        autoCapitalize='none'
+                                        autoCorrect={false}
+                                        maxLength={1000}
+                                        returnKeyType='next'
+                                        numberOfLines={5}
+                                        multiline={true}
+                                        blurOnSubmit={false}
+                                        ref='CommentInput'
+                                        onSubmitEditing={() => {
+                                            this.setState({ comment: (this.state.comment + '\n') });
+                                            this.refs.CommentInput.focus();
+                                        }}
+                                    />
+                                    <TouchableHighlight
+                                        style={styles.commentBtn}
+                                        underlayColor={'#000000'}
+                                        onPress={() => this.addComment()}
+                                    >
+                                        <Text style={styles.commentBtnText}>등록</Text>
+                                    </TouchableHighlight>
+                                </View>
+                            }
                         </View>
                     </ScrollView>
                     {/*/////////////////자신이 쓴 게시물일 경우///////////////*/}

@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         width: '100%',
-        height: '15%',
+        height: '10%',
         opacity: 0.6,
     },
     logo: {
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
         opacity: 0.6
     },
     label: { //버튼텍스트
-        width: 70 * dpi,
+        minWidth: 70 * dpi,
         alignSelf: 'center',
         textAlign: 'center',
         fontSize: 12 * dpi,

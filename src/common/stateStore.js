@@ -1,6 +1,7 @@
 import {observable} from 'mobx';
 
 const stateStore = observable({
+    guest:false,
     globalLoaded:'none',
     loaded:'',
     walletName:'',
@@ -19,6 +20,14 @@ const stateStore = observable({
     currentWallet:0,
     currentMyWalletId:'',
 });
+
+/////////손님 설정
+stateStore.setGuest = (bool)=>{
+    this.guest = bool; 
+};
+stateStore.guest = ()=>{
+    return this.guest;
+}
 //////////////////////for tradeRecord
 stateStore.setCurrentMyWalletList = (list)=>{
     this.currentMyWalletList = list; 

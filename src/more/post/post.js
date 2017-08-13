@@ -2,16 +2,17 @@
  * Created by kusob on 2017. 7. 24..
  */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
     View, AsyncStorage, TouchableOpacity, ScrollView
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import PrivateAddr from "../../common/private/address";
 import LoadingIcon from "../../common/loadingIcon";
 import Common from "../../common/common";
+import StateStore from "../../common/stateStore";
 
 export default class Post extends Component {
     constructor(props) {
@@ -26,7 +27,9 @@ export default class Post extends Component {
     }
 
     componentDidMount() {
-        this.getPostList(this.state.currentPage);
+        if (!StateStore.guest()) {
+            this.getPostList(this.state.currentPage);
+        }
     }
 
     async getPostList(size) {
@@ -61,11 +64,22 @@ export default class Post extends Component {
     }
 
     readPost(post_id) {
-        Actions.main({goTo: 'postRead', post_id: post_id});
+        Actions.main({ goTo: 'postRead', post_id: post_id });
     }
 
     render() {
-        if (this.state.load == true) {
+        if (StateStore.guest()) {
+            return (
+                <Text style={{
+                    color:'#FFFFFF',
+                    fontSize:18,
+                    textAlign:'center',
+                    padding:30,
+                }}>
+                    손님은 '아직' 게시판을 이용할수없어요
+                </Text>
+            );
+        } else if (this.state.load == true) {
             return (
                 <ScrollView contentContainerStyle={styles.frame}>
                     <View style={styles.thead}>
@@ -92,8 +106,8 @@ export default class Post extends Component {
                             c_count = "[" + top.c_count + "]";
                         }
 
-                        if(i==this.state.topList.length-1){
-                            return(
+                        if (i == this.state.topList.length - 1) {
+                            return (
                                 <View key={i}>
                                     <TouchableOpacity
                                         onPress={() => this.readPost(top.post_id)}
@@ -114,7 +128,7 @@ export default class Post extends Component {
                                             </Text>
                                         </View>
                                     </TouchableOpacity>
-                                    <View style={styles.heavyHr}/>
+                                    <View style={styles.heavyHr} />
                                 </View>
                             );
                         } else {
@@ -139,7 +153,7 @@ export default class Post extends Component {
                                             </Text>
                                         </View>
                                     </TouchableOpacity>
-                                    <View style={styles.hr}/>
+                                    <View style={styles.hr} />
                                 </View>
                             )
                         }
@@ -171,7 +185,7 @@ export default class Post extends Component {
                                         </Text>
                                     </View>
                                 </TouchableOpacity>
-                                <View style={styles.hr}/>
+                                <View style={styles.hr} />
                             </View>
                         )
                     })}
@@ -185,7 +199,7 @@ export default class Post extends Component {
             );
         } else {
             return (
-                <LoadingIcon/>
+                <LoadingIcon />
             );
         }
     }
@@ -231,19 +245,19 @@ var styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         height: thei,
-        opacity:0.8,
+        opacity: 0.8,
     },
     postTr: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         height: thei,
-        opacity:0.8,
+        opacity: 0.8,
     },
     hr: {
         borderBottomWidth: 0.8 * dpi,
         borderColor: '#FFFFFF',
     },
-    heavyHr:{
+    heavyHr: {
         borderBottomWidth: 1.5 * dpi,
         borderColor: '#FFFFFF',
     },
@@ -251,7 +265,7 @@ var styles = StyleSheet.create({
         fontSize: 14 * dpi,
         color: '#FFFFFF',
     },
-    c_count:{
+    c_count: {
         fontSize: 14 * dpi,
         color: '#DBCEFF',
     },
