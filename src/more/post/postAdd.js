@@ -2,7 +2,7 @@
  * Created by kusob on 2017. 6. 28..
  */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     StyleSheet, ScrollView,
     TextInput, View,
@@ -42,13 +42,13 @@ export default class PostAdd extends Component {
                     pointerEvents={StateStore.loaded()}
                     contentContainerStyle={styles.frame}>
                     {StateStore.loaded() == 'none' &&
-                    <LoadingIcon/>
+                        <LoadingIcon />
                     }
                     <TextInput
                         style={styles.input}
                         value={this.state.title}
                         onChangeText={(title) => {
-                            this.setState({title: title});
+                            this.setState({ title: title });
                             StateStore.setPostTitle(title);
                         }}
                         placeholder={'제목'}
@@ -60,11 +60,9 @@ export default class PostAdd extends Component {
                     />
                     <TextInput
                         style={styles.inputContent}
-                        multiline={true}
-                        numberOfLines={10}
                         value={this.state.contents}
                         onChangeText={(contents) => {
-                            this.setState({contents: contents});
+                            this.setState({ contents: contents });
                             StateStore.setPostContents(contents);
                         }}
                         placeholder={'1000자 이내로 입력해주세요'}
@@ -72,6 +70,15 @@ export default class PostAdd extends Component {
                         autoCapitalize='none'
                         autoCorrect={false}
                         maxLength={1000}
+                        returnKeyType='next'
+                        numberOfLines={5}
+                        multiline={true}
+                        blurOnSubmit={false}
+                        ref='ContentInput'
+                        onSubmitEditing={() => {
+                            this.setState({ contents:(this.state.contents+'\n') });
+                            this.refs.ContentInput.focus();
+                        }}
                     />
 
                     {/*<TouchableHighlight*/}

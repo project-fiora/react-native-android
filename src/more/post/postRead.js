@@ -2,13 +2,13 @@
  * Created by kusob on 2017. 7. 24..
  */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     StyleSheet,
     Text, Alert,
     View, AsyncStorage, TouchableOpacity, ScrollView, TextInput, TouchableHighlight
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import PrivateAddr from "../../common/private/address";
 import Common from '../../common/common';
 import LoadingIcon from "../../common/loadingIcon";
@@ -38,7 +38,7 @@ export default class Post extends Component {
                 return false;
             }
             const token = JSON.parse(result).token;
-            this.setState({token: token});
+            this.setState({ token: token });
             fetch(PrivateAddr.getAddr() + "post/postinfo?post_id=" + this.props.post_id, {
                 method: 'GET', headers: {
                     "Authorization": token,
@@ -77,7 +77,7 @@ export default class Post extends Component {
                     .then((response) => response.json())
                     .then((responseJson) => {
                         if (responseJson.message == "SUCCESS") {
-                            this.setState({like: false});
+                            this.setState({ like: false });
                         } else {
                             alert("좋아요 취소 실패");
                             return false;
@@ -92,7 +92,7 @@ export default class Post extends Component {
             }
         } else { //좋아요가 true가 아닐때
             // POST /api/post/postlike //조아요!
-            fetch(PrivateAddr.getAddr() + 'post/postlike?post_id='+this.props.post_id, {
+            fetch(PrivateAddr.getAddr() + 'post/postlike?post_id=' + this.props.post_id, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -103,7 +103,7 @@ export default class Post extends Component {
                 return response.json()
             }).then((responseJson) => {
                 if (responseJson.message == "SUCCESS") {
-                    this.setState({like: true});
+                    this.setState({ like: true });
                 } else {
                     alert('오류가 발생했습니다.\n다시 시도해주세요!');
                 }
@@ -133,40 +133,40 @@ export default class Post extends Component {
             [
                 {
                     text: 'Cancel', onPress: () => {
-                    return false
-                }, style: 'cancel'
+                        return false
+                    }, style: 'cancel'
                 },
                 {
                     text: 'OK', onPress: () => {
-                    try {
-                        //게시물 삭제
-                        fetch(PrivateAddr.getAddr() + "post/postdelete?post_id=" + this.props.post_id, {
-                            method: 'DELETE', headers: {
-                                "Authorization": this.state.token,
-                                "Accept": "*/*",
-                            }
-                        })
-                            .then((response) => response.json())
-                            .then((responseJson) => {
-                                if (responseJson.message == "SUCCESS") {
-                                    alert("게시물을 삭제했습니다");
-                                } else {
-                                    alert("글 실패");
-                                    return false;
+                        try {
+                            //게시물 삭제
+                            fetch(PrivateAddr.getAddr() + "post/postdelete?post_id=" + this.props.post_id, {
+                                method: 'DELETE', headers: {
+                                    "Authorization": this.state.token,
+                                    "Accept": "*/*",
                                 }
                             })
-                            .catch((error) => {
-                                console.error(error);
-                            });
-                        Actions.main({goTo: 'post'});
-                    } catch (err) {
-                        alert('삭제실패 ' + err);
-                        return false;
+                                .then((response) => response.json())
+                                .then((responseJson) => {
+                                    if (responseJson.message == "SUCCESS") {
+                                        alert("게시물을 삭제했습니다");
+                                    } else {
+                                        alert("글 실패");
+                                        return false;
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error(error);
+                                });
+                            Actions.main({ goTo: 'post' });
+                        } catch (err) {
+                            alert('삭제실패 ' + err);
+                            return false;
+                        }
                     }
-                }
                 },
             ],
-            {cancelable: false}
+            { cancelable: false }
         )
     }
 
@@ -216,7 +216,7 @@ export default class Post extends Component {
             alert('수정실패 ' + err);
             return false;
         } finally {
-            this.setState({enable: null});
+            this.setState({ enable: null });
         }
     }
 
@@ -228,45 +228,45 @@ export default class Post extends Component {
             [
                 {
                     text: 'Cancel', onPress: () => {
-                    return false
-                }, style: 'cancel'
+                        return false
+                    }, style: 'cancel'
                 },
                 {
                     text: 'OK', onPress: () => {
-                    try {
-                        //댓글 삭제하기
-                        fetch(PrivateAddr.getAddr() + "comments/commentdelete", {
-                            method: 'DELETE',
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json',
-                                "Authorization": this.state.token,
-                            },
-                            body: JSON.stringify({
-                                post_id: this.props.post_id,
-                                comment_id: comment_id,
-                            })
-                        }).then((response) => response.json()).then((responseJson) => {
-                            if (responseJson.message == "SUCCESS") {
-                                var stateCopy = Object.assign({}, this.state);
-                                stateCopy.post.comment_list = stateCopy['post'].comment_list.slice();
-                                stateCopy.post.comment_list.pop();
-                                this.setState(stateCopy);
-                            } else {
-                                Common.alert("댓글 삭제 실패");
-                                return false;
-                            }
-                        }).catch((error) => {
-                            console.error(error);
-                        });
-                    } catch (err) {
-                        alert('댓글 삭제 실패\n' + err);
-                        return false;
+                        try {
+                            //댓글 삭제하기
+                            fetch(PrivateAddr.getAddr() + "comments/commentdelete", {
+                                method: 'DELETE',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json',
+                                    "Authorization": this.state.token,
+                                },
+                                body: JSON.stringify({
+                                    post_id: this.props.post_id,
+                                    comment_id: comment_id,
+                                })
+                            }).then((response) => response.json()).then((responseJson) => {
+                                if (responseJson.message == "SUCCESS") {
+                                    var stateCopy = Object.assign({}, this.state);
+                                    stateCopy.post.comment_list = stateCopy['post'].comment_list.slice();
+                                    stateCopy.post.comment_list.pop();
+                                    this.setState(stateCopy);
+                                } else {
+                                    Common.alert("댓글 삭제 실패");
+                                    return false;
+                                }
+                            }).catch((error) => {
+                                console.error(error);
+                            });
+                        } catch (err) {
+                            alert('댓글 삭제 실패\n' + err);
+                            return false;
+                        }
                     }
-                }
                 },
             ],
-            {cancelable: false}
+            { cancelable: false }
         )
     }
 
@@ -321,22 +321,22 @@ export default class Post extends Component {
                                     </View>
                                     <View style={styles.commentRow}>
                                         {this.state.post.possibleEdditAndDelete &&
-                                        <View style={styles.commentRow}>
-                                            <TouchableOpacity
-                                                onPress={() => this.editPost()}
-                                            >
-                                                <Text style={styles.commentEditBtnText}>글수정</Text>
-                                            </TouchableOpacity>
-                                            < Text style={styles.commentEditBtnTextBetween}> | </Text>
-                                            <TouchableOpacity
-                                                onPress={() => this.deletePost()}
-                                            >
-                                                <Text style={styles.commentEditBtnText}>글삭제</Text>
-                                            </TouchableOpacity>
-                                        </View>
+                                            <View style={styles.commentRow}>
+                                                <TouchableOpacity
+                                                    onPress={() => this.editPost()}
+                                                >
+                                                    <Text style={styles.commentEditBtnText}>글수정</Text>
+                                                </TouchableOpacity>
+                                                < Text style={styles.commentEditBtnTextBetween}> | </Text>
+                                                <TouchableOpacity
+                                                    onPress={() => this.deletePost()}
+                                                >
+                                                    <Text style={styles.commentEditBtnText}>글삭제</Text>
+                                                </TouchableOpacity>
+                                            </View>
                                         }
                                         {!this.state.post.possibleEdditAndDelete &&
-                                        <View/>
+                                            <View />
                                         }
                                         <Text style={styles.name}>{this.state.post.writter_name}</Text>
                                     </View>
@@ -357,13 +357,13 @@ export default class Post extends Component {
                                     onPress={() => this.onClickLike()}
                                 >
                                     {!this.state.like &&
-                                    <Text style={styles.likeBtn}>
-                                        추천
+                                        <Text style={styles.likeBtn}>
+                                            추천
                                     </Text>
                                     }
                                     {this.state.like &&
-                                    <Text style={styles.likeCancelBtn}>
-                                        추천 취소
+                                        <Text style={styles.likeCancelBtn}>
+                                            추천 취소
                                     </Text>
                                     }
                                 </TouchableOpacity>
@@ -381,44 +381,44 @@ export default class Post extends Component {
                                             <View style={styles.commentContentRow}>
 
                                                 {this.state.post.comment_list[i].editStatus &&
-                                                <TextInput
-                                                    style={styles.inputEditComment}
-                                                    multiline={true}
-                                                    numberOfLines={5}
-                                                    value={this.state.post.comment_list[i].contents}
-                                                    onChangeText={(comment_edit) => {
-                                                        this.editCommentText(comment_edit, i)
-                                                    }}
-                                                    placeholderTextColor="#FFFFFF"
-                                                    autoCapitalize='none'
-                                                    autoCorrect={false}
-                                                    maxLength={1000}
-                                                />
+                                                    <TextInput
+                                                        style={styles.inputEditComment}
+                                                        multiline={true}
+                                                        numberOfLines={5}
+                                                        value={this.state.post.comment_list[i].contents}
+                                                        onChangeText={(comment_edit) => {
+                                                            this.editCommentText(comment_edit, i)
+                                                        }}
+                                                        placeholderTextColor="#FFFFFF"
+                                                        autoCapitalize='none'
+                                                        autoCorrect={false}
+                                                        maxLength={1000}
+                                                    />
                                                 }
                                                 {this.state.post.comment_list[i].editStatus != true &&
-                                                <View>
-                                                    {comment.contents.split("\\n").map((content, i) => {
-                                                        return (
-                                                            <Text key={i}
-                                                                  style={styles.commentContents}>{content}</Text>
-                                                        )
-                                                    })}
-                                                </View>
+                                                    <View>
+                                                        {comment.contents.split("\\n").map((content, i) => {
+                                                            return (
+                                                                <Text key={i}
+                                                                    style={styles.commentContents}>{content}</Text>
+                                                            )
+                                                        })}
+                                                    </View>
                                                 }
                                                 <View style={styles.commentRow}>
                                                     {this.state.post.comment_list[i].editStatus &&
-                                                    <TouchableOpacity
-                                                        onPress={() => this.editComment(comment.comment_id, this.state.post.comment_list[i].contents)}
-                                                    >
-                                                        <Text style={styles.commentEditBtnText}>저장</Text>
-                                                    </TouchableOpacity>
+                                                        <TouchableOpacity
+                                                            onPress={() => this.editComment(comment.comment_id, this.state.post.comment_list[i].contents)}
+                                                        >
+                                                            <Text style={styles.commentEditBtnText}>저장</Text>
+                                                        </TouchableOpacity>
                                                     }
                                                     {this.state.post.comment_list[i].editStatus != true &&
-                                                    <TouchableOpacity
-                                                        onPress={() => this.editCommentBtn(i)}
-                                                    >
-                                                        <Text style={styles.commentEditBtnText}>수정</Text>
-                                                    </TouchableOpacity>
+                                                        <TouchableOpacity
+                                                            onPress={() => this.editCommentBtn(i)}
+                                                        >
+                                                            <Text style={styles.commentEditBtnText}>수정</Text>
+                                                        </TouchableOpacity>
                                                     }
 
                                                     <Text style={styles.commentEditBtnTextBetween}> | </Text>
@@ -451,12 +451,21 @@ export default class Post extends Component {
                                     multiline={true}
                                     numberOfLines={3}
                                     value={this.state.comment}
-                                    onChangeText={(comment) => this.setState({comment: comment})}
+                                    onChangeText={(comment) => this.setState({ comment: comment })}
                                     placeholder={'댓글 내용'}
                                     placeholderTextColor="#FFFFFF"
                                     autoCapitalize='none'
                                     autoCorrect={false}
                                     maxLength={1000}
+                                    returnKeyType='next'
+                                    numberOfLines={5}
+                                    multiline={true}
+                                    blurOnSubmit={false}
+                                    ref='CommentInput'
+                                    onSubmitEditing={() => {
+                                        this.setState({ comment: (this.state.comment + '\n') });
+                                        this.refs.CommentInput.focus();
+                                    }}
                                 />
                                 <TouchableHighlight
                                     style={styles.commentBtn}
@@ -481,7 +490,7 @@ export default class Post extends Component {
             );
         } else {
             return (
-                <LoadingIcon/>
+                <LoadingIcon />
             );
         }
     }
@@ -500,14 +509,14 @@ var styles = StyleSheet.create({
         opacity: 0.8,
     },
     title: {
-        width:0.5*wid,
+        width: 0.5 * wid,
         fontSize: 18 * dpi,
         color: '#FFFFFF',
         opacity: 0.8,
         marginBottom: 15 * dpi,
     },
     date: {
-        width:0.4*wid,
+        width: 0.4 * wid,
         fontSize: 13 * dpi,
         color: '#FFFFFF',
         opacity: 0.8,
