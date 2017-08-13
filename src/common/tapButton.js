@@ -2,9 +2,9 @@
  * Created by kusob on 2017. 6. 26..
  */
 
-import React, {Component} from "react";
-import {Image, Text, View, StyleSheet, TouchableOpacity} from "react-native";
-import {Actions} from 'react-native-router-flux';
+import React, { Component } from "react";
+import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Actions } from 'react-native-router-flux';
 import Common from "./common";
 
 export default class TabButton extends Component {
@@ -19,11 +19,11 @@ export default class TabButton extends Component {
     render() {
         return (
             <View style={styles.taps}>
-                <Tap img={images.home} text='홈' goTo="home"/>
-                <Tap img={images.price} text="시세" goTo="price"/>
-                <Tap img={images.wallet} text="내지갑" goTo="myWallet"/>
-                <Tap img={images.friendWallet} text="친구지갑" goTo="friendWallet"/>
-                <Tap img={images.more} text="더보기" goTo="more"/>
+                {/* <Tap img={images.home} text='홈' goTo="home"/> */}
+                <Tap img={images.price} text="시세" goTo="price" />
+                <Tap img={images.wallet} text="내지갑" goTo="myWallet" />
+                <Tap img={images.friendWallet} text="친구지갑" goTo="friendWallet" />
+                <Tap img={images.more} text="더보기" goTo="more" />
             </View>
         )
     }
@@ -31,7 +31,7 @@ export default class TabButton extends Component {
 
 class Tap extends Component {
     goTo(part) {
-        Actions.main({goTo:part});
+        Actions.main({ goTo: part });
     }
 
     render() {
@@ -68,29 +68,30 @@ const wid = Common.winWidth();
 const hei = Common.winHeight();
 var styles = StyleSheet.create({
     taps: {
-        width:'100%',
-        height: 0.13*hei,
+        width: '100%',
+        height: 0.13 * hei,
         backgroundColor: 'transparent',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderTopWidth: 1*dpi,
+        borderTopWidth: 1 * dpi,
         borderColor: '#FFFFFF',
-        opacity:0.6,
+        opacity: 0.6,
+        paddingHorizontal: 0.06 * wid,
     },
     tab: {
-        maxWidth:0.19*wid,
+        maxWidth: 0.19 * wid,
         justifyContent: 'center',
     },
     img: {
-        width:0.1*hei,
-        height:0.1*hei,
-        marginTop: -7*dpi,
-        alignSelf:'center',
+        width: 0.1 * hei,
+        height: 0.1 * hei,
+        marginTop: -7 * dpi,
+        alignSelf: 'center',
     },
     boxText: {
-        marginTop: -9*dpi,
-        color:'#FFFFFF',
-        fontSize:14*dpi,
-        textAlign:'center',
+        marginTop: -9 * dpi,
+        color: '#FFFFFF',
+        fontSize: 14 * dpi,
+        textAlign: 'center',
     }
 });

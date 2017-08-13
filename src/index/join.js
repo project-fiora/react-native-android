@@ -324,10 +324,9 @@ export default class Join extends Component {
                     }
 
                     {!this.state.agree &&
-                        <View>
+                        <View style={{alignItems:'center'}}>
                             <Text style={styles.agreeText}>
-                                ** 이 앱을 사용하는 도중에 발생하는{'\n'}모든 책임은 사용자 본인에게 있습니다 **{'\n'}
-                                또한, 개인정보처리방침에 동의합니다
+                                ** 이 앱을 사용하는 도중에 발생하는{'\n'}모든 책임은 사용자 본인에게 있습니다 **
                             </Text>
                             <TouchableOpacity
                                 onPress={() => {
@@ -379,7 +378,9 @@ android.permission.SYSTEM_ALERT_WINDOW - 지금보시는 alert창을 띄울때 �
                                         { cancelable: false }
                                     )
                                 }}>
-                                <Text style={styles.viewPolicyBtnText}>**개인정보처리방침 보기**</Text>
+                                <View>
+                                    <Text style={styles.viewPolicyBtnText}>**개인정보처리방침 보기**</Text>
+                                </View>
                             </TouchableOpacity>
                         </View>
                     }
@@ -396,7 +397,7 @@ android.permission.SYSTEM_ALERT_WINDOW - 지금보시는 alert창을 띄울때 �
                                                     if (this.state.agree) {
                                                         this.join();
                                                     } else {
-                                                        alert('동의하셔야 가입이 가능합니다!');
+                                                        alert('개인정보처리방침을 보고,\n동의하셔야 가입이 가능합니다!');
                                                         this.setState({ loading: false });
                                                     }
                                                 } else {

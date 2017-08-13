@@ -20,10 +20,11 @@ class Home extends Component {
             nicknameLoad: false,
             confirmLoad: false,
             mysideLoad: false,
-            dollar: 2000,
-            token: {},
             confirmList: [],
             mysideConfirmList: [],
+            dollar: 2000,
+            token: {},
+            
         };
     }
 
@@ -38,7 +39,7 @@ class Home extends Component {
         });
     }
 
-    getMynickname() { //내가 받은 친구 요청 상태 확인
+    getMynickname() { //나의 닉네임 확인
         // GET /api/member/mynickname
         fetch(PrivateAddr.getAddr() + "member/mynickname", {
             method: 'GET', headers: {

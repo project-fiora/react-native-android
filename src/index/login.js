@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import {
     Image, ScrollView,
-    Text, TextInput, TouchableHighlight,
+    Text, TextInput,
     View, AsyncStorage, TouchableOpacity
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -66,12 +66,12 @@ export default class Login extends Component {
                         password: password,
                         token: responseJson.jwtToken,
                         autoLogin: this.state.autoLogin
-                    }), () => Actions.main({ goTo: 'home' }));
+                    }), () => Actions.main({ goTo: 'price' }));
                 } catch (e) {
                     alert("storage save fail : " + e);
                 }
             } else {
-                alert('로그인에 실패했습니다!'+password);
+                alert('로그인에 실패했습니다!');
             }
         }).catch((error) => {
             alert('Network Connection Failed');
@@ -140,13 +140,12 @@ export default class Login extends Component {
                     />
 
                     <View style={styles.row}>
-                        <TouchableHighlight
+                        <TouchableOpacity
                             style={styles.button}
-                            underlayColor={'#FFFFFF'}
                             onPress={this.props.goJoinPage}
                         >
                             <Text style={styles.label}>JOIN</Text>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.button}
                             onPress={() => {

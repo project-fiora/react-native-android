@@ -19,7 +19,12 @@ export default class FriendWalletMng extends Component {
         super(props);
 
         this.state = {
+            token: {},
             load: false,
+            confirmLoad: false,
+            mysideLoad: false,
+            confirmList: [],
+            mysideConfirmList: [],
             nickname: '',
             searching: false,
             searched: false,
@@ -29,31 +34,159 @@ export default class FriendWalletMng extends Component {
     }
 
     async componentDidMount() {
-        await this.getMyFriendList();
+        await this.getMyFriendList(); //가장 처음이어야함(토큰을 가져오기때문에)
     }
 
     async getMyFriendList() {
-        const tokens = await AsyncStorage.getItem('Token');
-        const token = JSON.parse(tokens).token;
-        fetch(PrivateAddr.getAddr() + "friend/myfriend", {
+        const tokens = await AsyncStorage.getItem('Token', (err, result) => {
+            try {
+                if (err != null) {
+                    alert(err);
+                    return false;
+                }
+                const token = JSON.parse(result).token;
+                fetch(PrivateAddr.getAddr() + "friend/myfriend", {
+                    method: 'GET', headers: {
+                        "Authorization": token,
+                        "Accept": "*/*",
+                    }
+                })
+                    .then((response) => response.json())
+                    .then((responseJson) => {
+                        if (responseJson.message == "SUCCESS") {
+                            this.setState({ myFriendList: responseJson.list, token: token, load: true });
+                        } else {
+                            alert("친구정보를 가져올 수 없습니다");
+                            return false;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    })
+                    .done(() => {
+                        this.getConfirm();
+                        this.getConfirmMyside();
+                    });
+            } catch (err) {
+                console.error(err);
+            }
+        });
+    }
+
+    getConfirm() { //내가 받은 친구 요청 상태 확인
+        this.setState({searching:true});
+        fetch(PrivateAddr.getAddr() + "friend/confirmcheck", {
             method: 'GET', headers: {
-                "Authorization": token,
+                "Authorization": this.state.token,
                 "Accept": "*/*",
             }
         })
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson.message == "SUCCESS") {
-                    this.setState({ myFriendList: responseJson.list, token: token, load: true });
+                    this.setState({ confirmList: responseJson.list, confirmLoad: true });
                 } else {
-                    alert("친구정보를 가져올 수 없습니다");
-                    return false;
+                    alert('데이터 로드에 실패했습니다.');
                 }
             })
             .catch((error) => {
+                alert('Network Connection Fail : ' + error);
                 console.error(error);
+            }).done(()=>this.setState({searching:false}));
+    }
+
+    getConfirmMyside() { //내가 보낸 친구 요청 상태 확인
+        this.setState({searching:true});
+        fetch(PrivateAddr.getAddr() + "friend/confirmmyside", {
+            method: 'GET', headers: {
+                "Authorization": this.state.token,
+                "Accept": "*/*",
+            }
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.message == "SUCCESS") {
+                    this.setState({ mysideConfirmList: responseJson.list, mysideLoad: true });
+                } else {
+                    alert('데이터 로드에 실패했습니다.');
+                }
             })
-            .done();
+            .catch((error) => {
+                alert('Network Connection Fail : ' + error);
+                console.error(error);
+            }).done(()=>this.setState({searching:false}));
+    }
+
+    confirmRequest(id) { //친구요청 수락
+        this.setState({searching:true});
+        var intId = parseInt(id);
+        try {
+            fetch(PrivateAddr.getAddr() + 'friend/agree?Friendid=' + intId, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': this.state.token
+                },
+            }).then((response) => {
+                return response.json()
+            }).then((responseJson) => {
+                if (responseJson.message == "SUCCESS") {
+                    alert('친구 요청을 수락했습니다');
+                } else {
+                    alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                }
+            }).catch((error) => {
+                alert('Network Connection Failed');
+                console.error(error);
+            }).done(() => this.getConfirm()); //refresh를 위해 목록을 다시불러온다
+        } catch (err) {
+            alert('친구 요청 수락 실패 ' + err);
+            return false;
+        }
+    }
+
+    denyRequest(friendId) { //친구요청거절
+        // DELETE /api/friend/rejectfriend
+        Alert.alert(
+            '경고!',
+            '친구요청이 거절됩니다!',
+            [
+                {
+                    text: 'Cancel', onPress: () => {
+                        return false
+                    }, style: 'cancel'
+                },
+                {
+                    text: 'OK', onPress: () => {
+                        try {
+                            fetch(PrivateAddr.getAddr() + "friend/rejectfriend?friendId=" + friendId, {
+                                method: 'DELETE', headers: {
+                                    "Authorization": this.state.token.token,
+                                    "Accept": "*/*",
+                                }
+                            })
+                                .then((response) => response.json())
+                                .then((responseJson) => {
+                                    if (responseJson.message == "SUCCESS") {
+                                        alert("친구 요청을 거절했습니다");
+                                    } else {
+                                        alert("친구 요청 거절 실패\n서버관리자에게 문의하세요");
+                                        return false;
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error(error);
+                                }).done(() => this.getConfirm());
+                        } catch (err) {
+                            alert('친구 요청 거절 실패 ' + err);
+                            return false;
+                        }
+                    }
+                },
+            ],
+            { cancelable: false }
+        )
     }
 
     searchNickname() {
@@ -240,6 +373,49 @@ export default class FriendWalletMng extends Component {
                                     })}
                                 </View>
                             }
+                            {(this.state.confirmLoad == true && this.state.confirmList.length != 0) &&
+                                <View style={styles.acceptWrapper}>
+                                    <View style={styles.hr} />
+                                    <Text style={styles.listTitle}>친구 요청이 왔어요!</Text>
+                                    {this.state.confirmList.map((list, i) => {
+                                        return (
+                                            <View style={styles.rowViewWrapper} key={i}>
+                                                <Text style={styles.waitListText}>
+                                                    {list.nickname}
+                                                </Text>
+                                                <View style={styles.rowView}>
+                                                    <TouchableOpacity
+                                                        style={styles.confirmBtn}
+                                                        onPress={() => this.confirmRequest(list.id)}
+                                                    >
+                                                        <Text style={styles.btnText}>수락</Text>
+                                                    </TouchableOpacity>
+                                                    <TouchableOpacity
+                                                        style={styles.confirmBtn}
+                                                        onPress={() => this.denyRequest(list.id)}
+                                                    >
+                                                        <Text style={styles.btnText}>거절</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </View>
+                                        );
+                                    })}
+                                </View>
+                            }
+
+                            {(this.state.mysideLoad == true && this.state.mysideConfirmList.length != 0) &&
+                                <View style={styles.acceptWrapper}>
+                                    <View style={styles.hr} />
+                                    <Text style={styles.listTitle}>친구 요청 목록(대기중)</Text>
+                                    {this.state.mysideConfirmList.map((list, i) => {
+                                        return (
+                                            <Text style={styles.listText} key={i}>
+                                                {list.nickname}
+                                            </Text>
+                                        );
+                                    })}
+                                </View>
+                            }
                         </View>
                     }
                 </ScrollView>
@@ -290,7 +466,7 @@ const styles = StyleSheet.create({
         width: 0.7 * wid,
         alignItems: 'center',
         alignSelf: 'center',
-        marginTop: 0.015*hei,
+        marginTop: 0.015 * hei,
     },
     searchListRow: {
         width: 0.7 * wid,
@@ -337,5 +513,55 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         marginBottom: 5,
+    },
+
+    rowViewWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    rowView: {
+        flexDirection: 'row',
+    },
+    confirmBtn: {
+        width: 0.15 * wid,
+        height: 0.04 * hei,
+        borderWidth: 1 * dpi,
+        borderRadius: 20 * dpi,
+        borderColor: '#FFFFFF',
+        padding: 5 * dpi,
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.6,
+        margin: 1 * dpi,
+    },
+    btnText: {
+        color: '#FFFFFF',
+        fontSize: 14 * dpi,
+        alignSelf: 'center',
+        justifyContent: 'center',
+    },
+    acceptWrapper: {
+        width: 0.7 * wid,
+        alignSelf: 'center'
+    },
+    listTitle: {
+        alignSelf: 'center',
+        color: '#FFFFFF',
+        fontSize: 18 * dpi,
+        opacity: 0.8,
+        marginBottom:5,
+    },
+    waitListText: {
+        color: '#FFFFFF',
+        fontSize: 16 * dpi,
+        opacity: 0.8,
+        justifyContent: 'center',
+        alignSelf: 'center',
+    },
+    listText: {
+        color: '#FFFFFF',
+        fontSize: 16 * dpi,
+        opacity: 0.8,
+        justifyContent: 'center',
     },
 });
