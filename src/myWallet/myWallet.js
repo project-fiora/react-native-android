@@ -21,11 +21,7 @@ export default class MyWallet extends Component {
         super(props);
 
         this.state = {
-            walletList: [{
-                wallet_add:"3D2oetdNuZUqQHPJmcMDDHYoqkyNVsFk9r",
-                wallet_name:"보석이의 지갑",
-                wallet_type:"BTC",
-            }],
+            walletList: [],
             load: false,
             currentWallet: 0,
             balance: '조회 중..',
@@ -37,18 +33,29 @@ export default class MyWallet extends Component {
             await this.getMyWallet();
             StateStore.setCurrentWallet(this.state.currentWallet);
         } else {
-            Promise.resolve()
-            .then(() => Common.getBalance(this.state.walletList[0].wallet_type,
-                this.state.walletList[0].wallet_add))
-            .then(result => {
-                var balance;
-                if (Number.isInteger(result)) {
-                    balance = (parseInt(result) / 100000000) + " " + this.state.walletList[0].wallet_type;
+            await AsyncStorage.getItem('MyWallet', (result, err) => {
+                if (err != null) {
+                    this.setState({ walletList: JSON.parse(result) }, () => {
+                        Promise.resolve()
+                            .then(() => Common.getBalance(this.state.walletList[0].wallet_type,
+                                this.state.walletList[0].wallet_add))
+                            .then(result => {
+                                var balance;
+                                if (Number.isInteger(result)) {
+                                    balance = (parseInt(result) / 100000000) + " " + this.state.walletList[0].wallet_type;
+                                } else {
+                                    balance = result;
+                                }
+                                this.setState({ balance: balance });
+                            });
+                    });
                 } else {
-                    balance = result;
+                    this.setState({ walletList: [] });
+
                 }
-                this.setState({ balance: balance });
             });
+
+
         }
     }
 
@@ -152,12 +159,23 @@ export default class MyWallet extends Component {
                                 지갑 주소를 등록하시면 아래처럼 지갑정보를 볼수있고,
                                 거래내역조회도 가능합니다.
                             </Text>
-                            <WalletInfo
-                                wallet_name={this.state.walletList[0].wallet_name}
-                                wallet_type={this.state.walletList[0].wallet_type}
-                                balance={this.state.balance}
-                                wallet_add={this.state.walletList[0].wallet_add}
-                            />
+                            {this.state.walletList.length == 0 &&
+                                <Text style={{
+                                    color: '#FFFFFF',
+                                    fontSize: 18,
+                                    textAlign: 'center',
+                                }}>
+                                    등록한 지갑이 없습니다.
+                                </Text>
+                            }
+                            {this.state.walletList.length != 0 &&
+                                <WalletInfo
+                                    wallet_name={this.state.walletList[0].wallet_name}
+                                    wallet_type={this.state.walletList[0].wallet_type}
+                                    balance={this.state.balance}
+                                    wallet_add={this.state.walletList[0].wallet_add}
+                                />
+                            }
                         </View>
                     }
                     {(this.state.load == true && this.state.walletList.length == 0) &&
@@ -190,7 +208,7 @@ export default class MyWallet extends Component {
                         </View>
                     }
                 </ScrollView>
-            </ScrollView>
+            </ScrollView >
         );
     }
 }

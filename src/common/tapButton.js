@@ -73,7 +73,7 @@ var styles = StyleSheet.create({
         backgroundColor: 'transparent',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderTopWidth: 1 * dpi,
+        borderTopWidth: 1,
         borderColor: '#FFFFFF',
         opacity: 0.6,
         paddingHorizontal: 0.06 * wid,
@@ -85,13 +85,13 @@ var styles = StyleSheet.create({
     img: {
         width: 0.1 * hei,
         height: 0.1 * hei,
-        marginTop: -7 * dpi,
+        marginTop: -7,
         alignSelf: 'center',
     },
     boxText: {
-        marginTop: -9 * dpi,
+        marginTop: -9,
         color: '#FFFFFF',
-        fontSize: 14 * dpi,
+        fontSize: 14,
         textAlign: 'center',
     }
 });
