@@ -59,14 +59,6 @@ class Common extends Component {
         return (width * height) / (375 * 667);
     }
 
-    static widthRatio() { //iphone6 = 375
-        return 375 / width;
-    }
-
-    static heightRatio() { //iphone6 = 667
-        return 667 / height;
-    }
-
     static winWidth() {
         return width;
     }

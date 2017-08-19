@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
     },
     thead: {
         width: wid * 0.9,
-        height: hei * 0.04,
         justifyContent: 'center',
         flexDirection: 'row',
     },
@@ -219,12 +218,11 @@ const styles = StyleSheet.create({
     htxt: {
         fontWeight: 'bold',
         color: '#FFFFFF',
-        fontSize: 10,
+        fontSize: 9,
         opacity: 0.8
     },
     tr: {
         width: wid * 0.9,
-        height: hei * 0.04,
         flexDirection: 'row',
     },
     td1: { // 분류
