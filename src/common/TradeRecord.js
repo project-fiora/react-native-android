@@ -365,7 +365,6 @@ class DataInfo extends Component {
     }
 }
 
-const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 const styles = StyleSheet.create({
@@ -373,14 +372,14 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     content: {
-        padding: 15 * dpi,
+        padding: 15,
         alignItems: 'center',
     },
     titleText: {
         alignSelf: 'center',
         color: '#FFFFFF',
-        fontSize: 17 * dpi,
-        marginBottom: 5 * dpi,
+        fontSize: 17,
+        marginBottom: 5,
         opacity: 0.8,
     },
     text: {
@@ -394,10 +393,10 @@ const styles = StyleSheet.create({
         height: 0.065 * hei,
         opacity: 0.4,
         borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
-        borderRadius: 10 * dpi,
-        paddingLeft: 17 * dpi,
-        paddingRight: 15 * dpi,
+        borderWidth: 1,
+        borderRadius: 10,
+        paddingLeft: 17,
+        paddingRight: 15,
     },
     selectBoxRow: {
         flexDirection: 'row',
@@ -406,29 +405,29 @@ const styles = StyleSheet.create({
     selectBoxText: {
         alignSelf: 'flex-start',
         color: '#FFFFFF',
-        fontSize: 17 * dpi,
+        fontSize: 17,
     },
     selectBoxIconWrapper: {
         alignItems: 'flex-end',
     },
     selectIcon: {
         color: '#FFFFFF',
-        fontSize: 17 * dpi,
+        fontSize: 17,
         opacity: 0.9,
     },
     blank: {
-        margin: 5 * dpi,
+        margin: 5,
     },
     addr: {
         alignSelf: 'center',
         color: '#FFFFFF',
-        fontSize: 15 * dpi,
+        fontSize: 15,
         opacity: 0.8,
     },
     hr: {
         borderBottomWidth: 1,
         borderColor: '#FFFFFF',
-        marginBottom: 7 * dpi,
+        marginBottom: 7,
         opacity: 0.8,
     },
 });

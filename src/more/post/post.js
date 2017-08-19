@@ -205,7 +205,6 @@ export default class Post extends Component {
     }
 }
 
-const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 const t1 = 0.09 * wid;
@@ -214,19 +213,19 @@ const t3 = 0.3 * wid;
 const thei = 0.06 * hei;
 var styles = StyleSheet.create({
     frame: {
-        padding: 10 * dpi,
+        padding: 10,
         opacity: 0.8,
     },
     thead: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderBottomWidth: 2 * dpi,
+        borderBottomWidth: 2,
         borderColor: '#FFFFFF',
         paddingVertical: thei / 6,
         height: thei,
     },
     headText: {
-        fontSize: 15 * dpi,
+        fontSize: 15,
         color: '#FFFFFF',
     },
     th1: {
@@ -254,19 +253,19 @@ var styles = StyleSheet.create({
         opacity: 0.8,
     },
     hr: {
-        borderBottomWidth: 0.8 * dpi,
+        borderBottomWidth: 0.8,
         borderColor: '#FFFFFF',
     },
     heavyHr: {
-        borderBottomWidth: 1.5 * dpi,
+        borderBottomWidth: 1.5,
         borderColor: '#FFFFFF',
     },
     bodyText: {
-        fontSize: 14 * dpi,
+        fontSize: 14,
         color: '#FFFFFF',
     },
     c_count: {
-        fontSize: 14 * dpi,
+        fontSize: 14,
         color: '#DBCEFF',
     },
     td1: {
@@ -286,17 +285,17 @@ var styles = StyleSheet.create({
     moreBtn: {
         width: 0.2 * wid,
         height: 0.05 * hei,
-        borderWidth: 1 * dpi,
-        borderRadius: 20 * dpi,
+        borderWidth: 1,
+        borderRadius: 20,
         borderColor: '#FFFFFF',
         alignItems: 'center',
         alignSelf: 'center',
         justifyContent: 'center',
         opacity: 0.6,
-        marginTop: 5 * dpi,
+        marginTop: 5,
     },
     moreBtnText: {
         color: '#FFFFFF',
-        fontSize: 14 * dpi
+        fontSize: 14
     },
 });

@@ -218,7 +218,6 @@ export default class FriendWallet extends Component {
     }
 }
 
-const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 const styles = StyleSheet.create({
@@ -226,59 +225,26 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     content: {
-        padding: 15 * dpi,
-        marginTop: 5 * dpi,
+        padding: 15,
+        marginTop: 5,
         alignItems: 'center',
         opacity: 0.8,
     },
     contentText: {
         color: '#FFFFFF',
-        fontSize: 17 * dpi,
-        marginTop: 10 * dpi,
+        fontSize: 17,
+        marginTop: 10,
         opacity: 0.8,
-        marginBottom: 20 * dpi,
+        marginBottom: 20,
     },
     titleText: {
         textAlign: 'center',
         color: '#FFFFFF',
-        fontSize: 17 * dpi,
-        marginBottom: 10 * dpi,
+        fontSize: 17,
+        marginBottom: 10,
         opacity: 0.8,
     },
     blank: {
-        margin: 5 * dpi,
-    },
-    selectBoxWrapper: {
-        alignSelf: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#000000',
-        width: 0.55 * wid,
-        height: 0.055 * hei,
-        opacity: 0.4,
-        borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
-        borderRadius: 10 * dpi,
-        paddingLeft: 17 * dpi,
-        paddingRight: 15 * dpi,
-    },
-    selectBoxRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    selectBoxTextWrapper: {
-        alignSelf: 'flex-start',
-    },
-    selectBox: {
-        color: '#FFFFFF',
-        fontSize: 17 * dpi,
-    },
-    selectBoxIconWrapper: {
-        alignSelf: 'flex-end',
-        alignItems: 'flex-end',
-    },
-    selectIcon: {
-        color: '#FFFFFF',
-        fontSize: 17 * dpi,
-        opacity: 0.9,
+        margin: 5,
     },
 });

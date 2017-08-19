@@ -112,32 +112,31 @@ export default class Convert extends Component {
     }
 }
 
-const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 var styles = StyleSheet.create({
     frame: {
-        paddingTop: 20 * dpi,
+        paddingTop: 20,
     },
     centerTxt: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 17 * dpi,
+        fontSize: 17,
         textAlign: 'center',
-        margin: 10 * dpi,
+        margin: 10,
     },
     inputCoinValue: {
         width: 0.6 * wid,
         height: 0.07 * hei,
-        fontSize: 15 * dpi,
+        fontSize: 15,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
-        borderRadius: 15 * dpi,
+        borderWidth: 1,
+        borderRadius: 15,
         alignSelf: 'center',
         backgroundColor: '#000000',
         opacity: 0.3,
-        paddingLeft: 20 * dpi,
+        paddingLeft: 20,
     },
     selectBoxWrapper: {
         alignSelf: 'center',
@@ -147,10 +146,10 @@ var styles = StyleSheet.create({
         height: 0.05 * hei,
         opacity: 0.4,
         borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
-        borderRadius: 10 * dpi,
-        paddingLeft: 17 * dpi,
-        paddingRight: 15 * dpi,
+        borderWidth: 1,
+        borderRadius: 10,
+        paddingLeft: 17 ,
+        paddingRight: 15 ,
     },
     selectBoxRow: {
         flexDirection: 'row',
@@ -159,37 +158,37 @@ var styles = StyleSheet.create({
     selectBoxText: {
         alignSelf: 'flex-start',
         color: '#FFFFFF',
-        fontSize: 17 * dpi,
+        fontSize: 17 ,
     },
     selectBoxIconWrapper: {
         alignItems: 'flex-end',
     },
     selectIcon: {
         color: '#FFFFFF',
-        fontSize: 17 * dpi,
+        fontSize: 17 ,
         opacity: 0.9,
     },
     convertBtn: {
         width: 0.2 * wid,
         height: 0.04 * hei,
-        borderWidth: 1 * dpi,
-        borderRadius: 20 * dpi,
+        borderWidth: 1 ,
+        borderRadius: 20 ,
         borderColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
         opacity: 0.6,
-        margin: 15 * dpi,
+        margin: 15 ,
     },
     btnText: {
         color: '#FFFFFF',
-        fontSize: 15 * dpi
+        fontSize: 15 
     },
     result: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 17 * dpi,
+        fontSize: 17,
         textAlign: 'center',
-        margin: 5 * dpi,
+        margin: 5,
     },
 });

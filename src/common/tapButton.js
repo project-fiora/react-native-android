@@ -63,7 +63,6 @@ const images = {
     more: require('./img/more.png'),
 };
 
-const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 var styles = StyleSheet.create({

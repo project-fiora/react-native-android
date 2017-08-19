@@ -43,19 +43,19 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     content:{
-        padding: 20 * dpi,
+        padding: 20,
     },
     txt: {
         color: '#FFFFFF',
         opacity: 0.8,
-        padding: 1 * dpi,
-        fontSize: 17 * dpi,
+        padding: 1,
+        fontSize: 17,
     },
     devText: {
         color: '#FFFFFF',
         opacity: 0.8,
-        padding: 1 * dpi,
-        fontSize: 17 * dpi,
+        padding: 1,
+        fontSize: 17,
     },
     btcQrCodeImg: {
         width: 0.55 * wid,

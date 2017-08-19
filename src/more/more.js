@@ -76,7 +76,6 @@ const images = {
     logout: require('../common/img/logout.png'),
 };
 
-const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 var styles = StyleSheet.create({
@@ -94,7 +93,7 @@ var styles = StyleSheet.create({
     },
     iconWrapper: {
         justifyContent: 'center',
-        marginBottom: -2 * dpi,
+        marginBottom: -2,
     },
     menuIcon: {
         width: 0.055 * wid,
@@ -104,8 +103,8 @@ var styles = StyleSheet.create({
     menuText: {
         // backgroundColor: 'transparent',
         justifyContent: 'center',
-        fontSize: 17 * dpi,
-        marginLeft: 20 * dpi,
+        fontSize: 17,
+        marginLeft: 20,
         color: 'white',
         opacity: 0.9
     }

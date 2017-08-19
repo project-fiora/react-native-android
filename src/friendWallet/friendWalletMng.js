@@ -424,7 +424,6 @@ export default class FriendWalletMng extends Component {
     }
 }
 
-const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 const styles = StyleSheet.create({
@@ -434,29 +433,29 @@ const styles = StyleSheet.create({
     explain: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 16 * dpi,
-        margin: 15 * dpi,
+        fontSize: 16,
+        margin: 15,
     },
     input: {
         width: 0.45 * wid,
         height: 0.06 * hei,
-        fontSize: 15 * dpi,
+        fontSize: 15,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
-        borderRadius: 15 * dpi,
+        borderWidth: 1,
+        borderRadius: 15,
         alignSelf: 'center',
         backgroundColor: '#000000',
         opacity: 0.3,
-        paddingLeft: 15 * dpi,
+        paddingLeft: 15,
     },
     searchBtn: {
         width: 0.2 * wid,
         height: 0.04 * hei,
-        borderWidth: 1 * dpi,
-        borderRadius: 20 * dpi,
+        borderWidth: 1,
+        borderRadius: 20,
         borderColor: '#FFFFFF',
-        padding: 5 * dpi,
+        padding: 5,
         marginVertical: 0.01 * hei,
         alignItems: 'center',
         justifyContent: 'center',
@@ -473,20 +472,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'center',
         justifyContent: 'space-between',
-        margin: 1.5 * dpi,
+        margin: 1.5,
     },
     nicknameText: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 16 * dpi,
+        fontSize: 16,
         alignSelf: 'center',
         justifyContent: 'center',
     },
     requestBtn: {
         width: 0.2 * wid,
         height: 0.04 * hei,
-        borderWidth: 1 * dpi,
-        borderRadius: 20 * dpi,
+        borderWidth: 1,
+        borderRadius: 20,
         borderColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
@@ -494,7 +493,7 @@ const styles = StyleSheet.create({
     },
     btnText: {
         color: '#FFFFFF',
-        fontSize: 15 * dpi
+        fontSize: 15
     },
     myFriendListWrapper: {
         width: 0.7 * wid,
@@ -509,7 +508,7 @@ const styles = StyleSheet.create({
     myFriendListText: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 18 * dpi,
+        fontSize: 18,
         alignSelf: 'center',
         justifyContent: 'center',
         marginBottom: 5,
@@ -525,18 +524,18 @@ const styles = StyleSheet.create({
     confirmBtn: {
         width: 0.15 * wid,
         height: 0.04 * hei,
-        borderWidth: 1 * dpi,
-        borderRadius: 20 * dpi,
+        borderWidth: 1,
+        borderRadius: 20,
         borderColor: '#FFFFFF',
-        padding: 5 * dpi,
+        padding: 5,
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6,
-        margin: 1 * dpi,
+        margin: 1,
     },
     btnText: {
         color: '#FFFFFF',
-        fontSize: 14 * dpi,
+        fontSize: 14,
         alignSelf: 'center',
         justifyContent: 'center',
     },
@@ -547,20 +546,20 @@ const styles = StyleSheet.create({
     listTitle: {
         alignSelf: 'center',
         color: '#FFFFFF',
-        fontSize: 18 * dpi,
+        fontSize: 18,
         opacity: 0.8,
         marginBottom:5,
     },
     waitListText: {
         color: '#FFFFFF',
-        fontSize: 16 * dpi,
+        fontSize: 16,
         opacity: 0.8,
         justifyContent: 'center',
         alignSelf: 'center',
     },
     listText: {
         color: '#FFFFFF',
-        fontSize: 16 * dpi,
+        fontSize: 16,
         opacity: 0.8,
         justifyContent: 'center',
     },

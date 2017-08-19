@@ -115,39 +115,38 @@ export default class Inquire extends Component {
     }
 }
 
-const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 var styles = StyleSheet.create({
     frame: {
         flex: 1,
-        padding: 20 * dpi,
+        padding: 20,
         // paddingBottom:15*dpi,
     },
     inputContent: {
         width: 0.7 * wid,
-        height: 350 * dpi,
-        fontSize: 15 * dpi,
+        height: 350,
+        fontSize: 15,
         color: '#FFFFFF',
-        padding: 15 * dpi,
-        paddingTop: 15 * dpi,
+        padding: 15,
+        paddingTop: 15,
         borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
-        borderRadius: 15 * dpi,
+        borderWidth: 1,
+        borderRadius: 15,
         alignSelf: 'center',
         backgroundColor: 'transparent',
-        marginBottom: 5 * dpi,
+        marginBottom: 5,
         opacity: 0.7
     },
     input: { //입력칸
         width: 0.7 * wid,
-        fontSize: 15 * dpi,
+        height: 0.7 * wid,
+        fontSize: 15,
         color: '#FFFFFF',
-        padding: 15 * dpi,
-        height: 50 * dpi,
+        padding: 15,
         borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
-        borderRadius: 15 * dpi,
+        borderWidth: 1,
+        borderRadius: 15,
         alignSelf: 'center',
         backgroundColor: 'transparent',
         marginBottom: 5,
@@ -155,11 +154,11 @@ var styles = StyleSheet.create({
     },
     attachBtn: {
         width: 0.5 * wid,
-        padding: 15 * dpi,
-        height: 40 * dpi,
+        padding: 15,
+        height: 40,
         borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
-        borderRadius: 15 * dpi,
+        borderWidth: 1,
+        borderRadius: 15,
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: 'transparent',

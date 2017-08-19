@@ -247,7 +247,6 @@ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
     }
 }
 
-const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 var styles = StyleSheet.create({
@@ -255,7 +254,7 @@ var styles = StyleSheet.create({
         flex:1,
     },
     content:{
-        padding:15*dpi,
+        padding:15,
     },
     txt:{
         textAlign:'center',

@@ -98,51 +98,49 @@ export default class PostAdd extends Component {
     }
 }
 
-const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 const navArrowSize = 40;
 const navArrowWrapperSize = navArrowSize + 10;
 var styles = StyleSheet.create({
     frame: {
-        paddingTop: 10 * dpi,
+        paddingTop: 10,
     },
     inputContent: {
         width: 0.75 * wid,
-        // height: 350 * dpi,
-        fontSize: 15 * dpi,
+        fontSize: 15,
         color: '#FFFFFF',
-        padding: 15 * dpi,
-        paddingTop: 15 * dpi,
+        padding: 15,
+        paddingTop: 15,
         borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
-        borderRadius: 15 * dpi,
+        borderWidth: 1,
+        borderRadius: 15,
         alignSelf: 'center',
         backgroundColor: 'transparent',
-        marginBottom: 5 * dpi,
+        marginBottom: 5,
         opacity: 0.7
     },
     input: { //입력칸
         width: 0.75 * wid,
         height: 0.075 * hei,
-        fontSize: 15 * dpi,
+        fontSize: 15,
         color: '#FFFFFF',
-        padding: 15 * dpi,
+        padding: 15,
         borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
-        borderRadius: 15 * dpi,
+        borderWidth: 1,
+        borderRadius: 15,
         alignSelf: 'center',
         backgroundColor: 'transparent',
-        marginBottom: 5 * dpi,
+        marginBottom: 5,
         opacity: 0.7
     },
     attachBtn: {
         width: 0.2 * wid,
-        padding: 15 * dpi,
         height: 0.04 * hei,
+        padding: 15,
         borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
-        borderRadius: 15 * dpi,
+        borderWidth: 1,
+        borderRadius: 15,
         alignSelf: 'center',
         backgroundColor: 'transparent',
         opacity: 0.7
@@ -150,7 +148,7 @@ var styles = StyleSheet.create({
     btnText: {
         textAlign: 'center',
         color: '#FFFFFF',
-        fontSize: 16 * dpi,
+        fontSize: 16,
         opacity: 0.9
     },
 });

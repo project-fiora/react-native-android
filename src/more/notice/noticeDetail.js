@@ -33,27 +33,26 @@ export default class NoticeDetail extends Component {
     }
 }
 
-const dpi = Common.getRatio();
 var styles = StyleSheet.create({
     frame: {
-        padding: 30*dpi,
+        padding: 30,
     },
     summaryTitle: {
         textAlign: 'center',
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 20*dpi,
+        fontSize: 20,
     },
     dateTime: {
         textAlign: 'right',
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 15*dpi,
-        marginBottom: 15*dpi,
+        fontSize: 15,
+        marginBottom: 15,
     },
     txt: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 17*dpi,
+        fontSize: 17,
     },
 });

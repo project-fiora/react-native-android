@@ -63,20 +63,15 @@ class LinkBtn extends Component {
     }
 }
 
-const dpi = Common.getRatio();
 var styles = StyleSheet.create({
-    box: {
-        // borderBottomWidth: 0.5,
-        // borderColor: '#A0A0A0',
-    },
     btn: {
-        borderBottomWidth: 0.5*dpi,
+        borderBottomWidth: 0.5,
         borderColor: '#FFFFFF',
-        padding: 20*dpi,
+        padding: 20,
     },
     menuText: {
         backgroundColor: 'transparent',
-        fontSize: 17*dpi,
+        fontSize: 17,
         color: 'white',
         opacity: 0.9
     }

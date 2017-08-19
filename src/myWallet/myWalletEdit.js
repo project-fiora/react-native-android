@@ -171,7 +171,6 @@ export default class MyWalletEdit extends Component {
     }
 }
 
-const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 const styles = StyleSheet.create({
@@ -181,78 +180,48 @@ const styles = StyleSheet.create({
     explain: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 15 * dpi,
-        margin: 15 * dpi,
+        fontSize: 15,
+        margin: 15,
     },
     inputWalletName: {
         width: 0.6 * wid,
         height: 0.055 * hei,
-        fontSize: 15 * dpi,
+        fontSize: 15,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
+        borderWidth: 1,
         borderRadius: 15,
         alignSelf: 'center',
         backgroundColor: '#000000',
         opacity: 0.3,
-        marginBottom: 5 * dpi,
-        paddingLeft: 15 * dpi,
+        marginBottom: 5,
+        paddingLeft: 15,
     },
     explain2: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 15 * dpi,
-        margin: 15 * dpi,
-    },
-    selectBoxWrapper: {
-        alignSelf: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#000000',
-        width: 0.6 * wid,
-        height: 0.055 * hei,
-        opacity: 0.4,
-        borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
-        borderRadius: 10 * dpi,
-        paddingLeft: 15 * dpi,
-        paddingRight: 15 * dpi,
-    },
-    selectBoxRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    selectBoxText: {
-        alignSelf: 'flex-start',
-        color: '#FFFFFF',
-        fontSize: 17 * dpi,
-    },
-    selectBoxIconWrapper: {
-        alignItems: 'flex-end',
-    },
-    selectIcon: {
-        color: '#FFFFFF',
-        fontSize: 17 * dpi,
-        opacity: 0.9,
+        fontSize: 15,
+        margin: 15,
     },
     inputWalletAddr: {
         width: 0.6 * wid,
         height: 0.055 * hei,
-        fontSize: 14 * dpi,
+        fontSize: 14,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
-        borderWidth: 1 * dpi,
+        borderWidth: 1,
         borderRadius: 15,
         alignSelf: 'center',
         backgroundColor: '#000000',
         opacity: 0.3,
-        marginTop: 10 * dpi,
-        marginBottom: 10 * dpi,
-        paddingLeft: 12 * dpi,
+        marginTop: 10,
+        marginBottom: 10,
+        paddingLeft: 12,
     },
     removeBtn: {
         width: 0.25 * wid,
         height: 0.05 * hei,
-        borderWidth: 1 * dpi,
+        borderWidth: 1,
         borderRadius: 20,
         borderColor: '#FFFFFF',
         alignSelf: 'center',
@@ -262,6 +231,6 @@ const styles = StyleSheet.create({
     },
     removeBtnText: {
         color: '#FFFFFF',
-        fontSize: 15 * dpi
+        fontSize: 15
     },
 });

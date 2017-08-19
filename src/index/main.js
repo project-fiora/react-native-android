@@ -247,7 +247,7 @@ export default class Main extends Component {
             this.setState({
                 enableRightHambug: false,
             });
-            if(p=='post'){
+            if (p == 'post') {
                 this.setState({
                     enableRightBtn: false,
                 });
@@ -420,11 +420,10 @@ export default class Main extends Component {
     }
 }
 
-const dpi = Common.getRatio();
 const wid = Common.winWidth();
 const hei = Common.winHeight();
-const navArrowSize = 40 * dpi;
-const navArrowWrapperSize = navArrowSize + 10 * dpi;
+const navArrowSize = 40;
+const navArrowWrapperSize = navArrowSize + 10;
 var styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -441,11 +440,11 @@ var styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'transparent',
     },
-    summaryTitleWrapper: {
-        height: 70 * dpi,
+    summaryTitleWrapper: { //top (nav)
+        height: 0.13 * hei,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 15 * dpi,
+        paddingHorizontal: 15,
     },
     navBtnWrapper: {
         minWidth: 0.22 * wid,
@@ -463,22 +462,22 @@ var styles = StyleSheet.create({
     summaryTitle: {
         color: '#FFFFFF',
         opacity: 0.9,
-        fontSize: 20 * dpi,
+        fontSize: 20,
         textAlign: 'center',
         alignSelf: 'center'
     },
     rightBtn: {
-        borderWidth: 1 * dpi,
-        borderRadius: 20 * dpi,
+        borderWidth: 1,
+        borderRadius: 20,
         borderColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.6,
-        paddingVertical: 5 * dpi,
+        paddingVertical: 5,
     },
     rightBtnText: {
         color: '#FFFFFF',
-        fontSize: 14 * dpi
+        fontSize: 14
     },
     hambugBtn: {
         width: 0.09 * wid,
@@ -522,7 +521,7 @@ const optionsStyles = {
     },
     optionText: {
         color: '#858EFF',
-        fontSize: 20 * dpi,
+        fontSize: 20,
         textAlign: 'center'
     },
 };
@@ -533,7 +532,7 @@ const optionStyles = {
     },
     optionText: {
         color: '#FF7B8C',
-        fontSize: 20 * dpi,
+        fontSize: 20,
         textAlign: 'center'
     },
 };
@@ -559,7 +558,7 @@ const cancelOptionsStyles = {
     },
     optionText: {
         color: '#FF7B8C',
-        fontSize: 20 * dpi,
+        fontSize: 20,
         textAlign: 'center'
     },
 };

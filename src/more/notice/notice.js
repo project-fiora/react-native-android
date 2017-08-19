@@ -85,17 +85,16 @@ class NoticeBtn extends Component {
     }
 }
 
-const dpi = Common.getRatio();
 var styles = StyleSheet.create({
     btn: {
         flexDirection:'row',
         borderBottomWidth: 0.5,
         borderColor: '#FFFFFF',
-        padding: 20*dpi,
+        padding: 20,
     },
     menuText: {
         backgroundColor: 'transparent',
-        fontSize: 17*dpi,
+        fontSize: 17,
         color: 'white',
         opacity: 0.9
     }
