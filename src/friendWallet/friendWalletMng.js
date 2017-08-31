@@ -74,7 +74,7 @@ export default class FriendWalletMng extends Component {
     }
 
     getConfirm() { //내가 받은 친구 요청 상태 확인
-        this.setState({searching:true});
+        this.setState({ searching: true });
         fetch(PrivateAddr.getAddr() + "friend/confirmcheck", {
             method: 'GET', headers: {
                 "Authorization": this.state.token,
@@ -92,11 +92,11 @@ export default class FriendWalletMng extends Component {
             .catch((error) => {
                 alert('Network Connection Fail : ' + error);
                 console.error(error);
-            }).done(()=>this.setState({searching:false}));
+            }).done(() => this.setState({ searching: false }));
     }
 
     getConfirmMyside() { //내가 보낸 친구 요청 상태 확인
-        this.setState({searching:true});
+        this.setState({ searching: true });
         fetch(PrivateAddr.getAddr() + "friend/confirmmyside", {
             method: 'GET', headers: {
                 "Authorization": this.state.token,
@@ -114,11 +114,11 @@ export default class FriendWalletMng extends Component {
             .catch((error) => {
                 alert('Network Connection Fail : ' + error);
                 console.error(error);
-            }).done(()=>this.setState({searching:false}));
+            }).done(() => this.setState({ searching: false }));
     }
 
     confirmRequest(id) { //친구요청 수락
-        this.setState({searching:true});
+        this.setState({ searching: true });
         var intId = parseInt(id);
         try {
             fetch(PrivateAddr.getAddr() + 'friend/agree?Friendid=' + intId, {
@@ -324,6 +324,12 @@ export default class FriendWalletMng extends Component {
                                     <Text style={styles.btnText}>검색</Text>
                                 </TouchableOpacity>
                             </View>
+
+                            {(this.state.searched && this.state.searchList.length == 0) &&
+                                <View style={styles.searchedFriendListWrapper}>
+                                    <Text style={styles.btnText}>검색결과없음</Text>
+                                </View>
+                            }
 
                             {this.state.searched &&
                                 <View style={styles.searchedFriendListWrapper}>
@@ -548,7 +554,7 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 18,
         opacity: 0.8,
-        marginBottom:5,
+        marginBottom: 5,
     },
     waitListText: {
         color: '#FFFFFF',

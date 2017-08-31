@@ -374,8 +374,8 @@ export default class Main extends Component {
                             </View>
                         </View>
                         <View style={styles.hr} />
-                        {this.props.goTo === 'price' && <Cryptocompare />}
-                        {this.props.goTo === 'coinmarketcap' && <Coinmarketcap />}
+                        {this.props.goTo === 'price' && <Coinmarketcap />}
+                        {this.props.goTo === 'coinmarketcap' && <Cryptocompare />}
 
                         {this.props.goTo === 'myWallet' && <MyWallet />}
                         {this.props.goTo === 'myWalletEdit' &&

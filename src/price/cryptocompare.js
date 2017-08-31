@@ -28,7 +28,7 @@ export default class Cryptocompare extends Component {
     }
 
     componentWillUnmount() {
-        clearTimeout();
+        clearTimeout(this.TimerId);
     }
 
     getRate() {
@@ -51,7 +51,7 @@ export default class Cryptocompare extends Component {
             }).catch((error) => {
             console.error(error);
         }).done(() => {
-            setTimeout(
+            this.TimerId = setTimeout(
                 () => {
                     this.getRate();
                 }, 5000
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     explain: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 16,
+        fontSize: 17,
         marginTop: 15,
         marginBottom: 10,
         textAlign: 'center',
@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         margin: 1,
+        paddingVertical: 3, //table head padding
         backgroundColor: '#000000',
         opacity: 0.5,
     },
@@ -275,7 +276,7 @@ const styles = StyleSheet.create({
     htxt: {
         fontWeight: 'bold',
         color: '#FFFFFF',
-        fontSize: 9,
+        fontSize: 10,
         opacity: 0.8
     },
     tr: {
@@ -339,17 +340,17 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#FFFFFF',
-        fontSize: 15,
+        fontSize: 16,
         fontWeight: 'bold',
     },
     htxt: {
         color: '#FFFFFF',
-        fontSize: 16,
+        fontSize: 17,
         fontWeight: 'bold',
     },
     txt: {
         color: '#FFFFFF',
-        fontSize: 15,
+        fontSize: 16,
     },
     betweenTable: {
         margin: 5,
@@ -359,7 +360,7 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         alignSelf: 'flex-end',
         color: '#FFFFFF',
-        fontSize: 13,
+        fontSize: 14,
     },
 });
 

@@ -2,7 +2,7 @@
  * Created by kusob on 2017. 7. 14..
  */
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     ScrollView,
     StyleSheet,
@@ -27,23 +27,23 @@ export default class Coinmarketcap extends Component {
     }
 
     componentWillUnmount() {
-        clearTimeout();
+        clearTimeout(this.TimerId);
     }
 
     getPriceInfo() {
-        this.setState({refreshing: true}, () => {
+        this.setState({ refreshing: true }, () => {
             fetch("https://api.coinmarketcap.com/v1/ticker/?limit=6")
                 .then((response) => response.json()).then((responseJson) => {
-                this.setState({list: responseJson, refreshing: false});
-            }).catch((error) => {
-                console.error(error);
-            }).done(() => {
-                setTimeout(
-                    () => {
-                        this.getPriceInfo();
-                    }, 5000
-                );
-            });
+                    this.setState({ list: responseJson, refreshing: false });
+                }).catch((error) => {
+                    console.error(error);
+                }).done(() => {
+                    this.TimerId = setTimeout(
+                        () => {
+                            this.getPriceInfo();
+                        }, 5000
+                    );
+                });
         });
     }
 
@@ -52,7 +52,7 @@ export default class Coinmarketcap extends Component {
         return (
             <ScrollView contentContainerStyle={styles.frame}>
                 {this.state.refreshing &&
-                <LoadingIcon/>
+                    <LoadingIcon />
                 }
                 <ScrollView contentContainerStyle={styles.priceWrapper}>
                     <Text style={styles.explain}>
@@ -84,7 +84,7 @@ export default class Coinmarketcap extends Component {
                             </View>
                         );
                     })}
-                    <View style={styles.betweenTable}/>
+                    <View style={styles.betweenTable} />
                     {/*////////////////////////////////여기까지 첫번째 테이블////////////////////////////////*/}
                     <View style={styles.thead}>
                         <View style={styles.th1}>
@@ -130,7 +130,7 @@ export default class Coinmarketcap extends Component {
 const wid = Common.winWidth();
 const hei = Common.winHeight();
 const styles = StyleSheet.create({
-    frame:{
+    frame: {
         flex: 1,
     },
     priceWrapper: {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     explain: {
         color: '#FFFFFF',
         opacity: 0.8,
-        fontSize: 16,
+        fontSize: 17,
         marginTop: 15,
         marginBottom: 10,
         textAlign: 'center',
@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         margin: 1,
+        paddingVertical: 3, //Table Head Padding
         backgroundColor: '#000000',
         opacity: 0.5,
     },
@@ -218,8 +219,8 @@ const styles = StyleSheet.create({
     htxt: {
         fontWeight: 'bold',
         color: '#FFFFFF',
-        fontSize: 9,
-        opacity: 0.8
+        fontSize: 11,
+        opacity: 0.8,
     },
     tr: {
         width: wid * 0.9,
@@ -293,17 +294,17 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#FFFFFF',
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: 'bold',
     },
     htxt: {
         color: '#FFFFFF',
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: 'bold',
     },
     txt: {
         color: '#FFFFFF',
-        fontSize: 14,
+        fontSize: 16,
     },
     betweenTable: {
         margin: 5,
@@ -314,7 +315,7 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         alignSelf: 'flex-end',
         color: '#FFFFFF',
-        fontSize: 13,
+        fontSize: 14,
     },
 });
 

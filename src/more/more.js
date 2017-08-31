@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import Common from "../common/common";
+import StateStore from "../common/stateStore";
 
 export default class More extends Component {
     render() {
@@ -18,7 +19,9 @@ export default class More extends Component {
                 <MoreBtn text="거래소 바로가기" img={images.stockMarket} goTo="exchangeLink"/>
                 {/* <MoreBtn text="자동거래" img={images.autoDeal} goTo="exchange"/> */}
                 <MoreBtn text="모의환전" img={images.sampleExchange} goTo="convert"/>
-                <MoreBtn text="커뮤니티" img={images.community} goTo="post"/>
+                {!StateStore.guest()&&
+                    <MoreBtn text="커뮤니티" img={images.community} goTo="post"/>
+                }
                 <MoreBtn text="공지사항" img={images.notice} goTo="notice"/>
                 {/*<MoreBtn text="버전정보" img={images.version} goTo="version"/>*/}
                 <MoreBtn text="문의하기" img={images.ask} goTo="inquire"/>
