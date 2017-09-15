@@ -11,7 +11,7 @@ import {
  * github.com/kusob
  * boseokjung@gmail.com
  * 
- * api (how to use)
+ * how to use
  * import SelectBox from "./selectBox";
  * <SelectBox 
     list={this.state.TYPE} //selectBox list, array or object array
@@ -23,6 +23,10 @@ import {
                     list={[{id:1, name:"boseok1"},{id:2, name:"boseok2"}]} //Array or [Object]
                     currentItem={1} //selected "boseok2", currentItem={0} will select "boseok1"
                     selectBoxText="name" // <= this will show your list.name on selectBox list
+                    selectStyle={{styles}}
+                    optionStyle={{styles}}
+                    fontSize={15} //default == 17
+                    icon="text" //default == ▼
                     />
     onClickBoxFunction={(i)=>{ //i==index
         //some function for onSelect
@@ -54,22 +58,24 @@ export default class SelectBox extends Component {
         return (
             <View>
                 <TouchableOpacity
-                    underlayColor={'#AAAAAA'}
                     onPress={() => this.setState({ onClickBox: !this.state.onClickBox })}
                 >
-                    <View style={styles.selectBoxWrapperSingle}>
+                    <View style={[styles.selectBoxWrapperSingle, this.props.selectStyle]}>
                         <View style={styles.selectBoxRow}>
-                            <Text style={styles.selectBoxText}>
-                                {this.props.selectBoxText == null &&
+                            <Text style={[styles.selectBoxText, { fontSize: this.props.fontSize }]}>
+                                {this.props.selectBoxText == null ?
                                     <Text>{this.state.list[this.state.currentItem]}</Text>
-                                }
-                                {this.props.selectBoxText != null &&
+                                    :
                                     <Text>{this.state.list[this.state.currentItem][this.props.selectBoxText]}</Text>
                                 }
                             </Text>
                             <View style={styles.selectBoxIconWrapper}>
                                 <Text style={styles.selectIcon}>
-                                    ▼
+                                    {this.props.icon == null ?
+                                        <Text>▼</Text>
+                                        :
+                                        <Text>{this.props.icon}</Text>
+                                    }
                                 </Text>
                             </View>
                         </View>
@@ -79,7 +85,7 @@ export default class SelectBox extends Component {
                 {(() => {
                     if (this.state.onClickBox == true) {
                         return (
-                            <View style={styles.selectBoxWrapper}>
+                            <View style={[styles.selectBoxWrapper, this.props.optionStyle]}>
                                 {this.state.list.map((item, i) => {
                                     var selectedStyle;
                                     if (i == this.state.list.length - 1) { //마지막 아이템은 borderBottomWidth가 없음
@@ -90,15 +96,13 @@ export default class SelectBox extends Component {
                                     return (
                                         <View style={selectedStyle} key={i}>
                                             <TouchableOpacity
-                                                underlayColor={'#AAAAAA'}
                                                 onPress={() => this.showItem(i)}
                                             >
                                                 <View style={styles.selectBoxRow}>
-                                                    <Text style={styles.selectBoxText}>
-                                                        {this.props.selectBoxText == null &&
+                                                    <Text style={[styles.selectBoxText, { fontSize: this.props.fontSize }]}>
+                                                        {this.props.selectBoxText == null ?
                                                             <Text>{item}</Text>
-                                                        }
-                                                        {this.props.selectBoxText != null &&
+                                                            :
                                                             <Text>{item[this.props.selectBoxText]}</Text>
                                                         }
                                                     </Text>
@@ -147,15 +151,20 @@ const styles = StyleSheet.create({
         borderColor: '#FFFFFF',
         paddingHorizontal: 16,
         paddingVertical: 10,
+        justifyContent: 'center',
+        marginTop: -3,
     },
     selectBoxWrapperBottom: {
         borderColor: '#FFFFFF',
         paddingHorizontal: 16,
         padding: 10,
+        justifyContent: 'center',
+        marginTop: -4,
     },
     selectBoxRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        marginBottom: -3,
     },
     selectBoxText: {
         alignSelf: 'flex-start',

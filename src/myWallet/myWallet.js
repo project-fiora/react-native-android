@@ -197,7 +197,8 @@ export default class MyWallet extends Component {
                                 selectBoxText="wallet_name"
                                 onClickBoxFunction={(i) => {
                                     this.showWallet(i, this.state.walletList[i].wallet_type, this.state.walletList[i].wallet_add)
-                                }} />
+                                }} 
+                                />
 
                             <WalletInfo
                                 wallet_name={this.state.walletList[this.state.currentWallet].wallet_name}
