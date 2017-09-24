@@ -113,7 +113,6 @@ export default class SelectBox extends Component {
                                 })}
                             </View>
                         );
-
                     }
                 })()}
 

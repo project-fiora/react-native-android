@@ -23,8 +23,10 @@ import Common from "../common/common";
 import TabButton from '../common/tapButton';
 
 import MyWallet from '../myWallet/myWallet';
-import MyWalletEdit from '../myWallet/myWalletEdit';
+import MyWalletCreate from '../myWallet/myWalletCreate';
 import MyWalletAdd from '../myWallet/myWalletAdd';
+import MyWalletEdit from '../myWallet/myWalletEdit';
+
 
 import FriendWallet from '../friendWallet/friendWallet';
 import FriendWalletMng from '../friendWallet/friendWalletMng';
@@ -96,7 +98,7 @@ export default class Main extends Component {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBack);
     }
 
-    //////////////////////////////////////////////////////////////네비게이션 버튼과 타이틀 설정////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////네비게이션 버튼과 타이틀 설정/////////////////////////////////////
     componentWillMount() { //title, backBtn handler
         var p = this.props.goTo;
         switch (p) {
@@ -118,11 +120,11 @@ export default class Main extends Component {
                     enableRightHambug: true,
                 });
                 break;
-            case 'myWalletEdit':
+            case 'myWalletCrete':
                 this.setState({
-                    title: '지갑 관리',
+                    title: '지갑 생성',
                     enableBackBtn: true,
-                    enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callEditWallet'
+                    enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callCreateWallet'
                 });
                 break;
             case 'myWalletAdd':
@@ -130,6 +132,13 @@ export default class Main extends Component {
                     title: '지갑 추가',
                     enableBackBtn: true,
                     enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callAddWallet'
+                });
+                break;
+            case 'myWalletEdit':
+                this.setState({
+                    title: '지갑 관리',
+                    enableBackBtn: true,
+                    enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callEditWallet'
                 });
                 break;
             case 'tradeRecord':
@@ -260,10 +269,13 @@ export default class Main extends Component {
             case 0:
                 this.close;
                 break;
-            case 1: //지갑추가
+            case 1: //지갑생성
+                Actions.main({ goTo: 'myWalletCreate' });
+                break;
+            case 2: //지갑추가
                 Actions.main({ goTo: 'myWalletAdd' });
                 break;
-            case 2: //지갑관리
+            case 3: //지갑관리
                 if (StateStore.currentMyWalletId() != undefined) {
                     Actions.main({
                         goTo: 'myWalletEdit',
@@ -273,14 +285,14 @@ export default class Main extends Component {
                     Common.alert("지갑이 없어요!\n오류가 계속되면 관리자에게 문의해주세요");
                 }
                 break;
-            case 3: //거래 조회
+            case 4: //거래 조회
                 Actions.main({
                     goTo: 'tradeRecord',
                     list: StateStore.currentMyWalletList(),
                     i: StateStore.currentWallet()
                 });
                 break;
-            case 4: //친구 관리 
+            case 5: //친구 관리 
                 Actions.main({ goTo: 'friendWalletMng' });
                 break;
         }
@@ -288,6 +300,9 @@ export default class Main extends Component {
 
     async goTo(part) {
         switch (part) {
+            case 'callCreateWallet':
+                await Common.createWallet();
+                break;
             case 'callAddWallet':
                 await Common.addWallet();
                 break;
@@ -351,20 +366,22 @@ export default class Main extends Component {
                                         </MenuTrigger>
                                         {this.props.goTo === 'myWallet' &&
                                             <MenuOptions customStyles={optionsStyles}>
-                                                <MenuOption value={1} text='지갑 추가' />
+                                                <MenuOption value={1} text='지갑 생성' />
                                                 <View style={styles.menuHr} />
-                                                <MenuOption value={2} text='지갑 관리' />
+                                                <MenuOption value={2} text='지갑 추가' />
                                                 <View style={styles.menuHr} />
-                                                <MenuOption value={3} text='거래 조회' />
+                                                <MenuOption value={3} text='지갑 관리' />
+                                                <View style={styles.menuHr} />
+                                                <MenuOption value={4} text='거래 조회' />
                                                 <View style={styles.menuHr} />
                                                 <MenuOption value={0} text='취소' customStyles={optionStyles} />
                                             </MenuOptions>
                                         }
                                         {this.props.goTo === 'friendWallet' &&
                                             <MenuOptions customStyles={optionsStyles}>
-                                                <MenuOption value={4} text='친구 관리' />
+                                                <MenuOption value={5} text='친구 관리' />
                                                 <View style={styles.menuHr} />
-                                                <MenuOption value={3} text='거래 조회' />
+                                                <MenuOption value={4} text='거래 조회' />
                                                 <View style={styles.menuHr} />
                                                 <MenuOption value={0} text='취소' customStyles={optionStyles} />
                                             </MenuOptions>
@@ -381,6 +398,7 @@ export default class Main extends Component {
                         {this.props.goTo === 'myWalletEdit' &&
                             <MyWalletEdit id={this.props.id} />
                         }
+                        {this.props.goTo === 'myWalletCreate' && <MyWalletCreate />}
                         {this.props.goTo === 'myWalletAdd' && <MyWalletAdd />}
                         {this.props.goTo === 'tradeRecord' && <TradeRecord />}
 

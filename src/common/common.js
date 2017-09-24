@@ -177,6 +177,13 @@ class Common extends Component {
         });
     }
 
+    static async createWallet(){
+        //getAwsAddr
+        fetch(PrivateAddr.getAwsAddr() + 'wallet/create', {
+
+        });
+    }
+
     static async addWallet() {
         const TYPE = ['BTC', 'ETH', 'ETC', 'XRP', 'LTC', 'DASH'];
         if (StateStore.walletName() == "") {
