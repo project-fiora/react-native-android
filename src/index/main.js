@@ -301,10 +301,10 @@ export default class Main extends Component {
     async goTo(part) {
         switch (part) {
             case 'callCreateWallet':
-                await Common.createWallet();
+                await MyWalletCreate.createWallet();
                 break;
             case 'callAddWallet':
-                await Common.addWallet();
+                await MyWalletAdd.addWallet();
                 break;
             case 'callEditWallet':
                 await Common.editWallet();

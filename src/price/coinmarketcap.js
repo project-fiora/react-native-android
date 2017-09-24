@@ -7,7 +7,7 @@ import {
     ScrollView,
     StyleSheet,
     Text,
-    View,
+    View, RefreshControl,
 } from 'react-native';
 import Common from "../common/common";
 import LoadingIcon from 'react-native-loading-spinner-overlay';
@@ -26,8 +26,9 @@ export default class Coinmarketcap extends Component {
         this.getPriceInfo();
     }
 
-    componentWillUnmount() {
-        clearTimeout(this.TimerId);
+    _onRefresh() {
+        this.setState({ refreshing: true });
+        this.getPriceInfo();
     }
 
     getPriceInfo() {
@@ -37,26 +38,29 @@ export default class Coinmarketcap extends Component {
                     this.setState({ list: responseJson, refreshing: false });
                 }).catch((error) => {
                     console.error(error);
-                }).done(() => {
-                    this.TimerId = setTimeout(
-                        () => {
-                            this.getPriceInfo();
-                        }, 5000
-                    );
-                });
+                }).done();
         });
     }
 
     render() {
         const tableHead = ['분류', '비율(BTC)', '순환공급량', 'Volume', '변화율', 'Price'];
         return (
-            <ScrollView contentContainerStyle={styles.frame}>
-                {this.state.refreshing &&
-                    <LoadingIcon visible={true}/>
-                }
+            <ScrollView contentContainerStyle={styles.frame}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={this._onRefresh.bind(this)}
+                        progressBackgroundColor='#FFFFFF'
+                        tintColor='#FFFFFF'
+                    />}
+            >
+                {/* {this.state.refreshing &&
+                    <LoadingIcon visible={true} />
+                } */}
                 <ScrollView contentContainerStyle={styles.priceWrapper}>
                     <Text style={styles.explain}>
-                        실시간 시세 차이에 주의하세요!
+                        실시간 시세 차이에 주의하세요!{'\n'}
+                        아래로 끌어 당겨서 새로고침하세요
                     </Text>
                     <View style={styles.thead}>
                         <View style={styles.th1}>

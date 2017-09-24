@@ -13,6 +13,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { observer } from 'mobx-react/native';
 import Common from "../common/common";
+import PrivateAddr from "../common/private/address";
 import StateStore from '../common/stateStore';
 import SelectBox from '../common/selectBox';
 
@@ -26,6 +27,58 @@ const MyWalletAdd = observer(class MyWalletAdd extends Component {
             TYPE: ['BTC', 'ETH', 'ETC', 'XRP', 'LTC', 'DASH'],
             currentTYPE: 0,
         };
+    }
+
+    static async addWallet() {
+        const TYPE = ['BTC', 'ETH', 'ETC', 'XRP', 'LTC', 'DASH'];
+        if (StateStore.walletName() == "") {
+            alert("지갑 이름을 입력하세요!");
+            return false;
+        } else if (StateStore.walletAddr() == "") {
+            alert("지갑 주소를 입력하세요!");
+            return false;
+        } else {
+            await AsyncStorage.getItem('Token', (err, result) => {
+                if (err != null) {
+                    alert(err);
+                    return false;
+                }
+                const token = JSON.parse(result).token;
+                try {
+                    //post api call
+                    fetch(PrivateAddr.getAddr() + 'wallet/add', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': token
+                        },
+                        body: JSON.stringify({
+                            walletName: StateStore.walletName(),
+                            walletAddr: StateStore.walletAddr(),
+                            walletType: TYPE[StateStore.walletType()],
+                        })
+                    }).then((response) => {
+                        return response.json()
+                    }).then((responseJson) => {
+                        if (responseJson.message == "SUCCESS") {
+                            alert('지갑을 추가했습니다!');
+                            Actions.main({ goTo: 'myWallet' });
+                        } else {
+                            alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                        }
+                    }).catch((error) => {
+                        alert('Network Connection Failed');
+                        console.error(error);
+                    }).done();
+                    StateStore.setName('');
+                    StateStore.setType(0);
+                    StateStore.setAddr('');
+                } catch (err) {
+                    alert('지갑추가실패 : ' + err);
+                }
+            });
+        }
     }
 
     async componentDidMount() {
