@@ -20,6 +20,7 @@ export default class Cryptocompare extends Component {
             load: false,
             refreshing: false,
             cryptoList: [{}],
+            noRfresh: false,
         };
     }
 
@@ -36,7 +37,13 @@ export default class Cryptocompare extends Component {
         fetch("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USD%22%2C%22KRW%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=")
             .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({rate: responseJson.query.results.rate[1].Rate});
+                if(responseJson.error===null){
+                    this.setState({rate: responseJson.query.results.rate[1].Rate});
+                } else {
+                    alert("야후api오류로 환율 정보를 가져올 수 없습니다");
+                    this.setState({noRfresh:true});
+                    return false;
+                }
             })
             .catch((error) => {
                 console.error(error);
@@ -53,7 +60,8 @@ export default class Cryptocompare extends Component {
         }).done(() => {
             this.TimerId = setTimeout(
                 () => {
-                    this.getRate();
+                    if(!this.state.noRfresh)
+                        this.getRate();
                 }, 5000
             );
         });

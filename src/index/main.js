@@ -120,7 +120,7 @@ export default class Main extends Component {
                     enableRightHambug: true,
                 });
                 break;
-            case 'myWalletCrete':
+            case 'myWalletCreate':
                 this.setState({
                     title: '지갑 생성',
                     enableBackBtn: true,
