@@ -1,14 +1,14 @@
 /**
  * Created by kusob on 2017. 7. 19..
  */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Image,
     StyleSheet,
     Text, TouchableOpacity,
     View
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import Common from "../common/common";
 
 export default class exchangeLink extends Component {
@@ -16,11 +16,11 @@ export default class exchangeLink extends Component {
         super(props);
 
         this.state = {
-            siteList:[
-                {name:'코인원', link:'https://coinone.co.kr/'},
-                {name:'빗썸', link:'https://www.bithumb.com/'},
-                {name:'코빗', link:'https://www.korbit.co.kr/'},
-                {name:'Poloniex', link:'https://poloniex.com/'}
+            siteList: [
+                { name: '코인원', link: 'https://coinone.co.kr/' },
+                { name: '빗썸', link: 'https://www.bithumb.com/' },
+                { name: '코빗', link: 'https://www.korbit.co.kr/' },
+                { name: 'Poloniex', link: 'https://poloniex.com/' }
             ],
         };
     }
@@ -33,9 +33,11 @@ export default class exchangeLink extends Component {
         return (
             <View style={styles.box}>
                 {this.state.siteList.map((site, i) => {
-                    return (<LinkBtn name={site.name}
-                                     link={site.link}
-                                       key={i}/>);
+                    return (
+                        <LinkBtn name={site.name}
+                            link={site.link}
+                            key={i} />
+                    );
                 })}
             </View>
         );
@@ -44,7 +46,7 @@ export default class exchangeLink extends Component {
 
 class LinkBtn extends Component {
     goTo() {
-        Actions.main({goTo:'exchangeSite', siteName:this.props.name, link:this.props.link});
+        Actions.main({ goTo: 'exchangeSite', siteName: this.props.name, link: this.props.link });
     }
 
     render() {

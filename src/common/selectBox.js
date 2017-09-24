@@ -151,14 +151,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingVertical: 10,
         justifyContent: 'center',
-        marginTop: -3,
+        marginTop: -1,
     },
     selectBoxWrapperBottom: {
         borderColor: '#FFFFFF',
         paddingHorizontal: 16,
         padding: 10,
         justifyContent: 'center',
-        marginTop: -4,
+        marginTop: -2,
     },
     selectBoxRow: {
         flexDirection: 'row',
@@ -166,6 +166,8 @@ const styles = StyleSheet.create({
         marginBottom: -3,
     },
     selectBoxText: {
+        minHeight:0.03 * height,
+        justifyContent:'center',
         alignSelf: 'flex-start',
         color: '#FFFFFF',
         fontSize: 17,

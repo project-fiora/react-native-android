@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Common from "../common/common";
 import SelectBox from "../common/selectBox";
+import LoadingIcon from 'react-native-loading-spinner-overlay';
 
 export default class Convert extends Component {
     constructor(props) {
@@ -66,9 +67,11 @@ export default class Convert extends Component {
         return (
             <View style={styles.frame}>
                 {!this.state.load &&
-                    <Text style={styles.centerTxt}>
-                        초기데이터를 불러오는중...
-                    </Text>
+                    <LoadingIcon visible={true}>
+                        <Text style={styles.centerTxt}>
+                            초기데이터를 불러오는중...
+                        </Text>
+                    </LoadingIcon>
                 }
 
                 <Text style={styles.centerTxt}>
@@ -148,8 +151,8 @@ var styles = StyleSheet.create({
         borderColor: '#FFFFFF',
         borderWidth: 1,
         borderRadius: 10,
-        paddingLeft: 17 ,
-        paddingRight: 15 ,
+        paddingLeft: 17,
+        paddingRight: 15,
     },
     selectBoxRow: {
         flexDirection: 'row',
@@ -158,31 +161,31 @@ var styles = StyleSheet.create({
     selectBoxText: {
         alignSelf: 'flex-start',
         color: '#FFFFFF',
-        fontSize: 17 ,
+        fontSize: 17,
     },
     selectBoxIconWrapper: {
         alignItems: 'flex-end',
     },
     selectIcon: {
         color: '#FFFFFF',
-        fontSize: 17 ,
+        fontSize: 17,
         opacity: 0.9,
     },
     convertBtn: {
         width: 0.2 * wid,
         height: 0.04 * hei,
-        borderWidth: 1 ,
-        borderRadius: 20 ,
+        borderWidth: 1,
+        borderRadius: 20,
         borderColor: '#FFFFFF',
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
         opacity: 0.6,
-        margin: 15 ,
+        margin: 15,
     },
     btnText: {
         color: '#FFFFFF',
-        fontSize: 15 
+        fontSize: 15
     },
     result: {
         color: '#FFFFFF',

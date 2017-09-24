@@ -10,7 +10,7 @@ import {
     View,
 } from 'react-native';
 import Common from "../common/common";
-import LoadingIcon from "../common/loadingIcon";
+import LoadingIcon from 'react-native-loading-spinner-overlay';
 
 export default class Coinmarketcap extends Component {
     constructor(props) {
@@ -52,7 +52,7 @@ export default class Coinmarketcap extends Component {
         return (
             <ScrollView contentContainerStyle={styles.frame}>
                 {this.state.refreshing &&
-                    <LoadingIcon />
+                    <LoadingIcon visible={true}/>
                 }
                 <ScrollView contentContainerStyle={styles.priceWrapper}>
                     <Text style={styles.explain}>

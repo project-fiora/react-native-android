@@ -13,7 +13,7 @@ import styles from './index_style';
 
 import PrivateAddr from "../common/private/address";
 import Encrypt2 from '../common/private/encrypt2';
-import LoadingIcon from "../common/loadingIcon";
+import LoadingIcon from 'react-native-loading-spinner-overlay';
 import Common from "../common/common";
 import StateStore from "../common/stateStore";
 
@@ -85,7 +85,7 @@ export default class Login extends Component {
         return (
             <View pointerEvents={this.state.enableTouch}>
                 {this.state.logining == true &&
-                    <LoadingIcon />
+                    <LoadingIcon visible={true}/>
                 }
                 <ScrollView contentContainerStyle={styles.loginContainer}>
                     <Image source={require('../common/img/logo.png')} style={styles.logo} />

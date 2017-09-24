@@ -14,7 +14,6 @@ import { Actions } from 'react-native-router-flux';
 
 import PrivateAddr from '../common/private/address';
 import Common from "../common/common";
-import LoadingIcon from "../common/loadingIcon";
 
 export default class Inquire extends Component {
     constructor(props) {

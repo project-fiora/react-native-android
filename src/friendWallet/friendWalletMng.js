@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import PrivateAddr from "../common/private/address";
-import LoadingIcon from "../common/loadingIcon";
+import LoadingIcon from 'react-native-loading-spinner-overlay';
 import Common from "../common/common";
 
 export default class FriendWalletMng extends Component {
@@ -292,10 +292,10 @@ export default class FriendWalletMng extends Component {
         return (
             <View>
                 {!this.state.load &&
-                    <LoadingIcon />
+                    <LoadingIcon visible={true}/>
                 }
                 {this.state.searching &&
-                    <LoadingIcon />
+                    <LoadingIcon visible={true}/>
                 }
                 <ScrollView contentContainerStyle={styles.frame}>
                     {this.state.load &&

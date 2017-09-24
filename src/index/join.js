@@ -13,7 +13,7 @@ import styles from './index_style';
 import PrivateAddr from '../common/private/address';
 import Encrypt2 from '../common/private/encrypt2';
 import Common from "../common/common";
-import LoadingIcon from "../common/loadingIcon";
+import LoadingIcon from 'react-native-loading-spinner-overlay';
 
 export default class Join extends Component {
     constructor(props) {
@@ -189,7 +189,7 @@ export default class Join extends Component {
             <View>
                 <ScrollView contentContainerStyle={styles.loginContainer}>
                     {(this.state.enable == 'none' || this.state.loading) &&
-                        <LoadingIcon />
+                        <LoadingIcon visible={true}/>
                     }
                     <View style={styles.inputWrapper}>
                         <Image source={require('../common/img/user.png')} style={styles.inputTextIcon} />

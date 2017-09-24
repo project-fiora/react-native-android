@@ -11,7 +11,7 @@ import {
 import {Actions} from 'react-native-router-flux';
 import PrivateAddr from '../../common/private/address';
 import Common from "../../common/common";
-import LoadingIcon from "../../common/loadingIcon";
+import LoadingIcon from 'react-native-loading-spinner-overlay';
 
 export default class Notice extends Component {
     constructor(props) {
@@ -47,7 +47,7 @@ export default class Notice extends Component {
         return (
             <View style={styles.box}>
                 {this.state.load==false &&
-                <LoadingIcon/>
+                <LoadingIcon visible={true}/>
                 }
                 {this.state.load==true &&
                     this.state.noticeList.reverse().map((notice, i) => {

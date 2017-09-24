@@ -10,7 +10,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import PrivateAddr from "../common/private/address";
 import Common from "../common/common";
-import LoadingIcon from "../common/loadingIcon";
+import LoadingIcon from 'react-native-loading-spinner-overlay';
 import StateStore from "../common/stateStore";
 import SelectBox from '../common/selectBox';
 
@@ -116,7 +116,7 @@ export default class MyWalletEdit extends Component {
         return (
             <ScrollView contentContainerStyle={styles.frame}>
                 {this.state.load == false &&
-                    <LoadingIcon />
+                    <LoadingIcon visible={true}/>
                 }
                 {this.state.load == true &&
                     <View>

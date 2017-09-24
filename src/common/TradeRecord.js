@@ -12,7 +12,7 @@ import {
 
 import Common from "../common/common";
 import StateStore from '../common/stateStore';
-import LoadingIcon from "../common/loadingIcon";
+import LoadingIcon from 'react-native-loading-spinner-overlay';
 import SelectBox from '../common/selectBox';
 
 class TradeRecord extends Component {
@@ -143,7 +143,7 @@ class TradeRecord extends Component {
         return (
             <ScrollView contentContainerStyle={styles.frame}>
                 {!this.state.loaded &&
-                    <LoadingIcon />
+                    <LoadingIcon visible={true}/>
                 }
                 <ScrollView contentContainerStyle={styles.content}>
                     {(this.state.list.length == 0) &&

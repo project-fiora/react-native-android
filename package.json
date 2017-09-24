@@ -13,6 +13,7 @@
     "react-native": "0.46.1",
     "react-native-camera": "^0.10.0",
     "react-native-checkbox": "^1.1.0",
+    "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-popup-menu": "^0.8.0",
     "react-native-qrcode": "^0.2.3",
     "react-native-qrcode-scanner": "0.0.14",

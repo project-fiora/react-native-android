@@ -11,7 +11,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import PrivateAddr from "../../common/private/address";
 import Common from '../../common/common';
-import LoadingIcon from "../../common/loadingIcon";
+import LoadingIcon from 'react-native-loading-spinner-overlay';
 import StateStore from "../../common/stateStore";
 
 export default class Post extends Component {
@@ -494,7 +494,7 @@ export default class Post extends Component {
             );
         } else {
             return (
-                <LoadingIcon />
+                <LoadingIcon visible={true}/>
             );
         }
     }

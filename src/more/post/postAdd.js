@@ -10,7 +10,7 @@ import {
 
 import Common from "../../common/common";
 import StateStore from "../../common/stateStore";
-import LoadingIcon from "../../common/loadingIcon";
+import LoadingIcon from 'react-native-loading-spinner-overlay';
 
 export default class PostAdd extends Component {
     constructor(props) {
@@ -42,7 +42,7 @@ export default class PostAdd extends Component {
                     pointerEvents={StateStore.loaded()}
                     contentContainerStyle={styles.frame}>
                     {StateStore.loaded() == 'none' &&
-                        <LoadingIcon />
+                        <LoadingIcon visible={true}/>
                     }
                     <TextInput
                         style={styles.input}

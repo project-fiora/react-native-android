@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import PrivateAddr from "../../common/private/address";
-import LoadingIcon from "../../common/loadingIcon";
+import LoadingIcon from 'react-native-loading-spinner-overlay';
 import Common from "../../common/common";
 import StateStore from "../../common/stateStore";
 
@@ -199,7 +199,7 @@ export default class Post extends Component {
             );
         } else {
             return (
-                <LoadingIcon />
+                <LoadingIcon visible={true} />
             );
         }
     }
