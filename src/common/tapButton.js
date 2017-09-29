@@ -36,7 +36,7 @@ class Tap extends Component {
 
     render() {
         return (
-            <View style={styles.tab}>
+            <View style={[styles.tab]}>
                 <TouchableOpacity
                     underlayColor={'#AAAAAA'}
                     onPress={() => this.goTo(this.props.goTo)}

@@ -11,8 +11,11 @@ import {
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
+import LoadingIcon from 'react-native-loading-spinner-overlay';
 
+import StateStore from '../common/stateStore';
 import Common from "../common/common";
+
 import PrivateAddr from "../common/private/address";
 
 class MyWalletCreate extends Component {
@@ -21,58 +24,84 @@ class MyWalletCreate extends Component {
 
         this.state = {
             name: '',
-            privateKey: '',
             addr: '',
+            loading: false,
         };
     }
 
-    static async createWallet(){
+    static async createWallet(callback) {
         //getAwsAddr
-        fetch(PrivateAddr.getAwsAddr() + 'wallet/create', {//////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////
-        });/////////////////////////////////////
-
-        if (StateStore.createWalletName() == "") {
+        var walletName = StateStore.createWalletName();
+        if (walletName == "" || walletName == undefined) {
             alert("지갑 이름을 입력하세요!");
+            callback();
             return false;
         } else {
-            await AsyncStorage.getItem('Token', (err, result) => {
-                if (err != null) {
-                    alert(err);
-                    return false;
+            fetch(PrivateAddr.getAwsAddr() + 'wallet/create', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                 }
-                const token = JSON.parse(result).token;
+            }).then((response) => {
+                return response.json()
+            }).then((responseJson) => {
                 try {
-                    //post api call
-                    fetch(PrivateAddr.getAddr() + 'wallet/add', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            'Authorization': token
-                        },
-                        body: JSON.stringify({
-                            walletName: StateStore.createWalletName(),
-                            walletAddr: "",/////////////////////////////////////
-                            walletType: "",/////////////////////////////////////
-                        })
-                    }).then((response) => {
-                        return response.json()
-                    }).then((responseJson) => {
-                        if (responseJson.message == "SUCCESS") {
-                            alert('지갑을 추가했습니다!');
-                            Actions.main({ goTo: 'myWallet' });
-                        } else {
-                            alert('오류가 발생했습니다.\n다시 시도해주세요!');
-                        }
-                    }).catch((error) => {
-                        alert('Network Connection Failed');
-                        console.error(error);
-                    }).done();
-                    StateStore.setCreateWalletName('');
-                } catch (err) {
-                    alert('지갑추가실패 : ' + err);
+                    if (responseJson !== null) {
+                        StateStore.setCreateWalletAddr(responseJson.address);
+                        AsyncStorage.setItem(walletName + "_privateKey", responseJson.private_key, () => {
+                            AsyncStorage.getItem('Token', (err, result) => {
+                                if (err != null) {
+                                    alert(err);
+                                    return false;
+                                }
+                                const token = JSON.parse(result).token;
+                                try {
+                                    //post api call
+                                    fetch(PrivateAddr.getAddr() + 'wallet/add', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Accept': 'application/json',
+                                            'Content-Type': 'application/json',
+                                            'Authorization': token
+                                        },
+                                        body: JSON.stringify({
+                                            walletName: walletName,
+                                            walletAddr: StateStore.createWalletAddr(),
+                                            walletType: "BSC", //보석코인
+                                        })
+                                    }).then((response) => {
+                                        return response.json()
+                                    }).then((responseJson) => {
+                                        if (responseJson.message == "SUCCESS") {
+                                            alert('지갑을 추가했습니다!');
+                                            Actions.main({ goTo: 'myWallet' });
+                                        } else {
+                                            alert('오류가 발생했습니다.\n다시 시도해주세요!');
+                                        }
+                                    }).catch((error) => {
+                                        alert('Network Connection Failed');
+                                        console.error(error);
+                                    }).done();
+                                    StateStore.setCreateWalletName('');
+                                } catch (err) {
+                                    alert('지갑추가실패 : ' + err);
+                                } finally {
+                                    callback();
+                                }
+                            });
+                        });
+
+                    }
+                } catch (e) {
+                    alert("지갑 만들기 실패");
+                    console.error(e);
                 }
+            }).catch((error) => {
+                alert('Network Connection Failed');
+                console.error(error);
+            }).done(() => {
+                callback();
             });
         }
     }
@@ -80,6 +109,9 @@ class MyWalletCreate extends Component {
     render() {
         return (
             <ScrollView contentContainerStyle={styles.frame}>
+                {this.state.loading &&
+                    <LoadingIcon visible={true} />
+                }
                 <ScrollView contentContainerStyle={styles.content}>
                     <Text style={styles.explain}>
                         {'\n'}{'\n'}

@@ -5,6 +5,7 @@ const stateStore = observable({
     globalLoaded:'none',
     loaded:'',
     createWalletName:'',
+    createWalletAddr:'',
     walletName:'',
     walletAddr:'',
     walletType:'',
@@ -28,7 +29,13 @@ stateStore.setCreateWalletName = (name)=>{
 stateStore.createWalletName = ()=>{
     return this.createWalletName;
 }
-
+///지갑생성할때 지갑주소
+stateStore.setCreateWalletAddr = (addr)=>{
+    this.createWalletAddr = addr;
+}
+stateStore.createWalletAddr = ()=>{
+    return this.createWalletAddr;
+}
 /////////손님 설정
 stateStore.setGuest = (bool)=>{
     this.guest = bool; 

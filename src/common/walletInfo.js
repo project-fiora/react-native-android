@@ -43,7 +43,8 @@ const wid = Common.winWidth();
 const hei = Common.winHeight();
 const styles = StyleSheet.create({
     frame: {
-        marginVertical: 0.03 * hei,
+        marginTop: 0.03 * hei,
+        marginBottom: 0.015 * hei,
     },
     infoWrapper: {
         paddingHorizontal: 0.15 * wid,

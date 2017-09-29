@@ -16,6 +16,7 @@ import Menu, {
     MenuOption,
     renderers
 } from 'react-native-popup-menu';
+import LoadingIcon from 'react-native-loading-spinner-overlay';
 
 const { SlideInMenu } = renderers;
 import Common from "../common/common";
@@ -66,6 +67,7 @@ export default class Main extends Component {
             rightBtnGoTo: '',
             rightBtnText: '',
             enableRightHambug: false,
+            loading:false,
         };
         StateStore.setGlobalLoaded('none');
         this.handleBack = (() => {
@@ -301,7 +303,10 @@ export default class Main extends Component {
     async goTo(part) {
         switch (part) {
             case 'callCreateWallet':
-                await MyWalletCreate.createWallet();
+                this.setState({ loading: true });
+                await MyWalletCreate.createWallet(() => {
+                    this.setState({ loading: false });
+                });
                 break;
             case 'callAddWallet':
                 await MyWalletAdd.addWallet();
@@ -328,6 +333,10 @@ export default class Main extends Component {
                 source={require('../common/img/bg-03.png')}
                 style={styles.container}
             >
+            {this.state.loading &&
+                <LoadingIcon visible={true}/>
+            }
+            
                 <MenuContext style={{ flex: 1 }}>
                     <View style={styles.wrapper}>
                         <View style={styles.summaryTitleWrapper}>
@@ -335,7 +344,6 @@ export default class Main extends Component {
                                 {this.state.enableBackBtn &&
                                     <TouchableOpacity
                                         style={styles.navBackBtn}
-                                        underlayColor={'#AAAAAA'}
                                         onPress={() => Actions.pop()
                                             //this.goTo(this.state.backBtnGoTo)
                                         }

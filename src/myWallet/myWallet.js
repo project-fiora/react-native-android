@@ -144,7 +144,7 @@ export default class MyWallet extends Component {
         return (
             <ScrollView contentContainerStyle={styles.frame}>
                 {(!this.state.load && !StateStore.guest()) &&
-                    <LoadingIcon visible={true}/>
+                    <LoadingIcon visible={true} />
                 }
                 <ScrollView contentContainerStyle={styles.content}>
                     {StateStore.guest() &&
@@ -197,8 +197,8 @@ export default class MyWallet extends Component {
                                 selectBoxText="wallet_name"
                                 onClickBoxFunction={(i) => {
                                     this.showWallet(i, this.state.walletList[i].wallet_type, this.state.walletList[i].wallet_add)
-                                }} 
-                                />
+                                }}
+                            />
 
                             <WalletInfo
                                 wallet_name={this.state.walletList[this.state.currentWallet].wallet_name}
@@ -207,6 +207,16 @@ export default class MyWallet extends Component {
                                 wallet_add={this.state.walletList[this.state.currentWallet].wallet_add}
                             />
                         </View>
+                    }
+                    {(this.state.load == true && this.state.walletList.length != 0 && this.state.walletList[this.state.currentWallet].wallet_type == "BSC") &&
+                        <TouchableOpacity
+                            style={styles.sendCoinBtn}
+                            onPress={() => {
+                                
+                            }}
+                        >
+                            <Text style={styles.sendCoinBtnText}>송 금</Text>
+                        </TouchableOpacity>
                     }
                 </ScrollView>
             </ScrollView >
@@ -239,5 +249,21 @@ const styles = StyleSheet.create({
         fontSize: 17,
         marginBottom: 10,
         opacity: 0.8,
+    },
+    sendCoinBtn: {
+        width:0.3*wid,
+        borderWidth: 1,
+        borderRadius: 20,
+        borderColor: '#FFFFFF',
+        alignSelf:'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.9,
+        paddingVertical: 5,
+        marginBottom:5,
+    },
+    sendCoinBtnText: {
+        color: '#FFFFFF',
+        fontSize: 19,
     },
 });

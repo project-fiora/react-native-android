@@ -55,7 +55,7 @@ class Common extends Component {
             }).done();
     }
 
-    static getRatio() {
+    static getRatio() { //아이폰6 기준으로 레이아웃을 만들었을때
         return (width * height) / (375 * 667);
     }
 
@@ -67,7 +67,7 @@ class Common extends Component {
         return height;
     }
 
-    static modifyDate(date) {
+    static modifyDate(date) { //게시판에서 사용
         var today = new Date();
         var tmp = "";
         var dateTime = date.split(" ");
@@ -173,6 +173,27 @@ class Common extends Component {
                     .catch((error) => {
                         console.error(error);
                     });
+            } else if(type=='BSC'){
+                //다슬이가 구현한 보석코인 잔액조회
+                fetch(PrivateAddr.getAwsAddr() + "wallet/balance", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        address: addr,
+                    })
+                }).then((response) => {
+                    return response.json()
+                }).then((responseJson) => {
+                    resolve(responseJson.balance);
+                }).catch((error) => {
+                    alert('Network Connection Failed');
+                    console.error(error);
+                }).done();
+            } else {
+                resolve(type+'는 잔액조회x'); //임시
             }
         });
     }
