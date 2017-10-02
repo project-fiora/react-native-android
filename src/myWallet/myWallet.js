@@ -85,7 +85,7 @@ export default class MyWallet extends Component {
                                 if (this.state.walletList.length != 0)
                                     StateStore.setCurrentMyWalletId(this.state.walletList[0].wallet_Id);
                                 StateStore.setCurrentMyWalletList(this.state.walletList);
-                                AsyncStorage.setItem('WalletList', JSON.stringify(this.state.walletList))
+                                AsyncStorage.setItem('WalletList', JSON.stringify(list));
                             });
                         } else {
                             Common.alert("지갑정보를 가져올 수 없습니다");
@@ -212,7 +212,7 @@ export default class MyWallet extends Component {
                         <TouchableOpacity
                             style={styles.sendCoinBtn}
                             onPress={() => {
-                                
+                                Actions.main({goTo:"sendCoin"});
                             }}
                         >
                             <Text style={styles.sendCoinBtnText}>송 금</Text>

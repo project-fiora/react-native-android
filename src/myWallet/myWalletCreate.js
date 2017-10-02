@@ -25,6 +25,7 @@ class MyWalletCreate extends Component {
         this.state = {
             name: '',
             addr: '',
+            password: '',
             loading: false,
         };
     }
@@ -32,8 +33,13 @@ class MyWalletCreate extends Component {
     static async createWallet(callback) {
         //getAwsAddr
         var walletName = StateStore.createWalletName();
+        var walletPassword = StateStore.createWalletPassword();
         if (walletName == "" || walletName == undefined) {
             alert("지갑 이름을 입력하세요!");
+            callback();
+            return false;
+        } else if (walletPassword == "" || walletPassword == undefined) {
+            alert("비밀번호를 입력하세요!");
             callback();
             return false;
         } else {
@@ -49,7 +55,9 @@ class MyWalletCreate extends Component {
                 try {
                     if (responseJson !== null) {
                         StateStore.setCreateWalletAddr(responseJson.address);
-                        AsyncStorage.setItem(walletName + "_privateKey", responseJson.private_key, () => {
+                        AsyncStorage.setItem(walletName + walletPassword + "_privateKey", responseJson.private_key, () => {
+                            console.log("created Private Key");
+                            console.log(walletName + walletPassword + "_privateKey");
                             AsyncStorage.getItem('Token', (err, result) => {
                                 if (err != null) {
                                     alert(err);
@@ -132,6 +140,21 @@ class MyWalletCreate extends Component {
                         autoCapitalize='none'
                         autoCorrect={false}
                         maxLength={20}
+                        multiline={false}
+                    />
+
+                    <TextInput
+                        style={styles.inputName}
+                        value={this.state.password}
+                        onChangeText={(pw) => {
+                            this.setState({ password: pw });
+                            StateStore.setCreateWalletPassword(pw);
+                        }}
+                        keyboardType='numeric'
+                        placeholder={'비밀번호'}
+                        placeholderTextColor="#FFFFFF"
+                        secureTextEntry={true}
+                        maxLength={8}
                         multiline={false}
                     />
                 </ScrollView>

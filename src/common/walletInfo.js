@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, Clipboard } from "react-native";
 import QRCode from "react-native-qrcode";
 import Common from "./common";
 
@@ -33,7 +33,16 @@ export default class WalletInfo extends Component {
                         fgColor='white'
                     />
                 </View>
-                <Text style={styles.centerText}>{this.props.wallet_add}</Text>
+                <Text
+                    style={styles.centerText}
+                    onPress={() => {
+                        Clipboard.setString(this.props.wallet_add);
+                        alert("클립보드에 복사되었습니다.");
+                    }}
+                >
+                    {this.props.wallet_add}{'\n'}
+                    터치하면 클립보드에 복사됩니다
+                </Text>
             </View>
         );
     }

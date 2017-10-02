@@ -25,6 +25,7 @@ import TabButton from '../common/tapButton';
 
 import MyWallet from '../myWallet/myWallet';
 import MyWalletCreate from '../myWallet/myWalletCreate';
+import SendCoin from '../myWallet/sendCoin';
 import MyWalletAdd from '../myWallet/myWalletAdd';
 import MyWalletEdit from '../myWallet/myWalletEdit';
 
@@ -67,7 +68,7 @@ export default class Main extends Component {
             rightBtnGoTo: '',
             rightBtnText: '',
             enableRightHambug: false,
-            loading:false,
+            loading: false,
         };
         StateStore.setGlobalLoaded('none');
         this.handleBack = (() => {
@@ -127,6 +128,12 @@ export default class Main extends Component {
                     title: '지갑 생성',
                     enableBackBtn: true,
                     enableRightBtn: true, rightBtnText: '저장', rightBtnGoTo: 'callCreateWallet'
+                });
+                break;
+            case 'sendCoin':
+                this.setState({
+                    title: '송 금',
+                    enableBackBtn: true,
                 });
                 break;
             case 'myWalletAdd':
@@ -333,10 +340,10 @@ export default class Main extends Component {
                 source={require('../common/img/bg-03.png')}
                 style={styles.container}
             >
-            {this.state.loading &&
-                <LoadingIcon visible={true}/>
-            }
-            
+                {this.state.loading &&
+                    <LoadingIcon visible={true} />
+                }
+
                 <MenuContext style={{ flex: 1 }}>
                     <View style={styles.wrapper}>
                         <View style={styles.summaryTitleWrapper}>
@@ -406,6 +413,8 @@ export default class Main extends Component {
                         {this.props.goTo === 'myWalletEdit' &&
                             <MyWalletEdit id={this.props.id} />
                         }
+
+                        {this.props.goTo === 'sendCoin' && <SendCoin />}
                         {this.props.goTo === 'myWalletCreate' && <MyWalletCreate />}
                         {this.props.goTo === 'myWalletAdd' && <MyWalletAdd />}
                         {this.props.goTo === 'tradeRecord' && <TradeRecord />}
