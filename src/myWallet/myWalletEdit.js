@@ -23,7 +23,7 @@ export default class MyWalletEdit extends Component {
             name: '',
             addr: '',
             wallet: {},
-            TYPE: ['BTC', 'ETH', 'ETC', 'XRP', 'LTC', 'DASH'],
+            TYPE: ['BTC', 'ETH', 'ETC', 'XRP', 'LTC', 'DASH', 'BSC'],
             currentTYPE: 0,
             token: '',
         };
@@ -185,7 +185,6 @@ const styles = StyleSheet.create({
     },
     inputWalletName: {
         width: 0.6 * wid,
-        height: 0.055 * hei,
         fontSize: 15,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',
@@ -205,7 +204,6 @@ const styles = StyleSheet.create({
     },
     inputWalletAddr: {
         width: 0.6 * wid,
-        height: 0.055 * hei,
         fontSize: 14,
         color: '#FFFFFF',
         borderColor: '#FFFFFF',

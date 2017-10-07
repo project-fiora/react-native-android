@@ -5,7 +5,6 @@ const stateStore = observable({
     globalLoaded:'none',
     loaded:'',
     createWalletName:'',
-    createWalletPassword:'',
     createWalletAddr:'',
     walletName:'',
     walletAddr:'',
@@ -29,13 +28,6 @@ stateStore.setCreateWalletName = (name)=>{
 }
 stateStore.createWalletName = ()=>{
     return this.createWalletName;
-}
-//BSC 간편 비밀번호
-stateStore.setCreateWalletPassword = (pw)=>{
-    this.createWalletPassword = pw;
-}
-stateStore.createWalletPassword = ()=>{
-    return this.createWalletPassword;
 }
 ///지갑생성할때 지갑주소
 stateStore.setCreateWalletAddr = (addr)=>{

@@ -21,7 +21,7 @@ import SelectBox from '../common/selectBox';
 보내는 금액 : amount
 수수료 : fee
 개인키 : privateKey
-받는 주소 : incomingAddress
+받는 주소 : incommingAddress
  */
 
 export default class SendCoin extends Component {
@@ -35,7 +35,8 @@ export default class SendCoin extends Component {
             sendAddress: '',
             amount: '',
             fee: '',
-            incomingAddress: '',
+            incommingAddress: '',
+            pk: '',
             wallet: [],
             friendList: [],
             friendWalletList: [],
@@ -74,7 +75,7 @@ export default class SendCoin extends Component {
                                     return item.wallet_type == "BSC";
                                 })
                             }, () => {
-                                this.setState({ load: true });
+                                this.setState({ load: true, sendAddress: this.state.wallet[this.state.currentWallet].wallet_add });
                             });
                         } else {
                             Common.alert("지갑정보를 가져올 수 없습니다");
@@ -93,7 +94,7 @@ export default class SendCoin extends Component {
     }
 
     setMyWallet(i) {
-        this.setState({ currentWallet: i });
+        this.setState({ currentWallet: i, sendAddress: this.state.wallet[this.state.currentWallet].wallet_add });
     }
 
     async getFriendList() {
@@ -133,7 +134,7 @@ export default class SendCoin extends Component {
 
     setFriend(i, friendId) {
         this.setState({
-            currentWallet: i,
+            currentFriend: i,
             secondLoad: false,
             friendId: friendId,
         }, () => {
@@ -156,8 +157,11 @@ export default class SendCoin extends Component {
                 }
             }).then((response) => response.json()).then((responseJson) => {
                 if (responseJson.message == "SUCCESS") {
-                    var list = responseJson.list;
-                    this.setState({ friendWalletList: list, secondLoad: true });
+                    this.setState({
+                        friendWalletList: responseJson.list.filter((item) => {
+                            return item.wallet_type == "BSC";
+                        }), secondLoad: true
+                    });
                 } else {
                     Common.alert("친구지갑정보를 가져올 수 없습니다");
                     return false;
@@ -171,52 +175,92 @@ export default class SendCoin extends Component {
     setFriendWallet(i) {
         this.setState({
             currentFriendWallet: i,
-            incomingAddress: this.state.friendWalletList[i].wallet_add,
+            incommingAddress: this.state.friendWalletList[i].wallet_add,
         });
     }
 
     async sendCoin() {
         try {
-            const value = await AsyncStorage.getItem(this.state.wallet[this.state.currentWallet].wallet_name + this.state.password + "_privateKey");
-            if (value !== null) {
-                // console.log(value);
-                // console.log(this.state.wallet[this.state.currentWallet].wallet_name + this.state.password + "_privateKey");
-                fetch(PrivateAddr.getAwsAddr() + "payment", {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        sendAddress: this.state.sendAddress,
-                        amount: this.state.amount,
-                        fee: this.state.fee,
-                        privateKey: value,
-                        incomingAddress: this.state.incomingAddress,
-                    })
-                }).then((response) => {
-                    return response.json()
-                }).then((responseJson) => {
-                    if (responseJson.message == "SUCCESS") {
+            fetch(PrivateAddr.getAwsAddr() + "payment", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    sendAddress: this.state.sendAddress,
+                    amount: this.state.amount,
+                    fee: this.state.fee,
+                    private_key: this.state.pk,
+                    incommingAddress: this.state.incommingAddress,
+                })
+            }).then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    Common.alert("API 에러입니다");
+                    return false;
+                }
+            }).then((responseJson) => {
+                console.log(responseJson);
+                switch (responseJson.message) {
+                    case "SUCCESS":
                         Common.alert("송금에 성공하였습니다!");
                         Actions.main({ goTo: 'myWallet' });
-                    } else if(responseJson.message == "ERROR"){
-                        this.setState({ load: true });
-                        Common.alert("송금에 실패하였습니다!");
-                        return false;
-                    } else {
-                        Common.alert("알수없는 에러입니다.\n관리자에게 문의하세요");
-                        return false;
-                    }
-                }).catch((error) => {
-                    Common.alert('Network Connection Failed');
-                    console.error(error);
-                    return false;
-                }).done();
-            }
+                        break;
+                    case "NO SENDADDRESS":
+                        Common.alert("보내는 사람 주소 오류입니다\n주소를 확인해주세요!");
+                        break;
+                    case "NO AMOUNT":
+                        Common.alert("잔액이 부족합니다.");
+                        break;
+                    default:
+                        Common.alert(responseJson.message + "\n전송실패");
+                        break;
+                }
+            }).catch((error) => {
+                alert('Network Connection Failed');
+                console.error(error);
+            }).done();
+
+
+            // fetch(PrivateAddr.getAwsAddr() + "", {
+            //     method: 'POST',
+            //     headers: {
+            //         'Accept': 'application/json',
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify({
+
+            //     })
+            // }).then((response) => {
+            //     console.log(response);
+            //     return response.json()
+            // }).then((responseJson) => {
+            //     switch (responseJson.message) {
+            //         case "SUCCESS":
+            //             Common.alert("송금에 성공하였습니다!");
+            //             Actions.main({ goTo: 'myWallet' });
+            //             break;
+            //         case "NO SENDADDRESS":
+            //             Common.alert("보내는 사람 주소 오류입니다\n주소를 확인해주세요!");
+            //             break;
+            //         case "NO AMOUNT":
+            //             Common.alert("잔액이 부족합니다.");
+            //             break;
+            //         default:
+            //             Common.alert(responseJson.message+"\n알수없는 에러입니다.\n관리자에게 문의하세요");
+            //             break;
+            //     }
+            // }).catch((error) => {
+            //     Common.alert('Network Connection Failed');
+            //     console.error(error);
+            //     return false;
+            // }).done();
         } catch (error) {
-            // Error retrieving data
             console.error(error);
+        } finally {
+            this.setState({ load: true });
         }
     }
 
@@ -298,8 +342,8 @@ export default class SendCoin extends Component {
                     <View style={styles.hr} />
 
                     <TextInput
-                        value={this.state.incomingAddress}
-                        onChangeText={(addr) => this.setState({ incomingAddress: addr })}
+                        value={this.state.incommingAddress}
+                        onChangeText={(addr) => this.setState({ incommingAddress: addr })}
                         placeholder={'친구의 지갑을 선택하거나, 받는 주소를 입력하세요'}
                         placeholderTextColor="#FFFFFF"
                         autoCapitalize='none'
@@ -308,13 +352,10 @@ export default class SendCoin extends Component {
                     />
 
                     <TextInput
-                        value={this.state.password}
-                        onChangeText={(pw) => this.setState({ password: pw })}
-                        keyboardType='numeric'
-                        placeholder={'비밀번호'}
+                        value={this.state.pk}
+                        onChangeText={(pw) => this.setState({ pk: pw })}
+                        placeholder={'개인키'}
                         placeholderTextColor="#FFFFFF"
-                        secureTextEntry={true}
-                        maxLength={8}
                         multiline={false}
                     />
 

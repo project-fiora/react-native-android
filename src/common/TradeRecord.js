@@ -10,10 +10,11 @@ import {
     View
 } from 'react-native';
 
-import Common from "../common/common";
+import Common from "../common/common.js";
 import StateStore from '../common/stateStore';
 import LoadingIcon from 'react-native-loading-spinner-overlay';
-import SelectBox from '../common/selectBox';
+import SelectBox from '../common/selectBox.js';
+import PrivateAddr from '../common/private/address.js';
 
 class TradeRecord extends Component {
     constructor(props) {
@@ -128,6 +129,31 @@ class TradeRecord extends Component {
                             console.error(error);
                         }).done(() => this.setState({ loaded: true }));
                     break;
+                case 'BSC':
+                    var addr = this.state.list[this.state.currentWallet].wallet_add;
+                    fetch(PrivateAddr.getAwsAddr() + "wallet/transactions", {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            address: addr,
+                        })
+                    }).then((response) => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            this.setState({ message: '조회 할 수 없습니다' });
+                            return false;
+                        }
+                    }).then((responseJson) => {
+                        this.setState({ data: responseJson.data, success: true });
+                    }).catch((error) => {
+                        alert('Network Connection Failed');
+                        console.error(error);
+                    }).done(() => this.setState({ loaded: true }));
+                    break;
                 default:
                     this.setState({ message: '현재 ' + type + '은 거래조회를 지원하지 않습니다', loaded: true });
                     break;
@@ -143,7 +169,7 @@ class TradeRecord extends Component {
         return (
             <ScrollView contentContainerStyle={styles.frame}>
                 {!this.state.loaded &&
-                    <LoadingIcon visible={true}/>
+                    <LoadingIcon visible={true} />
                 }
                 <ScrollView contentContainerStyle={styles.content}>
                     {(this.state.list.length == 0) &&
@@ -337,6 +363,25 @@ class TradeRecord extends Component {
                                             )()}
                                         </View>
                                     }
+                                    {this.state.list[this.state.currentWallet].wallet_type == 'BSC' && //XRP
+                                        <View>
+                                            <View style={styles.hr} />
+                                            {this.state.data.Items.map((item, i) => {
+                                                return (
+                                                    <View key={i}>
+                                                        <Text style={styles.text}>
+                                                            날짜 : {item.date}{'\n'}{'\n'}
+                                                            수수료 : {item.fee}{'\n'}{'\n'}
+                                                            금액 : {item.amount}{'\n'}{'\n'}
+                                                            받는주소 : {item.incommingAddress}{'\n'}{'\n'}
+                                                            보내는주소 : {item.address}{'\n'}
+                                                        </Text>
+                                                        <View style={styles.hr} />
+                                                    </View>
+                                                );
+                                            })}
+                                        </View>
+                                    }
                                 </View>
                             }
                         </View>
@@ -383,37 +428,9 @@ const styles = StyleSheet.create({
         opacity: 0.8,
     },
     text: {
-
-    },
-    selectBoxWrapper: {
-        alignSelf: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#000000',
-        width: 0.6 * wid,
-        height: 0.065 * hei,
-        opacity: 0.4,
-        borderColor: '#FFFFFF',
-        borderWidth: 1,
-        borderRadius: 10,
-        paddingLeft: 17,
-        paddingRight: 15,
-    },
-    selectBoxRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    selectBoxText: {
-        alignSelf: 'flex-start',
         color: '#FFFFFF',
-        fontSize: 17,
-    },
-    selectBoxIconWrapper: {
-        alignItems: 'flex-end',
-    },
-    selectIcon: {
-        color: '#FFFFFF',
-        fontSize: 17,
-        opacity: 0.9,
+        fontSize: 16,
+        opacity: 0.8,
     },
     blank: {
         margin: 5,
