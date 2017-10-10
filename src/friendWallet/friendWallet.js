@@ -105,7 +105,7 @@ export default class FriendWallet extends Component {
                         Common.getBalance(this.state.walletList[0].wallet_type, this.state.walletList[0].wallet_add)
                     ).then(result => {
                         var balance;
-                        if (Number.isInteger(result)) {
+                        if (Number.isInteger(result)&&this.state.walletList[0].wallet_type!="BSC") {
                             balance = (parseInt(result) / 100000000) + " " + this.state.walletList[0].wallet_type;
                         } else {
                             balance = result;
@@ -138,7 +138,7 @@ export default class FriendWallet extends Component {
             StateStore.setCurrentWallet(i);
             Promise.resolve().then(() => Common.getBalance(type, addr)).then(result => {
                 var balance;
-                if (Number.isInteger(result)) {
+                if (Number.isInteger(result)&&this.state.walletList[i].wallet_type!="BSC") {
                     balance = (parseInt(result) / 100000000) + " " + type;
                 } else {
                     balance = result;
