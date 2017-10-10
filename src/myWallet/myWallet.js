@@ -41,7 +41,7 @@ export default class MyWallet extends Component {
                                 this.state.walletList[0].wallet_add))
                             .then(result => {
                                 var balance;
-                                if (Number.isInteger(result)) {
+                                if (Number.isInteger(result)||this.state.walletList[0].wallet_type!="BSC") {
                                     balance = (parseInt(result) / 100000000) + " " + this.state.walletList[0].wallet_type;
                                 } else {
                                     balance = result;
@@ -102,7 +102,7 @@ export default class MyWallet extends Component {
                                     this.state.walletList[this.state.currentWallet].wallet_add))
                                 .then(result => {
                                     var balance;
-                                    if (Number.isInteger(result)) {
+                                    if (Number.isInteger(result)||this.state.walletList[0].wallet_type!="BSC") {
                                         balance = (parseInt(result) / 100000000) + " " + this.state.walletList[this.state.currentWallet].wallet_type;
                                     } else {
                                         balance = result;
@@ -129,7 +129,7 @@ export default class MyWallet extends Component {
                 .then(() => Common.getBalance(type, addr))
                 .then(result => {
                     var balance;
-                    if (Number.isInteger(result)) {
+                    if (Number.isInteger(result)||this.state.walletList[0].wallet_type!="BSC") {
                         balance = (parseInt(result) / 100000000) + " " + type;
                     } else {
                         balance = result;
