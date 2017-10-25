@@ -129,7 +129,7 @@ export default class MyWallet extends Component {
                 .then(() => Common.getBalance(type, addr))
                 .then(result => {
                     var balance;
-                    if (Number.isInteger(result)&&this.state.walletList[0].wallet_type!="BSC") {
+                    if (Number.isInteger(result)&&this.state.walletList[i].wallet_type!="BSC") {
                         balance = (parseInt(result) / 100000000) + " " + type;
                     } else {
                         balance = result;
